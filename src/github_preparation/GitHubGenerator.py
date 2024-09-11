@@ -1,7 +1,9 @@
+import time
+import json
 from gql import gql, Client
+from gql.transport.exceptions import TransportQueryError
 from openai import AzureOpenAI
 from pydantic import BaseModel
-import json
 
 class Discussion(BaseModel):
     title: str
@@ -19,6 +21,9 @@ class GitHubGenerator:
     Users can customize their pet’s appearance and personality, making it a unique addition to their virtual workspace.
     """
 
+    MAX_RETRIES = 10
+    RETRY_WAIT_TIME = 3
+
     def __init__(self, openai_client: AzureOpenAI, github_gql_client: Client, github_owner: str, github_repo: str):
         self.openai_client = openai_client
         self.github_gql_client = github_gql_client
@@ -26,6 +31,27 @@ class GitHubGenerator:
         self.github_repo = github_repo
         self.github_repo_id = self.fetch_repository_id(github_owner, github_repo)
         self.github_discussions_category_id = self.fetch_discussions_general_category_id(github_owner, github_repo)
+
+    def execute_gql_with_retry(self, query, variables):
+        """
+        Execute a GraphQL mutation with retry logic.
+        """
+
+        for attempt in range(self.MAX_RETRIES):
+            try:
+                response = self.github_gql_client.execute(query, variable_values=variables)
+                return response
+            except TransportQueryError as e:
+                if "was submitted too quickly" in str(e):
+                    if attempt < self.MAX_RETRIES - 1:
+                        wait_time = self.RETRY_WAIT_TIME ** attempt
+                        print(f"Error: {e}. Retrying in {wait_time} seconds...")
+                        time.sleep(wait_time)
+                    else:
+                        print(f"Failed to execute after {self.MAX_RETRIES} attempts.")
+                        raise
+                else:
+                    raise
 
     def generate_discussions(self):
         """
@@ -88,15 +114,19 @@ class GitHubGenerator:
                 "body": discussion["body"],
                 "categoryId": self.github_discussions_category_id
             }
-            response = self.github_gql_client.execute(discussion_mutation, variable_values=discussion_mutation_variables)
+
+            response = self.execute_gql_with_retry(discussion_mutation, discussion_mutation_variables)
             discussion_id = response["createDiscussion"]["discussion"]["id"]
+
+            # Add comments to the discussion
             for comment in discussion["comments"]:
                 comment_mutation_variables = {
                     "discussionId": discussion_id,
                     "body": comment
                 }
-                response = self.github_gql_client.execute(comment_mutation, variable_values=comment_mutation_variables)
-        
+
+                response = self.execute_gql_with_retry(comment_mutation, comment_mutation_variables)
+
     def delete_all_discussions(self, github_owner: str, github_repo: str):
         """
         Delete all discussions in the GitHub repository
@@ -126,7 +156,7 @@ class GitHubGenerator:
             }
             """)
             variables = {"discussionId": discussion_id}
-            self.github_gql_client.execute(mutation, variable_values=variables)
+            self.execute_gql_with_retry(mutation, variables)
 
     def generate_feature_requests(self):
         pass
@@ -150,7 +180,7 @@ class GitHubGenerator:
         }
         """)
         variables = {"owner": github_owner, "name": github_repo}
-        response = self.github_gql_client.execute(query, variable_values=variables)
+        response = self.execute_gql_with_retry(query, variables)
         return response["repository"]["id"]
     
     def fetch_discussions_general_category_id(self, github_owner: str, github_repo: str):
@@ -171,7 +201,7 @@ class GitHubGenerator:
         }
         """)
         variables = {"owner": github_owner, "name": github_repo}
-        response = self.github_gql_client.execute(query, variable_values=variables)
+        response = self.execute_gql_with_retry(query, variables)
         for category in response["repository"]["discussionCategories"]["nodes"]:
             if category["name"] == "General":
                 return category["id"]
