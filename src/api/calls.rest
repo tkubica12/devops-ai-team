@@ -1,0 +1,17 @@
+# userMessage
+POST http://localhost:8000/api/user_message
+content-type: application/json
+
+{
+    "message": "I want to work today on something impactful from revenue perspective. What do you suggest?"
+}
+
+###
+
+# userMessage2
+POST http://localhost:8000/api/user_message
+content-type: application/json
+
+{
+    "message": "I heard users complain about product stability"
+}

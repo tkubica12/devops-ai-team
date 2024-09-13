@@ -1,0 +1,6 @@
+gql
+python-dotenv
+requests
+requests_toolbelt
+azure-cosmos
+azure-identity
