@@ -1,0 +1,62 @@
+.message {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+  }
+  
+  .message.expanded {
+    background-color: #f1f1f1;
+  }
+  
+  .message-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .avatar-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .avatar {
+    width: 50px; /* Adjusted size */
+    height: 50px; /* Adjusted size */
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .agent-name {
+    font-size: 1em;
+    color: #333;
+  }
+  
+  .message-content {
+    margin-top: 10px;
+    color: #444;
+  }
+  
+  .message-content button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 5px;
+    font-size: 0.9em;
+  }
+  
+  .message-content button:hover {
+    text-decoration: underline;
+  }
+  
+  .next-agent {
+    margin-top: 10px;
+    font-style: italic;
+    color: #777;
+  }

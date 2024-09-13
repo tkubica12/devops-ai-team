@@ -8,10 +8,5 @@ content-type: application/json
 
 ###
 
-# userMessage2
-POST http://localhost:8000/api/user_message
-content-type: application/json
-
-{
-    "message": "I heard users complain about product stability"
-}
+# get messages
+GET http://localhost:8000/api/messages?conversation_id=dec4dc08-7d25-4c9a-835d-2e6e47540b17

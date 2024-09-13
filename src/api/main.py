@@ -4,9 +4,12 @@ from azure.identity import DefaultAzureCredential
 from azure.cosmos import CosmosClient
 import time
 from Event import Event, AgentCommunicationData
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from uuid import uuid4
+from typing import List, Dict
 
 app = FastAPI()
 
@@ -23,8 +26,19 @@ cosmos_client = CosmosClient(url=COSMOS_ENDPOINT, credential=credential)
 cosmos_database = cosmos_client.get_database_client(COSMOS_DATABASE_NAME)
 cosmos_events_container = cosmos_database.get_container_client(COSMOS_EVENTS_CONTAINER_NAME)
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+)
+
 class UserMessage(BaseModel):
     message: str
+
+# app.mount("/", StaticFiles(directory="path/to/build", html=True), name="static")
 
 @app.post("/api/user_message")
 async def user_message(user_message: UserMessage):
@@ -48,3 +62,17 @@ async def user_message(user_message: UserMessage):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/api/messages", response_model=List[Dict[str, str]])
+async def get_messages(conversation_id: str = Query(..., description="The ID of the conversation")):
+    try:
+        # Query the container for events with the specified conversation_id
+        query = f"SELECT c.event_data.message, c.event_data.next_agent, c.event_producer, c.timestamp FROM c WHERE c.conversation_id = @conversation_id ORDER BY c.timestamp"
+        parameters = [{"name": "@conversation_id", "value": conversation_id}]
+        items = cosmos_events_container.query_items(query=query, parameters=parameters, enable_cross_partition_query=True)
+        response = []
+        for item in items:
+            response.append({"message": item["message"], "timestamp": str(item["timestamp"]), "event_producer": item["event_producer"], "next_agent": item["next_agent"]})
+        return response
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail=str(e))
