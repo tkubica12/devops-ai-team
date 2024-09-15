@@ -1,0 +1,6 @@
+python-dotenv
+azure-cosmos
+azure-identity
+openai
+pydantic
+uuid

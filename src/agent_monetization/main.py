@@ -48,10 +48,7 @@ agent_config = AgentConfiguration(
 Virtual Office Pet is a fun and interactive app designed to bring a touch of joy and humor to the workplace. Users can adopt a virtual pet that lives on their desktop or mobile device, providing companionship and entertainment throughout the workday. The pet can perform various actions, such as playing games, sending funny reminders, and even offering motivational quotes. Users can customize their pet’s appearance and personality, making it a unique addition to their virtual workspace.
 
 **Inputs Available:**
-- **User Feedback:** Insights and suggestions from users about their experience with the app.
-- **Product Manager Insights:** Strategic goals and feature priorities for the app.
-- **User Experience Reports:** Analysis of user interactions and satisfaction levels.
-- **Additional Inputs:** Any other relevant data provided by other agents.
+- **Additional Inputs:** Any other relevant data provided by other agents, such as Product Manager Insights and User Experience Reports, if they are available.
 
 **Tasks:**
 1. **Analyze Inputs:** Review all available inputs from other agents to understand the current state of the app and user needs.

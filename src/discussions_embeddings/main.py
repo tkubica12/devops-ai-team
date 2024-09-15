@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 from azure.identity import DefaultAzureCredential
-from azure.cosmos import CosmosClient
+from azure.cosmos import CosmosClient, PartitionKey
 from openai import AzureOpenAI
 import time
 
@@ -24,8 +24,27 @@ credential = DefaultAzureCredential()
 cosmos_client = CosmosClient(url=COSMOS_ENDPOINT, credential=credential)
 cosmos_database = cosmos_client.get_database_client(COSMOS_DATABASE_NAME)
 cosmos_discussions_raw_container = cosmos_database.get_container_client(COSMOS_DISCUSSIONS_RAW_CONTAINER_NAME)
-cosmos_discussions_container = cosmos_database.get_container_client(COSMOS_DISCUSSIONS_CONTAINER_NAME)
 
+cosmos_discussions_container = cosmos_database.create_container_if_not_exists(
+    id=COSMOS_DISCUSSIONS_CONTAINER_NAME,
+    partition_key = PartitionKey(path="/id"),
+    indexing_policy = { 
+        "includedPaths": [ { "path": "/*" } ], 
+        "excludedPaths": [ { "path": "/\"_etag\"/?" } ],
+        "vectorIndexes": [ {"path": "/discussion_embedding", "type": "diskANN" } ]
+    },
+    vector_embedding_policy = {
+        "vectorEmbeddings": [
+            {
+                "path": "/discussion_embedding",
+                "dataType": "float32",
+                "distanceFunction": "cosine",
+                "dimensions": 3072
+            }
+        ]
+    }
+)
+    
 # OpenAI client
 print("Connecting to Azure OpenAI")
 openai_client = AzureOpenAI(

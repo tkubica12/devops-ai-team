@@ -1,13 +1,14 @@
 from openai import AzureOpenAI
 import time
 import json
-from Event import Event, AgentCommunicationData
+from SharedClasses.Event import Event, AgentCommunicationData
 from uuid import uuid4
 from pydantic import BaseModel, Field
 from typing import Union, Optional
 
 class AgentConfiguration(BaseModel):
     instructions: str = Field(..., title="Instructions", description="Instructions for the agent")
+    intent_extraction_instructions: str = Field(..., title="Intent Extraction Instructions", description="Instructions for extracting intents from the user message")
     model: str = Field(..., title="Model", description="Model to use for generating responses")
     event_producer: str = Field(..., title="Event Producer", description="Producer of event, which is name of the agent")
 
@@ -17,14 +18,27 @@ class Agent:
         self.agent_config = agent_config
         self.cosmos_events_container = cosmos_events_container
 
-    def process(self, message_input: str, conversation_id: str):
+    def process(self, message_input: str, conversation_id: str, context: str = None):
         print(f"Input message:\n{message_input}\n")
-        message_output = self.call_model(message_input=message_input, history=self.build_history(conversation_id=conversation_id))
+        message_output = self.call_model(
+            message_input=message_input, 
+            history=self.build_history(conversation_id=conversation_id), 
+            instructions=self.agent_config.instructions,
+            context=context
+            )
         self.create_event(
             message=message_output, 
             next_agent="agent_facilitator", 
             conversation_id=conversation_id
             )
+        
+    def extract_intent(self, message_input: str, conversation_id: str):
+        message_output = self.call_model(
+            message_input=message_input, 
+            history=self.build_history(conversation_id=conversation_id),
+            instructions=self.agent_config.intent_extraction_instructions
+            )
+        return message_output
 
     def create_event(self, message: str, next_agent: str, conversation_id: str):
         event_data = AgentCommunicationData(
@@ -42,12 +56,14 @@ class Agent:
         # Send the event to Cosmos DB
         self.cosmos_events_container.create_item(event.model_dump())
     
-    def call_model(self, message_input: str, history: str = None):
+    def call_model(self, message_input: str, instructions: str, history: str = None, context: str = None):
         # Prepare the messages for the model
         messages = []
-        messages.append({"role": "system", "content": self.agent_config.instructions})
+        messages.append({"role": "system", "content": instructions})
         messages.append({"role": "assistant", "content": history})
         messages.append({"role": "user", "content": message_input})
+        if context:
+            messages.append({"role": "user", "content": context})
 
         # Send the messages to the model
         response = self.openai_client.chat.completions.create(
@@ -72,5 +88,9 @@ class Agent:
             lines.append(f"{item['message']}\n")
         history = "\n".join(lines)
         return history
+    
+    def search(self, input: str):
+        # Placeholder for search functionality
+        return "Search context"
 
     
