@@ -41,18 +41,24 @@
     color: #444;
   }
   
-  .message-content button {
-    background: none;
-    border: none;
-    color: #007bff;
-    cursor: pointer;
-    padding: 0;
-    margin-left: 5px;
-    font-size: 0.9em;
+  .toggle-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
   }
   
-  .message-content button:hover {
-    text-decoration: underline;
+  .toggle-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .toggle-button:hover {
+    background-color: #0056b3;
   }
   
   .next-agent {

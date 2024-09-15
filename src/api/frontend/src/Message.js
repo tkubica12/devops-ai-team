@@ -26,9 +26,11 @@ function Message({ message }) {
         <ReactMarkdown>
           {expanded ? message.message : `${message.message.substring(0, 100)}...`}
         </ReactMarkdown>
-        <button onClick={toggleExpand}>
-          {expanded ? 'Show Less' : 'Show More'}
-        </button>
+        <div className="toggle-button-container">
+          <button className="toggle-button" onClick={toggleExpand}>
+            {expanded ? 'Show Less' : 'Show More'}
+          </button>
+        </div>
       </div>
       {/* <div className="next-agent">Next Agent: {message.next_agent}</div> */}
     </div>

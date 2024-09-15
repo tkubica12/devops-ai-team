@@ -4,8 +4,8 @@ from azure.identity import DefaultAzureCredential
 from azure.cosmos import CosmosClient
 from openai import AzureOpenAI
 import time
-from Agent import Agent
-from Event import Event, AgentCommunicationData
+from Facilitator import Facilitator
+from SharedClasses.Event import Event
 from uuid import uuid4
 
 # Load environment variables from .env file
@@ -35,7 +35,7 @@ openai_client = AzureOpenAI(
     azure_endpoint=AZURE_OPENAI_ENDPOINT
 )
 
-agent = Agent(openai_client=openai_client, model=AZURE_OPENAI_DEPLOYMENT_NAME, cosmos_events_container=cosmos_events_container)
+agent = Facilitator(openai_client=openai_client, model=AZURE_OPENAI_DEPLOYMENT_NAME, cosmos_events_container=cosmos_events_container)
 
 # Initialize continuation token
 continuation_token = None

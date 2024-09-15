@@ -4,7 +4,7 @@ import json
 from Event import Event, AgentCommunicationData
 from uuid import uuid4
 
-class Agent:
+class Facilitator:
     instructions = """
 # Facilitator agent
 

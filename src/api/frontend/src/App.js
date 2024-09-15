@@ -21,6 +21,7 @@ function App() {
 
   return (
     <div className="App">
+      <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" className="logo" />
       <h1>AI team discussion</h1>
       <div className="messages">
         {messages.map((msg, index) => (
