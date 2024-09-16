@@ -13,6 +13,7 @@ load_dotenv()
 COSMOS_ENDPOINT = os.getenv("COSMOS_ENDPOINT")
 COSMOS_DATABASE_NAME = os.getenv("COSMOS_DATABASE_NAME")
 COSMOS_EVENTS_CONTAINER_NAME = "events"
+COSMOS_RAG_CONTAINER_NAME = os.getenv("COSMOS_RAG_CONTAINER_NAME")
 AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY")
 AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
 AZURE_OPENAI_API_VERSION = "2024-02-01"
@@ -26,6 +27,7 @@ credential = DefaultAzureCredential()
 cosmos_client = CosmosClient(url=COSMOS_ENDPOINT, credential=credential)
 cosmos_database = cosmos_client.get_database_client(COSMOS_DATABASE_NAME)
 cosmos_events_container = cosmos_database.get_container_client(COSMOS_EVENTS_CONTAINER_NAME)
+cosmos_rag_container = cosmos_database.get_container_client(COSMOS_RAG_CONTAINER_NAME)
 
 # OpenAI client
 print("Connecting to Azure OpenAI")
@@ -38,7 +40,9 @@ openai_client = AzureOpenAI(
 # Agent configuration
 agent_config = AgentConfiguration(
     model=AZURE_OPENAI_DEPLOYMENT_NAME,
+    embedding_model=AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME,
     event_producer="agent_user_feedback",
+    rag_top_n=3,
     instructions="""
 **User Feedback Agent Prompt:**
 
@@ -85,7 +89,7 @@ Virtual Office Pet is a fun and interactive app designed to bring a touch of joy
 )
 
 # Initialize the agent
-agent = Agent(openai_client=openai_client, agent_config=agent_config, cosmos_events_container=cosmos_events_container)
+agent = Agent(openai_client=openai_client, agent_config=agent_config, cosmos_events_container=cosmos_events_container, cosmos_rag_container=cosmos_rag_container)
 
 # Initialize continuation token
 continuation_token = None

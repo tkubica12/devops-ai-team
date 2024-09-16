@@ -10,13 +10,16 @@ class AgentConfiguration(BaseModel):
     instructions: str = Field(..., title="Instructions", description="Instructions for the agent")
     intent_extraction_instructions: str = Field(..., title="Intent Extraction Instructions", description="Instructions for extracting intents from the user message")
     model: str = Field(..., title="Model", description="Model to use for generating responses")
+    embedding_model: str = Field(..., title="Embedding Model", description="Model to use for generating embeddings")
     event_producer: str = Field(..., title="Event Producer", description="Producer of event, which is name of the agent")
+    rag_top_n: Optional[int] = Field(None, title="RAG Top N", description="Top N responses to consider from RAG model")
 
 class Agent:
-    def __init__(self, openai_client: AzureOpenAI, agent_config: AgentConfiguration, cosmos_events_container):
+    def __init__(self, openai_client: AzureOpenAI, agent_config: AgentConfiguration, cosmos_events_container, cosmos_rag_container = None):
         self.openai_client = openai_client
         self.agent_config = agent_config
         self.cosmos_events_container = cosmos_events_container
+        self.cosmos_rag_container = cosmos_rag_container
 
     def process(self, message_input: str, conversation_id: str, context: str = None):
         print(f"Input message:\n{message_input}\n")
@@ -90,7 +93,24 @@ class Agent:
         return history
     
     def search(self, input: str):
-        # Placeholder for search functionality
-        return "Search context"
+        try:
+            input_embedding = self.openai_client.embeddings.create(input=input, model=self.agent_config.embedding_model).data[0].embedding
+            query = f"SELECT TOP @top_n c.text, VectorDistance(c.contentVector,@embedding) AS SimilarityScore FROM c ORDER BY VectorDistance(c.contentVector,@embedding)"
+            parameters = [
+                {"name": "@top_n", "value": self.agent_config.rag_top_n},
+                {"name": "@embedding", "value": input_embedding}
+            ]
+            items = self.cosmos_rag_container.query_items(query=query, parameters=parameters, enable_cross_partition_query=True)
+            lines = []
+            lines.append("# Search Results:")
+            for item in items:
+                print(json.dumps(item, indent=2))
+                lines.append(f"{item['text']}\n")
+            search_results = "\n".join(lines)
+            print(f">>>>>>>>>>> Search Results:\n{search_results}\n")
+            return search_results
+        except Exception as e:
+            print(f"An error occurred during search: {e}")
+            return ""
 
     
