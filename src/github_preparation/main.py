@@ -29,27 +29,6 @@ openai_client = AzureOpenAI(
     azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
     )
 
-# Initialize GitHubGenerator
-github_generator = GitHubGenerator(
-    openai_client=openai_client,
-    github_gql_client=github_gql_client,
-    github_owner=GITHUB_OWNER,
-    github_repo=GITHUB_REPO
-)
-
-# Define command functions
-def generate_discussions():
-    github_generator.generate_discussions()
-
-def generate_all():
-    print("Generating all items...")
-
-def delete_all_discussions():
-    github_generator.delete_all_discussions(GITHUB_OWNER, GITHUB_REPO)
-
-def destroy_all():
-    print("Destroying all items...")
-
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description="GitHub Generator CLI")
 subparsers = parser.add_subparsers(dest="command")
@@ -58,25 +37,34 @@ generate_parser = subparsers.add_parser("generate", help="Generate GitHub resour
 generate_subparsers = generate_parser.add_subparsers(dest="subcommand")
 generate_subparsers.add_parser("all", help="Generate all items")
 generate_subparsers.add_parser("discussions", help="Generate discussions")
+generate_subparsers.add_parser("issues", help="Generate issues")
 
 destroy_parser = subparsers.add_parser("delete", help="Delete GitHub resources")
 destroy_subparsers = destroy_parser.add_subparsers(dest="subcommand")
 destroy_subparsers.add_parser("all", help="Destroy all items")
-destroy_subparsers.add_parser("discussions", help="Destroy discussions")
+destroy_subparsers.add_parser("discussions", help="Destroy issues")
+destroy_subparsers.add_parser("issues", help="Destroy discussions")
 
 # Parse arguments
 args = parser.parse_args()
 
+# Get instance of GitHub Generator
+gh = GitHubGenerator(openai_client, github_gql_client, GITHUB_OWNER, GITHUB_REPO)
+
 # Execute based on parsed arguments
 if args.command == "generate":
     if args.subcommand == "all":
-        generate_all()
+        gh.generate_discussions()
     elif args.subcommand == "discussions":
-        generate_discussions()
+        gh.generate_discussions()
+    elif args.subcommand == "issues":
+        gh.generate_issues()
 elif args.command == "delete":
     if args.subcommand == "all":
-        destroy_all()
+        gh.delete_all_discussions()
     elif args.subcommand == "discussions":
-        delete_all_discussions()
+        gh.delete_all_discussions()
+    elif args.subcommand == "issues":
+        gh.delete_all_issues()
 else:
     parser.print_help()

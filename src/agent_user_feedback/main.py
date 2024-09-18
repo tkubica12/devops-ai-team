@@ -108,8 +108,9 @@ while True:
                 
                 # Search for relevant GitHub discussions
                 context = agent.search(input=intent)
+
                 # Answer event using LLM
-                agent.process(message_input=event.event_data.message, conversation_id=event.conversation_id)
+                agent.process(message_input=event.event_data.message, conversation_id=event.conversation_id, context=context)
 
         continuation_token = response.continuation_token
 

@@ -9,6 +9,10 @@ function Message({ message }) {
     setExpanded(!expanded);
   };
 
+  if (!message || !message.message) {
+    return null; // Return null if there are no messages
+  }
+
   return (
     <div className={`message ${expanded ? 'expanded' : ''}`}>
       <div className="message-header">
@@ -32,7 +36,6 @@ function Message({ message }) {
           </button>
         </div>
       </div>
-      {/* <div className="next-agent">Next Agent: {message.next_agent}</div> */}
     </div>
   );
 }

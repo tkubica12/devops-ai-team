@@ -76,3 +76,17 @@ async def get_messages(conversation_id: str = Query(..., description="The ID of 
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail=str(e))
+    
+@app.get("/api/conversations", response_model=List[str])
+async def get_conversations():
+    try:
+        # Query the container for all unique conversation IDs
+        query = "SELECT DISTINCT c.conversation_id FROM c ORDER BY c.timestamp DESC"
+        items = cosmos_events_container.query_items(query=query, enable_cross_partition_query=True)
+        response = []
+        for item in items:
+            response.append(item["conversation_id"])
+        return response
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail=str(e))

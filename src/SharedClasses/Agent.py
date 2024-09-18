@@ -8,9 +8,9 @@ from typing import Union, Optional
 
 class AgentConfiguration(BaseModel):
     instructions: str = Field(..., title="Instructions", description="Instructions for the agent")
-    intent_extraction_instructions: str = Field(..., title="Intent Extraction Instructions", description="Instructions for extracting intents from the user message")
+    intent_extraction_instructions: Optional[str] = Field(None, title="Intent Extraction Instructions", description="Instructions for extracting intents from the user message")
     model: str = Field(..., title="Model", description="Model to use for generating responses")
-    embedding_model: str = Field(..., title="Embedding Model", description="Model to use for generating embeddings")
+    embedding_model: Optional[str] = Field(None, title="Embedding Model", description="Model to use for generating embeddings")
     event_producer: str = Field(..., title="Event Producer", description="Producer of event, which is name of the agent")
     rag_top_n: Optional[int] = Field(None, title="RAG Top N", description="Top N responses to consider from RAG model")
 
@@ -64,9 +64,9 @@ class Agent:
         messages = []
         messages.append({"role": "system", "content": instructions})
         messages.append({"role": "assistant", "content": history})
-        messages.append({"role": "user", "content": message_input})
         if context:
             messages.append({"role": "user", "content": context})
+        messages.append({"role": "user", "content": message_input})
 
         # Send the messages to the model
         response = self.openai_client.chat.completions.create(

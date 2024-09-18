@@ -27,6 +27,48 @@
   margin-bottom: 20px;
 }
 
+.user-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 50%; /* Make the icon circular */
+  object-fit: cover; /* Ensure the image covers the entire area */
+}
+
+.input-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+.input-section input {
+  width: 80%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.input-section select {
+  margin-left: 10px; /* Add space between input and select */
+  height: 40px; /* Match the height of the input box */
+  padding: 10px; /* Match padding of the input box */
+  font-size: 16px; /* Match font size of the input box */
+}
+
+.conversation-selector {
+  display: flex;
+  align-items: center;
+}
+
+.refresh-icon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.messages {
+  margin-top: 20px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
