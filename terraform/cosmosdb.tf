@@ -39,6 +39,14 @@ resource "azurerm_cosmosdb_sql_container" "main" {
   partition_key_paths = ["/id"]
 }
 
+resource "azurerm_cosmosdb_sql_container" "issues" {
+  name                = "issues"
+  resource_group_name = azurerm_resource_group.main.name
+  account_name        = azurerm_cosmosdb_account.main.name
+  database_name       = azurerm_cosmosdb_sql_database.main.name
+  partition_key_paths = ["/id"]
+}
+
 resource "azurerm_cosmosdb_sql_container" "events" {
   name                = "events"
   resource_group_name = azurerm_resource_group.main.name

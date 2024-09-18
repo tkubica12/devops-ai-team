@@ -9,8 +9,9 @@ class GitHubImporter():
     MAX_RETRIES = 10
     RETRY_WAIT_TIME = 3
 
-    def __init__(self, cosmos_discussions_container, github_gql_client: Client, github_owner: str, github_repo: str):
+    def __init__(self, cosmos_discussions_container, cosmos_issues_container, github_gql_client: Client, github_owner: str, github_repo: str):
         self.cosmos_discussions_container = cosmos_discussions_container
+        self.cosmos_issues_container = cosmos_issues_container
         self.github_gql_client = github_gql_client
         self.github_owner = github_owner
         self.github_repo = github_repo
@@ -61,12 +62,12 @@ class GitHubImporter():
         """
         Fetch discussions from the GitHub repository
         """
-
+    
         print("Fetching discussions...")
         query = gql("""
-        query($owner: String!, $name: String!, $categoryId: ID!) {
+        query($owner: String!, $name: String!, $categoryId: ID!, $after: String) {
             repository(owner: $owner, name: $name) {
-                discussions(first: 100, categoryId: $categoryId) {
+                discussions(first: 100, categoryId: $categoryId, after: $after) {
                     nodes {
                         id
                         title
@@ -77,14 +78,108 @@ class GitHubImporter():
                             }
                         }
                     }
+                    pageInfo {
+                        endCursor
+                        hasNextPage
+                    }
                 }
             }
         }
         """)
-        variables = {"owner": self.github_owner, "name": self.github_repo, "categoryId": self.github_discussions_category_id}
-        response = self.execute_gql_with_retry(query, variables)
-        return response["repository"]["discussions"]["nodes"]
+        
+        variables = {"owner": self.github_owner, "name": self.github_repo, "categoryId": self.github_discussions_category_id, "after": None}
+        output = []
+    
+        while True:
+            response = self.execute_gql_with_retry(query, variables)
+            discussions = response["repository"]["discussions"]["nodes"]
+            
+            for discussion in discussions:
+                record = {
+                    "id": discussion["id"],
+                    "title": discussion["title"],
+                    "body": discussion["body"],
+                    "comments": [comment["body"] for comment in discussion["comments"]["nodes"]]
+                }
+                output.append(record)
+            
+            page_info = response["repository"]["discussions"]["pageInfo"]
+            if not page_info["hasNextPage"]:
+                break
+            
+            variables["after"] = page_info["endCursor"]
+        
+        return output
 
+    def import_issues(self):
+        """
+        Import issues from the GitHub repository to Cosmos DB
+        """
+
+        self.store_issues(self.fetch_issues())
+
+    def store_issues(self, issues: dict):
+        """
+        Store issues in the Cosmos DB container
+        """
+
+        print("Storing issues...")
+        for issue in issues:
+            self.cosmos_issues_container.upsert_item(issue)
+
+    def fetch_issues(self):
+        """
+        Fetch issues from the GitHub repository
+        """
+    
+        print("Fetching issues...")
+        query = gql("""
+        query($owner: String!, $name: String!, $after: String) {
+            repository(owner: $owner, name: $name) {
+                issues(first: 100, after: $after) {
+                    nodes {
+                        id
+                        title
+                        body
+                        labels(first: 100) {
+                            nodes {
+                                name
+                            }
+                        }
+                    }
+                    pageInfo {
+                        endCursor
+                        hasNextPage
+                    }
+                }
+            }
+        }
+        """)
+        
+        variables = {"owner": self.github_owner, "name": self.github_repo, "after": None}
+        output = []
+    
+        while True:
+            response = self.execute_gql_with_retry(query, variables)
+            issues = response["repository"]["issues"]["nodes"]
+            
+            for issue in issues:
+                record = {
+                    "id": issue["id"],
+                    "title": issue["title"],
+                    "body": issue["body"],
+                    "label": issue["labels"]["nodes"][0]["name"] if issue["labels"]["nodes"] else None
+                }
+                output.append(record)
+            
+            page_info = response["repository"]["issues"]["pageInfo"]
+            if not page_info["hasNextPage"]:
+                break
+            
+            variables["after"] = page_info["endCursor"]
+        
+        return output
+    
     def fetch_discussions_general_category_id(self):
         """
         Fetch the category ID for general discussions
