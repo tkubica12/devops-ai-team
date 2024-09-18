@@ -107,7 +107,6 @@ class Agent:
                 print(json.dumps(item, indent=2))
                 lines.append(f"{item['text']}\n")
             search_results = "\n".join(lines)
-            print(f">>>>>>>>>>> Search Results:\n{search_results}\n")
             return search_results
         except Exception as e:
             print(f"An error occurred during search: {e}")

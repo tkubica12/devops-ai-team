@@ -65,7 +65,9 @@ while True:
             has_new_issues = True
             issues_title = doc["title"]
             issues_body = doc["body"]
+            issues_label = doc["label"]
             issues_text = (
+                f"Label: {issues_label}\n"
                 f"Title: {issues_title}\n"
                 f"Body: {issues_body}\n"
             ).strip()

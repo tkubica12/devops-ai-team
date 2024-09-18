@@ -41,7 +41,7 @@ class Facilitator:
    - Role: Overlooks user discussions on GitHub and provides information about what features people are talking about, sentiment, suggestions, etc.
 
 2. **agent_product_manager**
-   - Role: Maintains the roadmap of features and fixes, and oversees overall product strategy.
+   - Role: Maintains the roadmap of features and bugs, and oversees overall product strategy.
 
 3. **agent_user_experience**
    - Role: Ensures the application is easy to use and understandable.
