@@ -35,28 +35,9 @@ jobs:
     - name: Test
       run: npm test -- --passWithNoTests
       working-directory: ./virtual-office-pet
+      env:
+        CI: true
 
-  # lint:
-  #   runs-on: ubuntu-latest
-    
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  
-  #     - name: Setup Node
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: '18.x'
-
-  #     - name: Install dependencies
-  #       working-directory: ./virtual-office-pet
-  #       run: |
-  #         if [ -f package-lock.json ]; then
-  #           npm ci
-  #         else
-  #           npm install
-  #         fi
-    
-  #     - name: Lint
-  #       working-directory: ./virtual-office-pet
-  #       run: npm run lint
+    - name: Lint
+      run: npm run lint
+      working-directory: ./virtual-office-pet

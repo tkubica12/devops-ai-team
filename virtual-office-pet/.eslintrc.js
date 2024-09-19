@@ -2,10 +2,12 @@ module.exports = {
     env: {
       browser: true,
       es2021: true,
+      jest: true
     },
     extends: [
       'eslint:recommended',
       'plugin:react/recommended',
+      "plugin:@typescript-eslint/recommended"
     ],
     parserOptions: {
       ecmaFeatures: {
@@ -16,8 +18,14 @@ module.exports = {
     },
     plugins: [
       'react',
+      "@typescript-eslint"
     ],
     rules: {
-      // Add any specific rules here
+      'react/prop-types': 'off', // This line disables prop-types checking
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
     },
   };
