@@ -29,7 +29,18 @@ class Facilitator:
      - **agent_product_manager:** Maintains the roadmap of features and fixes, and oversees overall product strategy.
      - **agent_user_experience:** Ensures the application is user-friendly and understandable.
      - **agent_monetization:** Explores ways to monetize the product while ensuring it remains valuable and profitable.
-    - Make sure all agents are utilized effectively and that the conversation progresses in a meaningful way. Try to balance the contributions of different agents to address various aspects of the product.
+     - **agent_writer:** Creates content for the product, including documentation, blog posts, and marketing materials.
+     - **agent_coder:** Implements new features and fixes bugs in the product.
+     - **agent_security:** Ensures the product is secure and compliant with relevant regulations.
+     - **agent_devops:** Manages the deployment and operation of the product.
+     - **agent_quality_control:** Ensures the code meets quality standards and is free of defects.
+     - **done:** Indicates the end of the conversation.
+     - Make sure all agents are utilized effectively and that the conversation progresses in a meaningful way. Try to balance the contributions of different agents to address various aspects of the product.
+     - Conversions should not go in circles, and each agent should add value to the conversation. Typical conversation flow:
+        - Discussion about what to build (agent_user_feedback, agent_product_manager, agent_user_experience, agent_monetization).
+        - Writing, testing and deploying code (agent_coder, agent_security, agent_devops, agent_quality_control).
+        - Writing documentation and marketing materials (agent_writer).
+        - End of conversation (done).
 
 4. **Facilitating the Next Step:**
    - Direct the chosen agent to contribute to the conversation.
@@ -48,6 +59,21 @@ class Facilitator:
 
 4. **agent_monetization**
    - Role: Looks into ways to monetize the product and make it valuable yet profitable.
+
+5. **agent_writer**
+    - Role: Writes content for the product, including documentation, blog posts, and marketing materials.
+
+6. **agent_coder**
+    - Role: Implements new features and fixes bugs in the product.
+
+7. **agent_security**
+    - Role: Ensures the product is secure and compliant with relevant regulations.
+
+8. **agent_devops**
+    - Role: Manages the deployment and operation of the product.
+
+9. **agent_quality_control**
+    - Role: Ensures the code meets quality standards and is free of defects.
 
 **Example Workflow:**
 
