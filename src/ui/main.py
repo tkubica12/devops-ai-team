@@ -38,7 +38,7 @@ app.add_middleware(
 class UserMessage(BaseModel):
     message: str
 
-app.mount("/", StaticFiles(directory="/ui", html=True), name="ui")
+app.mount("/", StaticFiles(directory="./ui", html=True), name="ui")
 
 @app.post("/api/user_message")
 async def user_message(user_message: UserMessage):
