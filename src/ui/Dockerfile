@@ -26,9 +26,6 @@ COPY Event.py .
 # Copy the frontend build artifacts
 COPY --from=frontend-build /app/build ./static
 
-# Copy the .env file if needed
-COPY .env .
-
 # Expose the port the app runs on
 EXPOSE 8000
 
