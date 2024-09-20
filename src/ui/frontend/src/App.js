@@ -32,7 +32,7 @@ function App() {
 
   const fetchConversations = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/conversations');
+      const response = await fetch('/api/conversations');
       const data = await response.json();
       setConversations(data);
       if (data.length > 0) {
@@ -45,7 +45,7 @@ function App() {
 
   const fetchMessages = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/messages?conversation_id=${conversationId}`);
+      const response = await fetch(`/api/messages?conversation_id=${conversationId}`);
       const data = await response.json();
       setMessages(data);
     } catch (error) {
@@ -72,7 +72,7 @@ function App() {
       };
 
       try {
-        const response = await fetch('http://localhost:8000/api/user_message', {
+        const response = await fetch('/api/user_message', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
