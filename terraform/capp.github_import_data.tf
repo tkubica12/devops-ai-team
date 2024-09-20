@@ -42,6 +42,11 @@ resource "azurerm_container_app_job" "github_import_data" {
         name  = "GITHUB_REPO"
         value = var.GITHUB_REPO
       }
+
+      env {
+        name  = "AZURE_CLIENT_ID"
+        value = azurerm_user_assigned_identity.main.client_id
+      }
     }
   }
 
