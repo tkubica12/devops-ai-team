@@ -1,13 +1,13 @@
-name: discussion_embeddings
+name: discussions_embeddings
 
 on:
   push:
     paths:
-      - 'src/discussion_embeddings/**'
+      - 'src/discussions_embeddings/**'
   workflow_dispatch: 
 
 env:
-  DIR: discussion_embeddings
+  DIR: discussions_embeddings
 
 
 jobs:
