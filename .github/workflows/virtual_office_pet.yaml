@@ -2,8 +2,12 @@ name: Virtual Office Pet
 
 on:
   push:
+    paths:
+      - 'virtual-office-pet/**'
     branches: [ main ]
   pull_request:
+    paths:
+      - 'virtual-office-pet/**'
     branches: [ main ]
 
 jobs:
