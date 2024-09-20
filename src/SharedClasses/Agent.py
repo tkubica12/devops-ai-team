@@ -63,7 +63,8 @@ class Agent:
         # Prepare the messages for the model
         messages = []
         messages.append({"role": "system", "content": instructions})
-        messages.append({"role": "assistant", "content": history})
+        if history:
+            messages.append({"role": "assistant", "content": history})
         if context:
             messages.append({"role": "user", "content": context})
         messages.append({"role": "user", "content": message_input})
