@@ -14,7 +14,7 @@ resource "azurerm_container_app_job" "github_import_data" {
   template {
     container {
       name   = "myapp"
-      image  = "ghcr.io/tkubica12/devops-ai-team/agent_facilitator:latest"
+      image  = "ghcr.io/tkubica12/devops-ai-team/github_import_data:latest"
       cpu    = 0.5
       memory = "1Gi"
 

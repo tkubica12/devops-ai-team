@@ -4,3 +4,4 @@ requests
 requests_toolbelt
 azure-cosmos
 azure-identity
+pydantic
