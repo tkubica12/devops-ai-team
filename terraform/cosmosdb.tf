@@ -23,6 +23,12 @@ resource "azurerm_cosmosdb_account" "main" {
     location          = azurerm_resource_group.main.location
     failover_priority = 0
   }
+
+  lifecycle {
+    ignore_changes = [
+      capabilities
+    ]
+  }
 }
 
 resource "azurerm_cosmosdb_sql_database" "main" {
@@ -31,7 +37,7 @@ resource "azurerm_cosmosdb_sql_database" "main" {
   account_name        = azurerm_cosmosdb_account.main.name
 }
 
-resource "azurerm_cosmosdb_sql_container" "main" {
+resource "azurerm_cosmosdb_sql_container" "discussions" {
   name                = "discussions"
   resource_group_name = azurerm_resource_group.main.name
   account_name        = azurerm_cosmosdb_account.main.name

@@ -13,13 +13,13 @@ resource "azurerm_cosmosdb_sql_role_definition" "main" {
   }
 }
 
-# resource "azurerm_cosmosdb_sql_role_assignment" "cosmos_function" {
-#   resource_group_name = azurerm_resource_group.main.name
-#   account_name        = azurerm_cosmosdb_account.main.name
-#   role_definition_id  = azurerm_cosmosdb_sql_role_definition.main.id
-#   principal_id        = azurerm_linux_function_app.books.identity[0].principal_id
-#   scope               = azurerm_cosmosdb_account.main.id
-# }
+resource "azurerm_cosmosdb_sql_role_assignment" "cosmos_services" {
+  resource_group_name = azurerm_resource_group.main.name
+  account_name        = azurerm_cosmosdb_account.main.name
+  role_definition_id  = azurerm_cosmosdb_sql_role_definition.main.id
+  principal_id        = azurerm_user_assigned_identity.main.principal_id
+  scope               = azurerm_cosmosdb_account.main.id
+}
 
 resource "azurerm_cosmosdb_sql_role_assignment" "cosmos_self" {
   resource_group_name = azurerm_resource_group.main.name
