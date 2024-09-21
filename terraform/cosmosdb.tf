@@ -11,9 +11,9 @@ resource "azurerm_cosmosdb_account" "main" {
     name = "EnableServerless"
   }
 
-  # capabilities {
-  #   name = "EnableNoSQLVectorSearch"
-  # }
+  capabilities {
+    name = "EnableNoSQLVectorSearch"
+  }
 
   consistency_policy {
     consistency_level = "Session"
@@ -22,12 +22,6 @@ resource "azurerm_cosmosdb_account" "main" {
   geo_location {
     location          = azurerm_resource_group.main.location
     failover_priority = 0
-  }
-
-  lifecycle {
-    ignore_changes = [
-      capabilities
-    ]
   }
 }
 

@@ -14,6 +14,13 @@ class AgentConfiguration(BaseModel):
     event_producer: str = Field(..., title="Event Producer", description="Producer of event, which is name of the agent")
     rag_top_n: Optional[int] = Field(None, title="RAG Top N", description="Top N responses to consider from RAG model")
 
+class File(BaseModel):
+    name: str
+    content: str
+
+class Files(BaseModel):
+    discussions: list[File]
+
 class Agent:
     def __init__(self, openai_client: AzureOpenAI, agent_config: AgentConfiguration, cosmos_events_container, cosmos_rag_container = None):
         self.openai_client = openai_client
@@ -78,6 +85,27 @@ class Agent:
         # Extract the response from the model
         message_output = response.choices[0].message.content
         print(f"Output message:\n{message_output}\n")
+        return message_output
+    
+    def generate_code(self, instructions: str, task_description: str, files: str):
+        task_description = "**TASK DESCRIPTION:**\n\n" + task_description
+        files = "**FILES:**\n\n" + files
+
+        messages = []
+        messages.append({"role": "system", "content": instructions})
+        messages.append({"role": "user", "content": task_description})
+        messages.append({"role": "user", "content": files})
+
+        # Send the messages to the model
+        response = self.openai_client.beta.chat.completions.parse(
+            messages=messages, 
+            model=self.agent_config.model,
+            response_format=Files,
+            )
+        
+        print(response)
+        # Extract the response from the model
+        message_output = response.choices[0].message.content
         return message_output
     
     def build_history(self, conversation_id: str):
