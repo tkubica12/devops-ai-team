@@ -19,7 +19,7 @@ class File(BaseModel):
     content: str
 
 class Files(BaseModel):
-    discussions: list[File]
+    files: list[File]
 
 class Agent:
     def __init__(self, openai_client: AzureOpenAI, agent_config: AgentConfiguration, cosmos_events_container, cosmos_rag_container = None):
@@ -89,7 +89,7 @@ class Agent:
     
     def generate_code(self, instructions: str, task_description: str, files: str):
         task_description = "**TASK DESCRIPTION:**\n\n" + task_description
-        files = "**FILES:**\n\n" + files
+        files = "**FILES:**\n\n" + files.json()
 
         messages = []
         messages.append({"role": "system", "content": instructions})
@@ -106,7 +106,8 @@ class Agent:
         print(response)
         # Extract the response from the model
         message_output = response.choices[0].message.content
-        return message_output
+        files_output = Files.model_validate_json(message_output)
+        return files_output
     
     def build_history(self, conversation_id: str):
         # Query the Cosmos DB for the conversation history

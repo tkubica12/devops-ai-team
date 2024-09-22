@@ -118,10 +118,10 @@ agent = Agent(openai_client=openai_client, agent_config=agent_config, cosmos_eve
 # Initialize continuation token
 continuation_token = None
 
-latest_commit_oid = github_tools.create_branch("test")
-github_tools.commit_files(branch="test", latest_commit_oid=latest_commit_oid, files=[{"name": "test.txt", "content": "Hello, world!"}])
-import sys
-sys.exit(0)
+# latest_commit_oid = github_tools.create_branch("test")
+# github_tools.commit_files(branch="test", latest_commit_oid=latest_commit_oid, files=[{"name": "test.txt", "content": "Hello, world!"}])
+# import sys
+# sys.exit(0)
 
 
 # Listen for changes in the discussions container and process new discussions
@@ -140,9 +140,11 @@ while True:
                 files = github_tools.fetch_code_files()
 
                 # Generate code based on the intent and files
-                code = agent.generate_code(instructions=agent.agent_config.instructions, task_description=intent, files=files)
+                generated_files = agent.generate_code(instructions=agent.agent_config.instructions, task_description=intent, files=files)
 
-                print(code)
+                # Create branch and commit the generated code
+                latest_commit_oid = github_tools.create_branch(event.conversation_id)
+                github_tools.commit_files(branch=event.conversation_id, latest_commit_oid=latest_commit_oid, files=generated_files)
 
         continuation_token = response.continuation_token
 

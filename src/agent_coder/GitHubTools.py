@@ -173,16 +173,10 @@ class GitHubTools():
         Commit the files to the GitHub repository
         """
 
-        files = Files(files=[])
-        for file in files:
-            record = File(
-                name = "file.txt",
-                content = "Nazdar vole"
-            )
-            files.files.append(record)
-
         additions = []
         for file in files.files:
+            print("***************************************************")
+            print(file)
             encoded_content = base64.b64encode(file.content.encode()).decode()
             additions.append({
                 "path": file.name,
