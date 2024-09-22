@@ -118,6 +118,12 @@ agent = Agent(openai_client=openai_client, agent_config=agent_config, cosmos_eve
 # Initialize continuation token
 continuation_token = None
 
+latest_commit_oid = github_tools.create_branch("test")
+github_tools.commit_files(branch="test", latest_commit_oid=latest_commit_oid, files=[{"name": "test.txt", "content": "Hello, world!"}])
+import sys
+sys.exit(0)
+
+
 # Listen for changes in the discussions container and process new discussions
 while True:
     response = cosmos_events_container.query_items_change_feed(is_start_from_beginning=True, continuation=continuation_token).by_page()

@@ -9,7 +9,7 @@ class File(BaseModel):
     content: str
 
 class Files(BaseModel):
-    discussions: list[File]
+    files: list[File]
 
 class GitHubTools():
 
@@ -20,7 +20,7 @@ class GitHubTools():
         self.github_gql_client = github_gql_client
         self.github_owner = github_owner
         self.github_repo = github_repo
-        # self.github_repo_id = self.fetch_repository_id(github_owner, github_repo)
+        self.github_repo_id = self.fetch_repository_id(github_owner, github_repo)
 
     def execute_gql_with_retry(self, query, variables):
         """
@@ -53,8 +53,8 @@ class GitHubTools():
 
         src_files = self.get_app_files("main:virtual-office-pet/src")
         components_files = self.get_app_files("main:virtual-office-pet/src/components/ui")
-        all_files = src_files + components_files
-        return json.dumps(all_files)
+        all_files = Files(files=src_files.files + components_files.files)
+        return all_files
 
     def get_app_files(self, path: str):
         """
@@ -78,14 +78,14 @@ class GitHubTools():
 
         variables = {"owner": self.github_owner, "name": self.github_repo, "path": path}
         response = self.execute_gql_with_retry(query, variables)
-        files = []
+        files = Files(files=[])
         for file in response["repository"]["object"]["entries"]:
             if file["type"] == "blob" and (file["name"].endswith(".js") or file["name"].endswith(".js")):
-                record = {
-                    "name": f"{path}/{file["name"]}",
-                    "content": self.get_file_content(f"{path}/{file["name"]}")
-                }
-                files.append(record)
+                record = File(
+                    name = f"{path}/{file["name"]}",
+                    content = self.get_file_content(f"{path}/{file["name"]}")
+                )
+                files.files.append(record)
         return files
     
     def get_file_content(self, path: str):
@@ -110,4 +110,98 @@ class GitHubTools():
         variables = {"owner": self.github_owner, "name": self.github_repo, "path": path}
         response = self.execute_gql_with_retry(query, variables)
         return response["repository"]["object"]["text"]
+
+    def fetch_repository_id(self, github_owner: str, github_repo: str):
+        """
+        Fetch the repository ID using the GitHub GraphQL API
+        """
+
+        query = gql("""
+        query($owner: String!, $name: String!) {
+            repository(owner: $owner, name: $name) {
+                id
+            }
+        }
+        """)
+        variables = {"owner": github_owner, "name": github_repo}
+        response = self.execute_gql_with_retry(query, variables)
+        return response["repository"]["id"]
+    
+    def create_branch(self, branch_name: str):
+        """
+        Create a new branch in the GitHub repository based on latest commit in main
+        """
+
+        # Get the latest commit on the main branch
+        query = gql("""
+        query($owner: String!, $name: String!) {
+            repository(owner: $owner, name: $name) {
+                ref(qualifiedName: "main") {
+                    target {
+                        ... on Commit {
+                            oid
+                        }
+                    }
+                }
+            }
+        }
+        """)
+        variables = {"owner": self.github_owner, "name": self.github_repo}
+        response = self.execute_gql_with_retry(query, variables)
+        print(response)
+        latest_commit_oid = response["repository"]["ref"]["target"]["oid"]
+        print(f"Latest commit OID: {latest_commit_oid}")
+
+        query = gql("""
+        mutation($repositoryId: ID!, $branchName: String!, $oid: GitObjectID!) {
+            createRef(input: {repositoryId: $repositoryId, name: $branchName, oid: $oid}) {
+                ref {
+                    name
+                }
+            }
+        }
+        """)
+        variables = {"repositoryId": self.github_repo_id, "branchName": f"refs/heads/{branch_name}", "oid": latest_commit_oid}
+        response = self.execute_gql_with_retry(query, variables)
+        print(f"Branch created: {response}")
+
+        return latest_commit_oid
+    
+    def commit_files(self, latest_commit_oid: str, branch: str, files: Files):
+        """
+        Commit the files to the GitHub repository
+        """
+
+        query = gql("""
+            mutation($name_with_owner: String!, $branch: String!, $latest_commit_oid: GitObjectID!) {
+            createCommitOnBranch(input: {
+                branch: {
+                    repositoryNameWithOwner: $name_with_owner,
+                    branchName: $branch
+                },
+                expectedHeadOid: $latest_commit_oid,
+                message: {
+                    headline: "agent_coder added files",
+                },
+                fileChanges: {
+                    additions: [
+                        {
+                            path: "file.txt",
+                            contents: "SGVsbG8gV29ybGQ="
+                        }
+                    ],
+                    deletions: [] 
+                }
+            }) {
+                commit {
+                oid
+                url
+                }
+            }
+            }
+            """)
+        variables = {"name_with_owner": f"{self.github_owner}/{self.github_repo}", "branch": branch, "latest_commit_oid": latest_commit_oid}
+
+        response = self.execute_gql_with_retry(query, variables)
+        print(f"Files committed: {response}")
 
