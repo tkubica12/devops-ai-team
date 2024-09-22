@@ -3,6 +3,7 @@ import json
 from gql import gql, Client
 from gql.transport.exceptions import TransportQueryError
 from pydantic import BaseModel
+import base64
 
 class File(BaseModel):
     name: str
@@ -172,8 +173,26 @@ class GitHubTools():
         Commit the files to the GitHub repository
         """
 
+        files = Files(files=[])
+        for file in files:
+            record = File(
+                name = "file.txt",
+                content = "Nazdar vole"
+            )
+            files.files.append(record)
+
+        additions = []
+        for file in files.files:
+            encoded_content = base64.b64encode(file.content.encode()).decode()
+            additions.append({
+                "path": file.name,
+                "contents": encoded_content
+            })
+
+        print(f"Committing files: {additions}")
+
         query = gql("""
-            mutation($name_with_owner: String!, $branch: String!, $latest_commit_oid: GitObjectID!) {
+            mutation($name_with_owner: String!, $branch: String!, $latest_commit_oid: GitObjectID!, $additions: [FileAddition!]!) {
             createCommitOnBranch(input: {
                 branch: {
                     repositoryNameWithOwner: $name_with_owner,
@@ -184,12 +203,7 @@ class GitHubTools():
                     headline: "agent_coder added files",
                 },
                 fileChanges: {
-                    additions: [
-                        {
-                            path: "file.txt",
-                            contents: "SGVsbG8gV29ybGQ="
-                        }
-                    ],
+                    additions: $additions,
                     deletions: [] 
                 }
             }) {
@@ -200,7 +214,12 @@ class GitHubTools():
             }
             }
             """)
-        variables = {"name_with_owner": f"{self.github_owner}/{self.github_repo}", "branch": branch, "latest_commit_oid": latest_commit_oid}
+        variables = {
+            "name_with_owner": f"{self.github_owner}/{self.github_repo}", 
+            "branch": branch, 
+            "latest_commit_oid": latest_commit_oid,
+            "additions": additions
+            }
 
         response = self.execute_gql_with_retry(query, variables)
         print(f"Files committed: {response}")
