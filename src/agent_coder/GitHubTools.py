@@ -178,8 +178,9 @@ class GitHubTools():
             print("***************************************************")
             print(file)
             encoded_content = base64.b64encode(file.content.encode()).decode()
+            parsed_name = file.name.split(":")[1]
             additions.append({
-                "path": file.name,
+                "path": parsed_name,
                 "contents": encoded_content
             })
 
