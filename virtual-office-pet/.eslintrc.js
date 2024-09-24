@@ -21,7 +21,8 @@ module.exports = {
       "@typescript-eslint"
     ],
     rules: {
-      'react/prop-types': 'off', // This line disables prop-types checking
+      // Enable prop-types checking
+      'react/prop-types': 'warn',
     },
     settings: {
       react: {

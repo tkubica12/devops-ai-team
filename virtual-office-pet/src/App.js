@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare } from 'lucide-react';
 import './styles/darkMode.css';
-import './index.css'; // Ensure styles are imported
+import './index.css';
+
+// Create a Context for the dark mode state
+const ThemeContext = createContext();
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -21,17 +24,7 @@ const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
   const [lastAction, setLastAction] = useState(null);
-  const [darkMode, setDarkMode] = useState(false);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
-  useEffect(() => {
-    const className = 'dark-mode';
-    const bodyClass = window.document.body.classList;
-    darkMode ? bodyClass.add(className) : bodyClass.remove(className);
-  }, [darkMode]);
+  const { darkMode, toggleDarkMode } = useContext(ThemeContext);
 
   const adoptPet = (petType) => {
     setPet(petType);
@@ -41,7 +34,6 @@ const VirtualOfficePet = () => {
 
   const performAction = (action) => {
     setLastAction(action);
-    // Logic to change the pet's mood based on the action
   };
 
   useEffect(() => {
@@ -94,4 +86,24 @@ const VirtualOfficePet = () => {
   );
 };
 
-export default VirtualOfficePet;
+const App = () => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const className = 'dark-mode';
+    const bodyClass = window.document.body.classList;
+    darkMode ? bodyClass.add(className) : bodyClass.remove(className);
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
+  return (
+    <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>
+      <VirtualOfficePet />
+    </ThemeContext.Provider>
+  );
+};
+
+export default App;

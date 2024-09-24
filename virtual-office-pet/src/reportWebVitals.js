@@ -1,4 +1,4 @@
-const reportWebVitals = onPerfEntry => {
+const reportWebVitals = (onPerfEntry) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
     import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
       try {
@@ -9,9 +9,8 @@ const reportWebVitals = onPerfEntry => {
         getTTFB(onPerfEntry);
       } catch (error) {
         console.error('Error reporting web vitals:', error);
-        // Optionally send error report to analytics endpoint
       }
-    }).catch(error => console.error('Failed to load web-vitals:', error));
+    }).catch((error) => console.error('Failed to load web-vitals:', error));
   }
 };
 
