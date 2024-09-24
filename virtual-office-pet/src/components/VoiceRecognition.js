@@ -16,8 +16,7 @@ const VoiceRecognition = ({ performAction }) => {
 
     recognition.onresult = (event) => {
       let command = event.results[0][0].transcript.toLowerCase();
-      command = validator.escape(command); // Sanitize the input
-      console.log(`Command: ${command}`);
+      command = validator.escape(command);
 
       if (command.includes('play')) {
         performAction('Played');
@@ -33,6 +32,8 @@ const VoiceRecognition = ({ performAction }) => {
     const startRecognition = () => {
       recognition.start();
     };
+
+    startRecognition();
 
     return () => {
       recognition.stop();
