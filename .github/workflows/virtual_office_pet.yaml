@@ -45,3 +45,27 @@ jobs:
     - name: Lint
       run: npm run lint
       working-directory: ./virtual-office-pet
+
+    - name: Login to GitHub Packages Docker registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: ./virtual-office-pet
+        push: true
+        tags: ghcr.io/${{ github.repository }}/virtual-office-pet:${{ github.run_id }}    
+
+    - name: Deploy Container App
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        registryUrl: ghcr.io
+        containerAppName: virtual-office-pet
+        resourceGroup: rg-ai-team-ccay
+        imageToDeploy: ghcr.io/${{ github.repository }}/virtual-office-pet:${{ github.run_id }}
+        targetPort: 80
+        ingress: external
