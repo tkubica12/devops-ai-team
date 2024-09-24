@@ -1,19 +1,18 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import VirtualOfficePet from './App'; // Import the VirtualOfficePet component
+import App from './App';
 
-test('adopts a pet and updates mood and last action', () => {
-  render(<VirtualOfficePet />);
+// Test for dark mode toggle
+test('switches between light and dark mode', () => {
+  render(<App />);
 
-  // Check if the initial text is present
-  expect(screen.getByText(/Choose your pet:/i)).toBeInTheDocument();
+  // Check initial mode
+  expect(screen.getByText(/switch to Dark mode/i)).toBeInTheDocument();
 
-  // Click on the Dog button to adopt a dog
-  const dogButton = screen.getByText(/Dog/i);
-  fireEvent.click(dogButton);
+  // Toggle dark mode
+  fireEvent.click(screen.getByText(/switch to Dark mode/i));
 
-  // Check if the pet's mood and last action are updated
-  expect(screen.getByText(/Mood: excited/i)).toBeInTheDocument();
-  expect(screen.getByText(/Last action: Adopted/i)).toBeInTheDocument();
+  // Verify mode switch
+  expect(screen.getByText(/switch to Light mode/i)).toBeInTheDocument();
 });
