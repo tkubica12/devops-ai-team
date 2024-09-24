@@ -11,4 +11,4 @@ root.render(
   </React.StrictMode>
 );
 
-reportWebVitals();
+reportWebVitals(); // Add custom logging or analytics here if needed.

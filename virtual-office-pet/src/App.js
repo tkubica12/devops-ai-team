@@ -86,7 +86,6 @@ const VirtualOfficePet = () => {
               <div className="grid grid-cols-2 gap-2">
                 <PetAction icon={Coffee} label="Feed" onClick={() => performAction(ACTION_FED)} />
                 <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction(ACTION_TALKED)} />
-                {/* Add more actions as needed */}
               </div>
             </div>
           )}
