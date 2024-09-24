@@ -53,8 +53,9 @@ class GitHubTools():
         """
 
         src_files = self.get_app_files(f"{branch}:virtual-office-pet/src")
-        components_files = self.get_app_files(f"{branch}:virtual-office-pet/src/components/ui")
-        all_files = Files(files=src_files.files + components_files.files)
+        components_files = self.get_app_files(f"{branch}:virtual-office-pet/src/components")
+        ui_components_files = self.get_app_files(f"{branch}:virtual-office-pet/src/components/ui")
+        all_files = Files(files=src_files.files + ui_components_files.files + components_files.files)
         return all_files
 
     def get_app_files(self, path: str):
@@ -259,8 +260,6 @@ class GitHubTools():
                 "path": parsed_name,
                 "contents": encoded_content
             })
-
-        print(f"Committing files: {additions}")
 
         query = gql("""
             mutation($name_with_owner: String!, $branch: String!, $latest_commit_oid: GitObjectID!, $additions: [FileAddition!]!) {
