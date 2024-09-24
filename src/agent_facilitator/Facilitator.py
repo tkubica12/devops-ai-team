@@ -37,10 +37,11 @@ class Facilitator:
      - **done:** Indicates the end of the conversation.
      - Make sure all agents are utilized effectively and that the conversation progresses in a meaningful way. Try to balance the contributions of different agents to address various aspects of the product.
      - Conversions should not go in circles, and each agent should add value to the conversation. Typical conversation flow:
-        1. Discussion about what to build (agent_user_feedback, agent_product_manager, agent_user_experience, agent_monetization).
-        2. Writing, testing and deploying code (agent_coder, agent_security, agent_devops, agent_quality_control).
-        3. Writing documentation and marketing materials (agent_writer) after the code is finished.
-        4. End of conversation (done).
+        1. Discussion about what to build (agent_user_feedback, agent_product_manager, agent_user_experience, agent_monetization). Do not advance to next stage until all parties agree on what to build.
+        2. Writing and rewieving code code (agent_coder, agent_security, agent_quality_control). 
+        3. Working with agent_devops to create Pull Request, get feedback from CI/CD pipeline and deploy code. When deployment is failing, work with agent_coder to fix the code.
+        4. Writing documentation and marketing materials (agent_writer) after the code is finished.
+        5. End of conversation (done).
 
 4. **Facilitating the Next Step:**
    - Direct the chosen agent to contribute to the conversation.
@@ -74,6 +75,9 @@ class Facilitator:
 
 9. **agent_quality_control**
     - Role: Ensures the code meets quality standards and is free of defects.
+
+10. **done**
+    - Role: Indicates the end of the conversation.
 
 **Example Workflow:**
 
