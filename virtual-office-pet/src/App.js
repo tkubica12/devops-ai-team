@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare } from 'lucide-react';
-import Wardrobe from './Wardrobe';
-import DesignTool from './DesignTool';
+import styles from './App.module.css';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -21,7 +20,6 @@ const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
   const [lastAction, setLastAction] = useState(null);
-  const [outfit, setOutfit] = useState(null);
 
   const adoptPet = (petType) => {
     setPet(petType);
@@ -34,11 +32,7 @@ const VirtualOfficePet = () => {
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      // Periodically update pet's mood or trigger random events
-    }, 60000);
-
-    return () => clearInterval(timer);
+    return () => clearInterval();
   }, []);
 
   return (
@@ -50,11 +44,11 @@ const VirtualOfficePet = () => {
         {!pet ? (
           <div>
             <p>Choose your pet:</p>
-            <div className="flex justify-around mt-4">
-              {petTypes.map((type) => (
-                <Button key={type.name} onClick={() => adoptPet(type)} className="flex flex-col items-center">
-                  <type.icon size={40} />
-                  <span>{type.name}</span>
+            <div className={styles.petChoiceContainer}>
+              {petTypes.map(({ name, icon: Icon }) => (
+                <Button key={name} onClick={() => adoptPet({ name, icon: Icon })} className={styles.petButton}>
+                  <Icon size={40} />
+                  <span>{name}</span>
                 </Button>
               ))}
             </div>
@@ -70,8 +64,6 @@ const VirtualOfficePet = () => {
               <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
               <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
             </div>
-            <Wardrobe outfit={outfit} setOutfit={setOutfit} />
-            <DesignTool setOutfit={setOutfit} />
           </div>
         )}
       </CardContent>

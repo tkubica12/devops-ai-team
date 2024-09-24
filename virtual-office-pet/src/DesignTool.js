@@ -1,42 +1,24 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const DesignTool = ({ setOutfit }) => {
-  const [color, setColor] = useState('#ff0000');
-  const [pattern, setPattern] = useState('stripes');
+const DesignTool = ({ onSave }) => {
+  const [design, setDesign] = useState('');
 
-  const patterns = ['stripes', 'dots', 'plain'];
-
-  const handleSubmit = () => {
-    const customOutfit = `${pattern} pattern in ${color}`;
-    setOutfit(customOutfit);
+  const handleSave = () => {
+    onSave(design);
+    alert('Design saved successfully!');
   };
 
   return (
-    <div className="mt-4">
-      <h3 className="text-lg font-bold mb-2">Design Your Own Outfit</h3>
-      <div>
-        <label className="block mb-1">Choose Color:</label>
-        <input 
-          type="color" 
-          value={color} 
-          onChange={(e) => setColor(e.target.value)}
-          className="mb-4"
-        />
-        <label className="block mb-1">Pattern:</label>
-        <select onChange={(e) => setPattern(e.target.value)} value={pattern} className="mb-4">
-          {patterns.map((p) => (
-            <option key={p} value={p}>{p}</option>
-          ))}
-        </select>
-        <button 
-          onClick={handleSubmit} 
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
-        >
-          Save Design
-        </button>
-      </div>
+    <div>
+      <textarea value={design} onChange={(e) => setDesign(e.target.value)} />
+      <button onClick={handleSave}>Save Design</button>
     </div>
   );
+};
+
+DesignTool.propTypes = {
+  onSave: PropTypes.func.isRequired,
 };
 
 export default DesignTool;

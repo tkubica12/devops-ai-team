@@ -17,3 +17,14 @@ test('adopts a pet and updates mood and last action', () => {
   expect(screen.getByText(/Mood: excited/i)).toBeInTheDocument();
   expect(screen.getByText(/Last action: Adopted/i)).toBeInTheDocument();
 });
+
+test('feeds the pet and updates last action', () => {
+  render(<VirtualOfficePet />);
+
+  const dogButton = screen.getByText(/Dog/i);
+  fireEvent.click(dogButton);
+
+  const feedButton = screen.getByText(/Feed/i);
+  fireEvent.click(feedButton);
+  expect(screen.getByText(/Last action: Fed/i)).toBeInTheDocument();
+});

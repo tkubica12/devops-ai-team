@@ -1,32 +1,35 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 const UserContent = ({ userId }) => {
-  const [userDesigns, setUserDesigns] = useState([]);
+  const [content, setContent] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Simulate database fetch
-    const fetchUserDesigns = async () => {
-      const response = await fetch(`/api/userDesigns?userId=${userId}`);
-      const data = await response.json();
-      setUserDesigns(data);
+    const fetchContent = async () => {
+      try {
+        const response = await fetch(`/api/user/${userId}/content`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch content');
+        }
+        const data = await response.json();
+        setContent(data);
+      } catch (err) {
+        setError(err.message);
+      }
     };
 
-    fetchUserDesigns();
+    fetchContent();
   }, [userId]);
 
-  return (
-    <div className="mt-4">
-      <h3 className="text-lg font-bold mb-2">Your Designs</h3>
-      <ul>
-        {userDesigns.map((design, index) => (
-          <li key={index} className="border rounded p-2 mb-2">
-            {design}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  if (error) return <div>Error: {error}</div>;
+  if (!content) return <div>Loading...</div>;
+
+  return <div>{content}</div>;
+};
+
+UserContent.propTypes = {
+  userId: PropTypes.string.isRequired,
 };
 
 export default UserContent;

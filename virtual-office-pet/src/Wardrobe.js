@@ -1,29 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-const Wardrobe = ({ outfit, setOutfit }) => {
-  const outfits = [
-    { name: 'Summer Dress', season: 'Summer', occasion: 'Casual' },
-    { name: 'Winter Coat', season: 'Winter', occasion: 'Formal' },
-    { name: 'Halloween Costume', season: 'Fall', occasion: 'Halloween' }
-  ];
+const Wardrobe = ({ userId }) => {
+  const [outfits, setOutfits] = useState([]);
+
+  useEffect(() => {
+    const fetchOutfits = async () => {
+      const response = await fetch(`/api/user/${userId}/outfits`);
+      const data = await response.json();
+      setOutfits(data);
+    };
+
+    fetchOutfits();
+  }, [userId]);
 
   return (
-    <div className="mt-4">
-      <h3 className="text-lg font-bold mb-2">Choose an Outfit</h3>
-      <div className="grid grid-cols-1 gap-2">
+    <div>
+      <h2>Wardrobe</h2>
+      <ul>
         {outfits.map((outfit) => (
-          <button
-            key={outfit.name}
-            className="border rounded p-2 hover:bg-gray-200" 
-            onClick={() => setOutfit(outfit.name)}
-          >
-            {outfit.name}
-          </button>
+          <li key={outfit.id}>{outfit.name}</li>
         ))}
-      </div>
-      {outfit && <p className="mt-2">Selected Outfit: {outfit}</p>}
+      </ul>
     </div>
   );
+};
+
+Wardrobe.propTypes = {
+  userId: PropTypes.string.isRequired,
 };
 
 export default Wardrobe;
