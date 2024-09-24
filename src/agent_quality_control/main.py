@@ -120,7 +120,7 @@ while True:
                   message_output = agent.generate_report(instructions=agent.agent_config.instructions, files=files, conversation_id=event.conversation_id)
 
                   # Create event for the next agent
-                  agent.create_event(message=message_output, next_agent="agent_facilitator", conversation_id=event.conversation_id)
+                  agent.create_event(message=message_output.model_dump_json(), next_agent="agent_facilitator", conversation_id=event.conversation_id)
 
         continuation_token = response.continuation_token
 
