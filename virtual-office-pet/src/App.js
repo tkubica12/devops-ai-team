@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare } from 'lucide-react';
 import './styles/darkMode.css';
+import './index.css'; // Ensure styles are imported
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -27,11 +28,9 @@ const VirtualOfficePet = () => {
   };
 
   useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-    }
+    const className = 'dark-mode';
+    const bodyClass = window.document.body.classList;
+    darkMode ? bodyClass.add(className) : bodyClass.remove(className);
   }, [darkMode]);
 
   const adoptPet = (petType) => {
@@ -54,8 +53,8 @@ const VirtualOfficePet = () => {
   }, []);
 
   return (
-    <div className="app-container">
-      <Button onClick={toggleDarkMode} className="toggle-dark-mode">
+    <div className={`app-container ${darkMode ? 'dark' : 'light'}`}>
+      <Button onClick={toggleDarkMode} className="toggle-dark-mode mt-4">
         Toggle Dark Mode
       </Button>
       <Card className="w-80 mx-auto mt-8">

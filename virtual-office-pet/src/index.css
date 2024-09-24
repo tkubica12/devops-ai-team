@@ -8,6 +8,15 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+body.light-mode {
+  background-color: white;
+  color: black;
 }
