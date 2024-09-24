@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
-import { Dog, Cat, Coffee, MessageSquare, Mic } from 'lucide-react';
+import { Dog, Cat, Coffee, MessageSquare } from 'lucide-react';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -19,7 +19,6 @@ const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
   const [lastAction, setLastAction] = useState(null);
-  const [listening, setListening] = useState(false);
 
   const adoptPet = (petType) => {
     setPet(petType);
@@ -29,37 +28,34 @@ const VirtualOfficePet = () => {
 
   const performAction = (action) => {
     setLastAction(action);
-    // Implement logic to change the pet's mood based on the action
-    setMood('content');
-  };
-
-  const handleVoiceCommand = (command) => {
-    if (command.includes('feed')) {
-      performAction('Fed');
-    } else if (command.includes('play')) {
-      performAction('Played');
-    } else if (command.includes('rest')) {
-      performAction('Rested');
-    }
-  };
-
-  const startListening = () => {
-    // Dummy implementation for voice command
-    setListening(true);
-    setTimeout(() => {
-      const fakeCommand = 'feed'; // For demonstration
-      handleVoiceCommand(fakeCommand);
-      setListening(false);
-    }, 3000);
+    // Here you would implement logic to change the pet's mood based on the action
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      // Periodically update pet's mood or trigger random events
-    }, 60000);
-
-    return () => clearInterval(timer);
+    // Removed unnecessary interval
   }, []);
+
+  const startListening = () => {
+    if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+
+      recognition.onresult = (event) => {
+        const command = event.results[0][0].transcript.toLowerCase();
+        if (command.includes('happy')) {
+          setMood('happy');
+          setLastAction('Heard: Be Happy');
+        } else if (command.includes('sit')) {
+          setMood('calm');
+          setLastAction('Heard: Sit');
+        }
+      };
+
+      recognition.start();
+    } else {
+      console.error('Speech Recognition API is not supported in this browser.');
+    }
+  };
 
   return (
     <Card className="w-80 mx-auto mt-8">
@@ -89,12 +85,8 @@ const VirtualOfficePet = () => {
             <div className="grid grid-cols-2 gap-2">
               <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
               <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
-              <Button onClick={startListening} className="flex items-center space-x-2">
-                <Mic size={20} />
-                <span>Voice Command</span>
-              </Button>
+              <Button onClick={startListening} className="col-span-2">Start Listening</Button>
             </div>
-            {listening && <p className="text-center mt-4">Listening...</p>}
           </div>
         )}
       </CardContent>
