@@ -8,7 +8,7 @@ test('adopts a pet and updates mood and last action', () => {
 
   expect(screen.getByText(/Choose your pet:/i)).toBeInTheDocument();
 
-  const dogButton = screen.getByText(/Dog/i);
+  const dogButton = screen.getByRole('button', { name: /Dog/i });
   fireEvent.click(dogButton);
 
   expect(screen.getByRole('heading', { name: /Mood: happy/i })).toBeInTheDocument();

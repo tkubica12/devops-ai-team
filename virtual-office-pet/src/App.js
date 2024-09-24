@@ -3,12 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare } from 'lucide-react';
 import './App.css';
-
-// Define mood and action strings as constants
-const MOOD_HAPPY = 'happy';
-const ACTION_ADOPTED = 'Adopted';
-const ACTION_FED = 'Fed';
-const ACTION_TALKED = 'Talked';
+import { MOOD_HAPPY, ACTION_ADOPTED, ACTION_FED, ACTION_TALKED } from './constants';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -58,10 +53,6 @@ const VirtualOfficePet = () => {
     setLastAction(action);
     // Here you would implement logic to change the pet's mood based on the action
   };
-
-  useEffect(() => {
-    // Removed empty setInterval as it was unnecessary
-  }, []);
 
   return (
     <div className="App">
