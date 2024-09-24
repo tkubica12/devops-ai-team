@@ -5,9 +5,44 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+[data-theme='light'] {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --card-bg-color: #ffffff;
+  --button-bg-color: #blue-500;
+  --button-hover-bg-color: #blue-700;
+}
+
+[data-theme='dark'] {
+  --bg-color: #181a1b;
+  --text-color: #d1d5db;
+  --card-bg-color: #1f2933;
+  --button-bg-color: #4b5563;
+  --button-hover-bg-color: #374151;
+}
+
+body, .App {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--button-bg-color);
+  color: var(--text-color);
+}
+
+button:hover {
+  background-color: var(--button-hover-bg-color);
+}
+
+.Card {
+  background-color: var(--card-bg-color);
 }
