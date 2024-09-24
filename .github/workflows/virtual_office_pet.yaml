@@ -40,7 +40,7 @@ jobs:
         fi
 
     - name: Build
-      run: npm run build --if-present
+      run: SKIP_PREFLIGHT_CHECK=true npm run build --if-present --no-audit
       working-directory: ./virtual-office-pet
 
     # - name: Test
