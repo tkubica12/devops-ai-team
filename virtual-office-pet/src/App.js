@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
-import './App.css'; // Import the CSS file
+import VoiceRecognition from './components/VoiceRecognition'; // Import VoiceRecognition component
+import './App.css';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -60,6 +61,7 @@ const VirtualOfficePet = () => {
           <CardTitle>Virtual Office Pet</CardTitle>
         </CardHeader>
         <CardContent>
+          <VoiceRecognition performAction={performAction} /> {/* Add VoiceRecognition */}
           {!pet ? (
             <div>
               <p>Choose your pet:</p>
@@ -82,8 +84,7 @@ const VirtualOfficePet = () => {
               <div className="button-container grid grid-cols-2 gap-2">
                 <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
                 <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
-                <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} /> {/* New Play action */}
-                {/* Add more actions as needed */}
+                <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} />
               </div>
             </div>
           )}
