@@ -136,7 +136,7 @@ while True:
                 if github_tools.check_branch_exists(branch=event.conversation_id):
                     files = github_tools.fetch_code_files(branch=event.conversation_id)
                 else:
-                    files = github_tools.fetch_code_files()
+                    files = github_tools.fetch_code_files(branch="main")
 
                 # Generate code based on the intent and files
                 generated_files = agent.generate_code(instructions=agent.agent_config.instructions, task_description=intent, files=files)
