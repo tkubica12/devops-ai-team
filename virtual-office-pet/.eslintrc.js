@@ -21,11 +21,11 @@ module.exports = {
       "@typescript-eslint"
     ],
     rules: {
-      'react/prop-types': 'off', // This line disables prop-types checking
+      'react/prop-types': 'warn', // This line re-enables prop-types checking
     },
     settings: {
       react: {
         version: 'detect',
       },
     },
-  };
+  }; 
