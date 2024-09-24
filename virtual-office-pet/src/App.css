@@ -18,7 +18,7 @@
 }
 
 .App-header {
-  @apply bg-dark-background dark:bg-light-background min-h-screen flex flex-col items-center justify-center;
+  @apply bg-light-background dark:bg-dark-background min-h-screen flex flex-col items-center justify-center;
   font-size: calc(10px + 2vmin);
   color: var(--color-text);
 }

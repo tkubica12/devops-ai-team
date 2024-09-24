@@ -18,7 +18,7 @@ const PetAction = ({ icon: Icon, label, onClick }) => (
 
 const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
-  const [mood, setMood] = useState('happy');
+  const [mood] = useState('happy');
   const [lastAction, setLastAction] = useState(null);
   const [darkMode, setDarkMode] = useState(() => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
@@ -45,7 +45,6 @@ const VirtualOfficePet = () => {
 
   const adoptPet = (petType) => {
     setPet(petType);
-    setMood('excited');
     setLastAction('Adopted');
   };
 

@@ -7,16 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-dark .App-header {
-  color: var(--color-text);
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-dark body {
+body.dark {
   background-color: #121212;
   color: #e0e0e0;
 }
