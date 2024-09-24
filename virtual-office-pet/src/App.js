@@ -46,6 +46,14 @@ const VirtualOfficePet = () => {
   const performAction = (action) => {
     setLastAction(action);
     setMoodScore((prevScore) => Math.min(prevScore + 10, 100));
+    showFeedback();
+  };
+
+  const showFeedback = () => {
+    document.querySelector('.voice-feedback').style.visibility = 'visible';
+    setTimeout(() => {
+      document.querySelector('.voice-feedback').style.visibility = 'hidden';
+    }, 1000);
   };
 
   useEffect(() => {
@@ -92,6 +100,7 @@ const VirtualOfficePet = () => {
                 <p>Mood: {mood}</p>
                 {lastAction && <p>Last action: {lastAction}</p>}
                 <p>Voice Command: {transcript}</p>
+                <div className="voice-feedback">♪</div>
               </div>
               <div className="button-container grid grid-cols-2 gap-2">
                 <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
