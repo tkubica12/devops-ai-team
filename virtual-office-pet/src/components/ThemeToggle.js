@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
+const sanitizeTheme = (theme) => {
+  return theme === 'light' || theme === 'dark' ? theme : 'light';
+};
+
 const ThemeToggle = () => {
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState(() => {
+    const storedTheme = localStorage.getItem('theme');
+    return sanitizeTheme(storedTheme) || 'light';
+  });
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -10,8 +17,8 @@ const ThemeToggle = () => {
 
   useEffect(() => {
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (systemPrefersDark) {
-      setTheme('dark');
+    if (!localStorage.getItem('theme')) {
+      setTheme(systemPrefersDark ? 'dark' : 'light');
     }
   }, []);
 

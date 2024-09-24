@@ -1,3 +1,16 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --card-bg-color: #ffffff;
+  --button-bg-color: #007bff;
+  --button-hover-bg-color: #0056b3;
+  --dark-bg-color: #181a1b;
+  --dark-text-color: #d1d5db;
+  --dark-card-bg-color: #1f2933;
+  --dark-button-bg-color: #4b5563;
+  --dark-button-hover-bg-color: #374151;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -14,19 +27,13 @@ code {
 }
 
 [data-theme='light'] {
-  --bg-color: #ffffff;
-  --text-color: #000000;
-  --card-bg-color: #ffffff;
-  --button-bg-color: #blue-500;
-  --button-hover-bg-color: #blue-700;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 [data-theme='dark'] {
-  --bg-color: #181a1b;
-  --text-color: #d1d5db;
-  --card-bg-color: #1f2933;
-  --button-bg-color: #4b5563;
-  --button-hover-bg-color: #374151;
+  background-color: var(--dark-bg-color);
+  color: var(--dark-text-color);
 }
 
 body, .App {
@@ -45,4 +52,8 @@ button:hover {
 
 .Card {
   background-color: var(--card-bg-color);
+}
+
+[data-theme='dark'] .Card {
+  background-color: var(--dark-card-bg-color);
 }

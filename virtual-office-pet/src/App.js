@@ -33,6 +33,11 @@ const VirtualOfficePet = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
+      try {
+        // Simulate some periodic action
+      } catch (error) {
+        console.error('An unexpected error occurred:', error);
+      }
     }, 60000);
 
     return () => clearInterval(timer);
