@@ -1,0 +1,19 @@
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .Card {
+  background-color: #1f1f1f;
+  color: #ffffff;
+}
+
+.dark-mode .Button {
+  background-color: #ffffff;
+  color: #121212;
+}
+
+.app-container .toggle-dark-mode {
+  margin-top: 20px;
+  font-size: 16px;
+}
