@@ -47,13 +47,13 @@ class GitHubTools():
                 else:
                     raise
 
-    def fetch_code_files(self):
+    def fetch_code_files(self, branch = "main"):
         """
         Fetch code files from the GitHub repository
         """
 
-        src_files = self.get_app_files("main:virtual-office-pet/src")
-        components_files = self.get_app_files("main:virtual-office-pet/src/components/ui")
+        src_files = self.get_app_files(f"{branch}:virtual-office-pet/src")
+        components_files = self.get_app_files(f"{branch}:virtual-office-pet/src/components/ui")
         all_files = Files(files=src_files.files + components_files.files)
         return all_files
 

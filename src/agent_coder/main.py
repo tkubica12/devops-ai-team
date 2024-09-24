@@ -1,12 +1,12 @@
 from dotenv import load_dotenv
 import os
-from GitHubTools import GitHubTools
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
 from gql.transport.exceptions import TransportQueryError
 from azure.identity import DefaultAzureCredential
 from azure.cosmos import CosmosClient
 import time
+from SharedClasses.GitHubTools import GitHubTools
 from SharedClasses.Agent import Agent, AgentConfiguration
 from SharedClasses.Event import Event
 from openai import AzureOpenAI
