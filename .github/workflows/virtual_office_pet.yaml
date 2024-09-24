@@ -11,6 +11,10 @@ on:
       - 'virtual-office-pet/**'
     branches: [ main ]
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
