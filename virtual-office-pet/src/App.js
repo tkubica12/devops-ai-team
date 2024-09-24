@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Sun, Moon } from 'lucide-react';
+import styled from '@emotion/styled';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -14,6 +15,10 @@ const PetAction = ({ icon: Icon, label, onClick }) => (
     <span>{label}</span>
   </Button>
 );
+
+const Container = styled.div`
+  ${(props) => (props.darkMode ? 'background-color: #333; color: #fff;' : '')}
+`;
 
 const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
@@ -29,7 +34,7 @@ const VirtualOfficePet = () => {
 
   const performAction = (action) => {
     setLastAction(action);
-    // Here you would implement logic to change the pet's mood based on the action
+    setMood('content'); // Simple mood logic
   };
 
   const toggleDarkMode = () => {
@@ -42,15 +47,15 @@ const VirtualOfficePet = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      // Periodically update pet's mood or trigger random events
+      setMood((prevMood) => (prevMood === 'happy' ? 'playful' : 'happy'));
     }, 60000);
 
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className={darkMode ? 'dark-mode' : ''}>
-      <Card className="w-80 mx-auto mt-8">
+    <Container darkMode={darkMode} className="h-full flex justify-center items-center">
+      <Card className="w-80">
         <CardHeader>
           <CardTitle>Virtual Office Pet</CardTitle>
           <Button onClick={toggleDarkMode} className="ml-auto">
@@ -86,7 +91,7 @@ const VirtualOfficePet = () => {
           )}
         </CardContent>
       </Card>
-    </div>
+    </Container>
   );
 };
 

@@ -1,7 +1,15 @@
 import React from 'react';
+import styled from '@emotion/styled';
+
+const StyledCard = styled.div`
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+`;
 
 export const Card = ({ children, className }) => (
-  <div className={`bg-white shadow-md rounded-lg p-4 ${className}`}>{children}</div>
+  <StyledCard className={className}>{children}</StyledCard>
 );
 
 export const CardHeader = ({ children }) => <div className="mb-4">{children}</div>;

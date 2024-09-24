@@ -17,3 +17,14 @@ test('adopts a pet and updates mood and last action', () => {
   expect(screen.getByText(/Mood: excited/i)).toBeInTheDocument();
   expect(screen.getByText(/Last action: Adopted/i)).toBeInTheDocument();
 });
+
+test('toggles dark mode', () => {
+  render(<VirtualOfficePet />);
+
+  const toggleButton = screen.getByRole('button', { name: /moon/i });
+  fireEvent.click(toggleButton);
+  expect(JSON.parse(window.localStorage.getItem('darkMode'))).toBe(true);
+
+  fireEvent.click(toggleButton);
+  expect(JSON.parse(window.localStorage.getItem('darkMode'))).toBe(false);
+});
