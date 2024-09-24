@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import { fetchOutfits } from './api/outfitService';
 
-const Wardrobe = ({ userId }) => {
+const Wardrobe = () => {
   const [outfits, setOutfits] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchOutfits = async () => {
-      const response = await fetch(`/api/user/${userId}/outfits`);
-      const data = await response.json();
-      setOutfits(data);
+    const loadOutfits = async () => {
+      try {
+        const data = await fetchOutfits();
+        setOutfits(data);
+      } catch (err) {
+        setError('Failed to load outfits. Please try again later.');
+      }
     };
 
-    fetchOutfits();
-  }, [userId]);
+    loadOutfits();
+  }, []);
 
   return (
     <div>
-      <h2>Wardrobe</h2>
-      <ul>
-        {outfits.map((outfit) => (
-          <li key={outfit.id}>{outfit.name}</li>
-        ))}
-      </ul>
+      {error ? <p className="text-red-500">{error}</p> : (
+        <ul>
+          {outfits.map((outfit) => (
+            <li key={outfit.id}>{outfit.name}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
-};
-
-Wardrobe.propTypes = {
-  userId: PropTypes.string.isRequired,
 };
 
 export default Wardrobe;

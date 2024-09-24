@@ -1,24 +1,32 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { Modal, ModalHeader, ModalContent } from './components/ui/Modal';
 
-const DesignTool = ({ onSave }) => {
-  const [design, setDesign] = useState('');
+const DesignTool = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState('');
 
-  const handleSave = () => {
-    onSave(design);
-    alert('Design saved successfully!');
+  const handleAction = () => {
+    setFeedbackMessage('Action successful!');
+    setShowModal(true);
   };
 
   return (
     <div>
-      <textarea value={design} onChange={(e) => setDesign(e.target.value)} />
-      <button onClick={handleSave}>Save Design</button>
+      <button onClick={handleAction} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+        Perform Action
+      </button>
+
+      {showModal && (
+        <Modal>
+          <ModalHeader>Feedback</ModalHeader>
+          <ModalContent>{feedbackMessage}</ModalContent>
+          <button onClick={() => setShowModal(false)} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Close
+          </button>
+        </Modal>
+      )}
     </div>
   );
-};
-
-DesignTool.propTypes = {
-  onSave: PropTypes.func.isRequired,
 };
 
 export default DesignTool;

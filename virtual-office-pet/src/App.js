@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare } from 'lucide-react';
-import styles from './App.module.css';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -29,11 +28,22 @@ const VirtualOfficePet = () => {
 
   const performAction = (action) => {
     setLastAction(action);
+    // Here you would implement logic to change the pet's mood based on the action
   };
 
   useEffect(() => {
-    return () => clearInterval();
+    const timer = setInterval(() => {
+      // Periodically update pet's mood or trigger random events
+    }, 60000);
+
+    return () => clearInterval(timer);
   }, []);
+
+  const renderPetIcon = () => {
+    if (pet.name === 'Dog') return <Dog size={80} />;
+    if (pet.name === 'Cat') return <Cat size={80} />;
+    return null;
+  };
 
   return (
     <Card className="w-80 mx-auto mt-8">
@@ -44,11 +54,11 @@ const VirtualOfficePet = () => {
         {!pet ? (
           <div>
             <p>Choose your pet:</p>
-            <div className={styles.petChoiceContainer}>
-              {petTypes.map(({ name, icon: Icon }) => (
-                <Button key={name} onClick={() => adoptPet({ name, icon: Icon })} className={styles.petButton}>
-                  <Icon size={40} />
-                  <span>{name}</span>
+            <div className="flex justify-around mt-4">
+              {petTypes.map((type) => (
+                <Button key={type.name} onClick={() => adoptPet(type)} className="flex flex-col items-center">
+                  <type.icon size={40} />
+                  <span>{type.name}</span>
                 </Button>
               ))}
             </div>
@@ -56,13 +66,14 @@ const VirtualOfficePet = () => {
         ) : (
           <div>
             <div className="text-center mb-4">
-              <pet.icon size={80} />
+              {renderPetIcon()}
               <p>Mood: {mood}</p>
               {lastAction && <p>Last action: {lastAction}</p>}
             </div>
             <div className="grid grid-cols-2 gap-2">
               <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
               <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
+              {/* Add more actions as needed */}
             </div>
           </div>
         )}
