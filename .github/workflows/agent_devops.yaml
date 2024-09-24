@@ -1,13 +1,13 @@
-name: agent_coder
+name: agent_devops
 
 on:
   push:
     paths:
-      - 'src/agent_coder/**'
+      - 'src/agent_devops/**'
   workflow_dispatch: 
 
 env:
-  DIR: agent_coder
+  DIR: agent_devops
 
 
 jobs:

@@ -1,4 +1,4 @@
-name: agent_user_experience
+name: agent_quality_control
 
 on:
   push:
