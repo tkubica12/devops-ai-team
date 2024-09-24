@@ -3,6 +3,7 @@ import { useSpeechRecognition } from 'react-speech-recognition';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
+import sanitizeHtml from 'sanitize-html';
 import './App.css';
 
 const petTypes = [
@@ -25,10 +26,11 @@ const VirtualOfficePet = () => {
   const { transcript, resetTranscript } = useSpeechRecognition();
 
   useEffect(() => {
-    if (transcript.toLowerCase().includes('play')) {
+    const sanitizedTranscript = sanitizeHtml(transcript.toLowerCase());
+    if (sanitizedTranscript.includes('play')) {
       performAction('Played');
       resetTranscript();
-    } else if (transcript.toLowerCase().includes('sleep')) {
+    } else if (sanitizedTranscript.includes('sleep')) {
       performAction('Slept');
       resetTranscript();
     }

@@ -11,7 +11,8 @@
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
-    "react-speech-recognition": "^3.10.0"
+    "react-speech-recognition": "^3.10.0",
+    "sanitize-html": "^2.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
