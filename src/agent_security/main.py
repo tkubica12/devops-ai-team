@@ -123,7 +123,7 @@ while True:
                     agent.create_event(message="Branch with changes does not exist yet, agent_coder should first work on some code I can review.", next_agent="agent_facilitator", conversation_id=event.conversation_id)
                 else:
                   # Get relevant application files
-                  files = github_tools.fetch_code_files(branch=event.conversation_id)
+                  files = github_tools.fetch_code_files(path=f"{event.conversation_id}:virtual-office-pet")
 
                   # Generate report based on files
                   message_output = agent.generate_report(instructions=agent.agent_config.instructions, files=files, conversation_id=event.conversation_id)

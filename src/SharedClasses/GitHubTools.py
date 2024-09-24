@@ -47,21 +47,9 @@ class GitHubTools():
                 else:
                     raise
 
-    def fetch_code_files(self, branch: str):
+    def fetch_code_files(self, path: str):
         """
         Fetch code files from the GitHub repository
-        """
-
-        package_json = self.get_app_files(f"{branch}:virtual-office-pet")
-        src_files = self.get_app_files(f"{branch}:virtual-office-pet/src")
-        components_files = self.get_app_files(f"{branch}:virtual-office-pet/src/components")
-        ui_components_files = self.get_app_files(f"{branch}:virtual-office-pet/src/components/ui")
-        all_files = Files(files = package_json.files + src_files.files + ui_components_files.files + components_files.files)
-        return all_files
-
-    def get_app_files(self, path: str):
-        """
-        Get list of file in path
         """
 
         query = gql("""
@@ -82,15 +70,24 @@ class GitHubTools():
         variables = {"owner": self.github_owner, "name": self.github_repo, "path": path}
         response = self.execute_gql_with_retry(query, variables)
         files = Files(files=[])
-        for file in response["repository"]["object"]["entries"]:
-            if file["type"] == "blob" and (file["name"].endswith(".js") or file["name"].endswith(".css") or file["name"].endswith(".json")):
+
+        if response["repository"]["object"] is None or response["repository"]["object"]["entries"] is None:
+            return files  # Return empty Files object if the directory is empty or does not exist
+
+        for entry in response["repository"]["object"]["entries"]:
+            full_path = f"{path}/{entry['name']}"
+            if entry["type"] == "blob" and (entry["name"].endswith(".js") or entry["name"].endswith(".css") or entry["name"].endswith(".json")):
                 record = File(
-                    name = f"{path}/{file["name"]}",
-                    content = self.get_file_content(f"{path}/{file["name"]}")
+                    name=full_path,
+                    content=self.get_file_content(full_path)
                 )
                 files.files.append(record)
+            elif entry["type"] == "tree":
+                sub_files = self.fetch_code_files(full_path)
+                files.files.extend(sub_files.files)
+
         return files
-    
+
     def get_file_content(self, path: str):
         """
         Get the content of a file

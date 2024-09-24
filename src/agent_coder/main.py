@@ -134,9 +134,9 @@ while True:
 
                 # Get relevant application files from feature branch or from main branch if feature branch does not exist
                 if github_tools.check_branch_exists(branch=event.conversation_id):
-                    files = github_tools.fetch_code_files(branch=event.conversation_id)
+                    files = github_tools.fetch_code_files(path=f"{event.conversation_id}:virtual-office-pet")
                 else:
-                    files = github_tools.fetch_code_files(branch="main")
+                    files = github_tools.fetch_code_files(path="main:virtual-office-pet")
 
                 # Generate code based on the intent and files
                 generated_files = agent.generate_code(instructions=agent.agent_config.instructions, task_description=intent, files=files)
