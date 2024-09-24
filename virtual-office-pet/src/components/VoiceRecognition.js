@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import validator from 'validator';
 
 const VoiceRecognition = ({ performAction }) => {
   useEffect(() => {
@@ -14,7 +15,8 @@ const VoiceRecognition = ({ performAction }) => {
     recognition.maxAlternatives = 1;
 
     recognition.onresult = (event) => {
-      const command = event.results[0][0].transcript.toLowerCase();
+      let command = event.results[0][0].transcript.toLowerCase();
+      command = validator.escape(command); // Sanitize the input
       console.log(`Command: ${command}`);
 
       if (command.includes('play')) {
@@ -32,15 +34,16 @@ const VoiceRecognition = ({ performAction }) => {
       recognition.start();
     };
 
-    document.addEventListener('click', startRecognition);
-
     return () => {
-      document.removeEventListener('click', startRecognition);
       recognition.stop();
     };
   }, [performAction]);
 
-  return <div className="voice-recognition-info">Click anywhere to start voice command recognition.</div>;
+  return (
+    <button onClick={() => recognition.start()} className="bg-blue-500 text-white p-2 rounded">
+      Start Voice Recognition
+    </button>
+  );
 };
 
 export default VoiceRecognition;
