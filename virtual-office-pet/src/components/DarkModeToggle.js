@@ -1,28 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import './DarkModeToggle.css';
 
 const DarkModeToggle = () => {
-  const [darkMode, setDarkMode] = useState(() => {
-    const savedMode = localStorage.getItem('darkMode');
-    return savedMode ? JSON.parse(savedMode) : false;
-  });
-
-  useEffect(() => {
-    localStorage.setItem('darkMode', JSON.stringify(darkMode));
-    document.body.classList.toggle('dark-mode', darkMode);
-  }, [darkMode]);
+  const [darkMode, setDarkMode] = useState(false);
 
   const toggleDarkMode = () => {
-    setDarkMode((prevMode) => !prevMode);
+    setDarkMode(!darkMode);
+    document.body.classList.toggle('dark-mode', !darkMode);
   };
 
   return (
-    <div className="dark-mode-toggle">
-      <label className="switch">
-        <input type="checkbox" checked={darkMode} onChange={toggleDarkMode} />
-        <span className="slider round"></span>
-      </label>
-      <span>{darkMode ? 'Dark Mode' : 'Light Mode'}</span>
-    </div>
+    <button onClick={toggleDarkMode} className="dark-mode-toggle">
+      {darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+    </button>
   );
 };
 

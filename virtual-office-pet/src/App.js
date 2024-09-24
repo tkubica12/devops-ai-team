@@ -20,6 +20,7 @@ const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
   const [lastAction, setLastAction] = useState(null);
+  const [intervalId, setIntervalId] = useState(null);
 
   const adoptPet = (petType) => {
     setPet(petType);
@@ -33,12 +34,20 @@ const VirtualOfficePet = () => {
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    return () => clearInterval(intervalId);
+  }, [intervalId]);
+
+  const startTimer = () => {
+    const id = setInterval(() => {
       // Periodically update pet's mood or trigger random events
     }, 60000);
+    setIntervalId(id);
+  };
 
-    return () => clearInterval(timer);
-  }, []);
+  const stopTimer = () => {
+    clearInterval(intervalId);
+    setIntervalId(null);
+  };
 
   return (
     <div className="dark-mode-container">
@@ -70,8 +79,9 @@ const VirtualOfficePet = () => {
               <div className="grid grid-cols-2 gap-2">
                 <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
                 <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
-                {/* Add more actions as needed */}
               </div>
+              <Button onClick={startTimer} className="mt-4">Start Timer</Button>
+              <Button onClick={stopTimer} className="mt-2">Stop Timer</Button>
             </div>
           )}
         </CardContent>
