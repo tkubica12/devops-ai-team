@@ -1,0 +1,31 @@
+body.light {
+  background-color: white;
+  color: black;
+}
+
+body.dark {
+  background-color: #121212;
+  color: white;
+}
+
+.home {
+  padding: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+.dark button {
+  background-color: white;
+  color: black;
+}
+
+.light button {
+  background-color: black;
+  color: white;
+}
