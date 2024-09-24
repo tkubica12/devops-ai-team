@@ -7,7 +7,32 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+dark .App-header {
+  color: var(--color-text);
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+dark body {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.toggle-dark-mode {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.toggle-dark-mode:hover {
+  background-color: #444;
 }
