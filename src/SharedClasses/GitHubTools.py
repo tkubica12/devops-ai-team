@@ -52,10 +52,11 @@ class GitHubTools():
         Fetch code files from the GitHub repository
         """
 
+        package_json = self.get_app_files(f"{branch}:virtual-office-pet")
         src_files = self.get_app_files(f"{branch}:virtual-office-pet/src")
         components_files = self.get_app_files(f"{branch}:virtual-office-pet/src/components")
         ui_components_files = self.get_app_files(f"{branch}:virtual-office-pet/src/components/ui")
-        all_files = Files(files=src_files.files + ui_components_files.files + components_files.files)
+        all_files = Files(files = package_json.files + src_files.files + ui_components_files.files + components_files.files)
         return all_files
 
     def get_app_files(self, path: str):
@@ -82,7 +83,7 @@ class GitHubTools():
         response = self.execute_gql_with_retry(query, variables)
         files = Files(files=[])
         for file in response["repository"]["object"]["entries"]:
-            if file["type"] == "blob" and (file["name"].endswith(".js") or file["name"].endswith(".js") or file["name"].endswith(".json")):
+            if file["type"] == "blob" and (file["name"].endswith(".js") or file["name"].endswith(".css") or file["name"].endswith(".json")):
                 record = File(
                     name = f"{path}/{file["name"]}",
                     content = self.get_file_content(f"{path}/{file["name"]}")
@@ -254,6 +255,8 @@ class GitHubTools():
 
         additions = []
         for file in files.files:
+            if ':' not in file.name:
+                continue
             encoded_content = base64.b64encode(file.content.encode()).decode()
             parsed_name = file.name.split(":")[1]
             additions.append({
