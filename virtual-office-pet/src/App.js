@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare } from 'lucide-react';
+import Wardrobe from './Wardrobe';
+import DesignTool from './DesignTool';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -19,6 +21,7 @@ const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
   const [lastAction, setLastAction] = useState(null);
+  const [outfit, setOutfit] = useState(null);
 
   const adoptPet = (petType) => {
     setPet(petType);
@@ -28,7 +31,6 @@ const VirtualOfficePet = () => {
 
   const performAction = (action) => {
     setLastAction(action);
-    // Here you would implement logic to change the pet's mood based on the action
   };
 
   useEffect(() => {
@@ -67,8 +69,9 @@ const VirtualOfficePet = () => {
             <div className="grid grid-cols-2 gap-2">
               <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
               <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
-              {/* Add more actions as needed */}
             </div>
+            <Wardrobe outfit={outfit} setOutfit={setOutfit} />
+            <DesignTool setOutfit={setOutfit} />
           </div>
         )}
       </CardContent>
