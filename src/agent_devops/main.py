@@ -10,6 +10,7 @@ from SharedClasses.GitHubTools import GitHubTools
 from SharedClasses.Agent import Agent, AgentConfiguration
 from SharedClasses.Event import Event
 from openai import AzureOpenAI
+import json
 
 # Load environment variables from .env file
 load_dotenv()
@@ -57,17 +58,17 @@ openai_client = AzureOpenAI(
 agent_config = AgentConfiguration(
     model=AZURE_OPENAI_DEPLOYMENT_NAME,
     embedding_model=AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME,
-    event_producer="agent_quality_control",
+    event_producer="agent_devops",
     instructions="""
-**Quality Control prompt:**
+**Coder prompt:**
 
-You are an expert in code quality and best practices for React, JavaScript, and CSS.
+You are skilled programmer in React, Javascript and CSS. 
 
-You will receive a JSON list of files with their content. The JSON list is an array of objects, each with the attributes `name` and `content`. Your task is to review the code in these files and identify any quality issues or deviations from best practices. You should provide a concise, actionable report highlighting the problems and suggesting improvements. This report will be used by another agent to implement the necessary changes.
-
-Make sure that all components and CSS files have correct names and are properly referenced in code.
+You will receive a task description and a JSON list of files with their content. The JSON list is an array of files objects, each with the attributes `name` and `content`. Your task is to implement the feature described in the task description by modifying the appropriate files from the JSON list. You may also create new files if necessary by adding them to the JSON list. Your output must be a pure JSON array of objects with the updated `name` and `content`.
 
 **Example:**
+
+Task: Log different message and add a new file
 
 Input:
 {
@@ -81,15 +82,14 @@ Input:
 
 Output:
 {
-  "report": [
+  "files": [
     {
-      "file": "file1.js",
-      "issues": [
-        {
-          "problem": "Use of console.log for debugging",
-          "suggestion": "Replace with a proper logging mechanism or remove before production."
-        }
-      ]
+      "name": "file1.js",
+      "content": "console.log('Hello, world changed!');"
+    },
+    {
+      "name": "file2.js",
+      "content": "function add(a, b) { return a + b; }"
     }
   ]
 }
@@ -111,18 +111,10 @@ while True:
             print(f"Processing event: {doc['id']}")
             event = Event(**doc)
             if event.event_type in ["agent_communication"] and event.event_data.next_agent == agent_config.event_producer:
-                if not github_tools.check_branch_exists(event.conversation_id):
-                    print("Branch does not exist, skipping...")
-                    agent.create_event(message="Branch with changes does not exist yet, agent_coder should first work on some code I can review.", next_agent="agent_facilitator", conversation_id=event.conversation_id)
-                else:
-                  # Get relevant application files
-                  files = github_tools.fetch_code_files(branch=event.conversation_id)
+                if not github_tools.check_open_pr_exists(branch=event.conversation_id) and github_tools.check_branch_exists(branch=event.conversation_id):
+                    pr_id = github_tools.create_pr(branch=event.conversation_id, title="Test PR")
+                    agent.create_event(message=json.dumps({"pull_request_id": pr_id}), next_agent="agent_facilitator", conversation_id=event.conversation_id)
 
-                  # Generate report based on files
-                  message_output = agent.generate_report(instructions=agent.agent_config.instructions, files=files, conversation_id=event.conversation_id)
-
-                  # Create event for the next agent
-                  agent.create_event(message=message_output.model_dump_json(), next_agent="agent_facilitator", conversation_id=event.conversation_id)
 
         continuation_token = response.continuation_token
 

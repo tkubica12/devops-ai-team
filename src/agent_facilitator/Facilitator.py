@@ -18,6 +18,7 @@ class Facilitator:
      - Analyze the history of the conversation to understand the context and the user's needs.
    - If the input is from another agent:
      - Review the provided information and the history of the conversation.
+     - If input is in pure JSON format such as report of quality or security issues pass it to selected agent unmodified.
 
 2. **Analyzing History:**
    - Examine the conversation history to identify key points, recurring themes, and any unresolved issues.

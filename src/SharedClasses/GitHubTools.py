@@ -128,7 +128,7 @@ class GitHubTools():
         response = self.execute_gql_with_retry(query, variables)
         return response["repository"]["id"]
     
-    def check_branch_exists(self, branch_name: str):
+    def check_branch_exists(self, branch: str):
         """
         Check if a branch exists in the GitHub repository
         """
@@ -142,18 +142,18 @@ class GitHubTools():
             }
         }
         """)
-        variables = {"owner": self.github_owner, "name": self.github_repo, "branch": f"refs/heads/{branch_name}"}
+        variables = {"owner": self.github_owner, "name": self.github_repo, "branch": f"refs/heads/{branch}"}
         response = self.execute_gql_with_retry(query, variables)
         return response["repository"]["ref"] is not None
     
-    def create_branch(self, branch_name: str):
+    def create_branch(self, branch: str):
         """
         Create a new branch in the GitHub repository based on latest commit in main
         """
 
-        if self.check_branch_exists(branch_name):
-            print(f"Branch {branch_name} already exists")
-            latest_commit_oid = self.get_latest_commit_oid(branch_name)
+        if self.check_branch_exists(branch):
+            print(f"Branch {branch} already exists")
+            latest_commit_oid = self.get_latest_commit_oid(branch)
         else:
             # Get the latest commit on the main branch
             latest_commit_oid = self.get_latest_commit_oid("main")
@@ -168,11 +168,61 @@ class GitHubTools():
                 }
             }
             """)
-            variables = {"repositoryId": self.github_repo_id, "branchName": f"refs/heads/{branch_name}", "oid": latest_commit_oid}
+            variables = {"repositoryId": self.github_repo_id, "branchName": f"refs/heads/{branch}", "oid": latest_commit_oid}
             response = self.execute_gql_with_retry(query, variables)
             print(f"Branch created: {response}")
 
         return latest_commit_oid
+    
+    def check_open_pr_exists(self, branch: str):
+        """
+        Check if a pull request exists for the specified branch
+        """
+
+        if not self.check_branch_exists(branch):
+            return False
+
+        query = gql("""
+        query($owner: String!, $name: String!, $branch: String!) {
+            repository(owner: $owner, name: $name) {
+                ref(qualifiedName: $branch) {
+                    associatedPullRequests(first: 1, states: OPEN) {
+                        nodes {
+                            number
+                        }
+                    }
+                }
+            }
+        }
+        """)
+        variables = {"owner": self.github_owner, "name": self.github_repo, "branch": f"refs/heads/{branch}"}
+        response = self.execute_gql_with_retry(query, variables)
+        return len(response["repository"]["ref"]["associatedPullRequests"]["nodes"]) > 0
+    
+    def create_pr(self, branch: str, title: str):
+        """
+        Create a pull request for the specified branch
+        """
+
+        query = gql("""
+        mutation($repositoryId: ID!, $headRefName: String!, $baseRefName: String!, $title: String!) {
+            createPullRequest(input: {
+                repositoryId: $repositoryId,
+                baseRefName: $baseRefName,
+                headRefName: $headRefName,
+                title: $title
+            }) {
+                pullRequest {
+                    number
+                    url
+                }
+            }
+        }
+        """)
+        variables = {"repositoryId": self.github_repo_id, "headRefName": f"refs/heads/{branch}", "baseRefName": "main", "title": title}
+        response = self.execute_gql_with_retry(query, variables)
+        print(f"Pull request created: {response}")
+        return response["createPullRequest"]["pullRequest"]["number"]
     
     def get_latest_commit_oid(self, branch: str):
         """
