@@ -82,7 +82,7 @@ class GitHubTools():
         response = self.execute_gql_with_retry(query, variables)
         files = Files(files=[])
         for file in response["repository"]["object"]["entries"]:
-            if file["type"] == "blob" and (file["name"].endswith(".js") or file["name"].endswith(".js")):
+            if file["type"] == "blob" and (file["name"].endswith(".js") or file["name"].endswith(".js") or file["name"].endswith(".json")):
                 record = File(
                     name = f"{path}/{file["name"]}",
                     content = self.get_file_content(f"{path}/{file["name"]}")
