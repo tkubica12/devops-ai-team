@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
-import { Dog, Cat, Coffee, MessageSquare } from 'lucide-react';
+import { Dog, Cat, Coffee, MessageSquare, Mic } from 'lucide-react';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -19,6 +19,7 @@ const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
   const [lastAction, setLastAction] = useState(null);
+  const [listening, setListening] = useState(false);
 
   const adoptPet = (petType) => {
     setPet(petType);
@@ -28,7 +29,28 @@ const VirtualOfficePet = () => {
 
   const performAction = (action) => {
     setLastAction(action);
-    // Here you would implement logic to change the pet's mood based on the action
+    // Implement logic to change the pet's mood based on the action
+    setMood('content');
+  };
+
+  const handleVoiceCommand = (command) => {
+    if (command.includes('feed')) {
+      performAction('Fed');
+    } else if (command.includes('play')) {
+      performAction('Played');
+    } else if (command.includes('rest')) {
+      performAction('Rested');
+    }
+  };
+
+  const startListening = () => {
+    // Dummy implementation for voice command
+    setListening(true);
+    setTimeout(() => {
+      const fakeCommand = 'feed'; // For demonstration
+      handleVoiceCommand(fakeCommand);
+      setListening(false);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -67,8 +89,12 @@ const VirtualOfficePet = () => {
             <div className="grid grid-cols-2 gap-2">
               <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
               <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
-              {/* Add more actions as needed */}
+              <Button onClick={startListening} className="flex items-center space-x-2">
+                <Mic size={20} />
+                <span>Voice Command</span>
+              </Button>
             </div>
+            {listening && <p className="text-center mt-4">Listening...</p>}
           </div>
         )}
       </CardContent>
