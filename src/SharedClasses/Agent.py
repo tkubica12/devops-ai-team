@@ -4,7 +4,7 @@ import json
 from SharedClasses.Event import Event, AgentCommunicationData
 from uuid import uuid4
 from pydantic import BaseModel, Field
-from typing import Union, Optional
+from typing import Union, Optional, List
 
 class AgentConfiguration(BaseModel):
     instructions: str = Field(..., title="Instructions", description="Instructions for the agent")
@@ -19,7 +19,18 @@ class File(BaseModel):
     content: str
 
 class Files(BaseModel):
-    files: list[File]
+    files: List[File]
+
+class Issue(BaseModel):
+    problem: str
+    suggestion: str
+
+class ReportItem(BaseModel):
+    file: str
+    issues: List[Issue]
+
+class Report(BaseModel):
+    report: List[ReportItem]
 
 class Agent:
     def __init__(self, openai_client: AzureOpenAI, agent_config: AgentConfiguration, cosmos_events_container, cosmos_rag_container = None):
@@ -103,11 +114,33 @@ class Agent:
             response_format=Files,
             )
         
-        print(response)
         # Extract the response from the model
         message_output = response.choices[0].message.content
         files_output = Files.model_validate_json(message_output)
         return files_output
+    
+    
+    def generate_report(self, instructions: str, files: str, conversation_id: str):
+        files = "**FILES:**\n\n" + files.json()
+        history=self.build_history(conversation_id=conversation_id)
+
+        messages = []
+        messages.append({"role": "system", "content": instructions})
+        messages.append({"role": "user", "content": history})
+        messages.append({"role": "user", "content": files})
+
+        # Send the messages to the model
+        response = self.openai_client.beta.chat.completions.parse(
+            messages=messages, 
+            model=self.agent_config.model,
+            response_format=Report,
+            )
+        
+        # Extract the response from the model
+        message_output = response.choices[0].message.content
+        report = Report.model_validate_json(message_output)
+        print(report)
+        return report
     
     def build_history(self, conversation_id: str):
         # Query the Cosmos DB for the conversation history

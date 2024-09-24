@@ -57,17 +57,15 @@ openai_client = AzureOpenAI(
 agent_config = AgentConfiguration(
     model=AZURE_OPENAI_DEPLOYMENT_NAME,
     embedding_model=AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME,
-    event_producer="agent_coder",
+    event_producer="agent_security",
     instructions="""
-**Coder prompt:**
+**Security prompt:**
 
-You are skilled programmer in React, Javascript and CSS. 
+You are an expert in security best practices for React, JavaScript, and CSS.
 
-You will receive a task description and a JSON list of files with their content. The JSON list is an array of files objects, each with the attributes `name` and `content`. Your task is to implement the feature described in the task description by modifying the appropriate files from the JSON list. You may also create new files if necessary by adding them to the JSON list. Your output must be a pure JSON array of objects with the updated `name` and `content`.
+You will receive a JSON list of files with their content. The JSON list is an array of objects, each with the attributes `name` and `content`. Your task is to review the code in these files and identify any security issues or vulnerabilities. You should provide a concise, actionable report highlighting the problems and suggesting improvements. This report will be used by another agent to implement the necessary changes.
 
 **Example:**
-
-Task: Log different message and add a new file
 
 Input:
 {
@@ -81,36 +79,27 @@ Input:
 
 Output:
 {
-  "files": [
+  "report": [
     {
-      "name": "file1.js",
-      "content": "console.log('Hello, world changed!');"
+      "file": "file1.js",
+      "issues": [
+        {
+          "problem": "Use of console.log for debugging",
+          "suggestion": "Replace with a proper logging mechanism or remove before production to avoid exposing sensitive information."
+        }
+      ]
     },
     {
-      "name": "file2.js",
-      "content": "function add(a, b) { return a + b; }"
+      "file": "App.js",
+      "issues": [
+        {
+          "problem": "Potential XSS vulnerability in 'open' method",
+          "suggestion": "Sanitize user inputs to prevent cross-site scripting attacks."
+        }
+      ]
     }
   ]
 }
-""",
-
-   intent_extraction_instructions="""
-**Extract Actionable Outcomes:**
-
-**Objective:** Extract key actionable outcomes from the provided conversation history between the product manager, user experience team, and other agents. Focus on identifying specific tasks or features that have been agreed upon and provide technical descriptions for implementation.
-
-**Instructions:**
-
-1. **Extract Agreed Outcomes:** Identify the specific tasks, features, or improvements that have been agreed upon in the conversations.
-2. **Provide Technical Descriptions:** Offer clear, technical descriptions of each actionable item to guide the coder in implementing the functionality.
-
-**Example Output:**
-
-1. Task: Implement 'Remember Me' feature
-   Technical Description: Add a checkbox to the login form labeled 'Remember Me'. When checked, store the user's session token in a secure, persistent cookie with a long expiration time. Ensure the backend can recognize and validate this token on subsequent logins.
-
-2. Task: Optimize backend authentication process
-   Technical Description: Review and refactor the authentication logic to reduce processing time. Implement caching for frequently accessed authentication data. Ensure secure handling of user credentials and tokens.
 """
 )
 
@@ -129,21 +118,18 @@ while True:
             print(f"Processing event: {doc['id']}")
             event = Event(**doc)
             if event.event_type in ["agent_communication"] and event.event_data.next_agent == agent_config.event_producer:
-                # Extract list of topics for search
-                intent = agent.extract_intent(message_input=event.event_data.message, conversation_id=event.conversation_id)
+                if not github_tools.check_branch_exists(event.conversation_id):
+                    print("Branch does not exist, skipping...")
+                    agent.create_event(message="Branch with changes does not exist yet, agent_coder should first work on some code I can review.", next_agent="agent_facilitator", conversation_id=event.conversation_id)
+                else:
+                  # Get relevant application files
+                  files = github_tools.fetch_code_files(branch=event.conversation_id)
 
-                # Get relevant application files
-                files = github_tools.fetch_code_files()
+                  # Generate report based on files
+                  message_output = agent.generate_report(instructions=agent.agent_config.instructions, files=files, conversation_id=event.conversation_id)
 
-                # Generate code based on the intent and files
-                generated_files = agent.generate_code(instructions=agent.agent_config.instructions, task_description=intent, files=files)
-
-                # Create branch and commit the generated code
-                latest_commit_oid = github_tools.create_branch(event.conversation_id)
-                github_tools.commit_files(branch=event.conversation_id, latest_commit_oid=latest_commit_oid, files=generated_files)
-
-                # Create event for the next agent
-                agent.create_event(message="Code generation completed and commited to new branch", next_agent="agent_facilitator", conversation_id=event.conversation_id)
+                  # Create event for the next agent
+                  agent.create_event(message=message_output, next_agent="agent_facilitator", conversation_id=event.conversation_id)
 
         continuation_token = response.continuation_token
 

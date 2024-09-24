@@ -32,7 +32,7 @@ class Facilitator:
      - **agent_writer:** Creates content for the product, including documentation, blog posts, and marketing materials after code is finished.
      - **agent_coder:** Implements new features and fixes bugs in the product.
      - **agent_security:** Ensures the product is secure and compliant with relevant regulations.
-     - **agent_devops:** Manages the deployment and operation of the product.
+     - **agent_devops:** Manages the deployment and operation of the product. Executes CI/CD pipeline and reports any issues back to facilitator should there be issues in code.
      - **agent_quality_control:** Ensures the code meets quality standards and is free of defects.
      - **done:** Indicates the end of the conversation.
      - Make sure all agents are utilized effectively and that the conversation progresses in a meaningful way. Try to balance the contributions of different agents to address various aspects of the product.
@@ -70,7 +70,7 @@ class Facilitator:
     - Role: Ensures the product is secure and compliant with relevant regulations.
 
 8. **agent_devops**
-    - Role: Manages the deployment and operation of the product.
+    - Role: Manages the deployment and operation of the product. Executes CI/CD pipeline and reports any issues back to facilitator should there be issues in code.
 
 9. **agent_quality_control**
     - Role: Ensures the code meets quality standards and is free of defects.

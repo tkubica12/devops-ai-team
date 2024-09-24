@@ -128,16 +128,61 @@ class GitHubTools():
         response = self.execute_gql_with_retry(query, variables)
         return response["repository"]["id"]
     
+    def check_branch_exists(self, branch_name: str):
+        """
+        Check if a branch exists in the GitHub repository
+        """
+
+        query = gql("""
+        query($owner: String!, $name: String!, $branch: String!) {
+            repository(owner: $owner, name: $name) {
+                ref(qualifiedName: $branch) {
+                    name
+                }
+            }
+        }
+        """)
+        variables = {"owner": self.github_owner, "name": self.github_repo, "branch": f"refs/heads/{branch_name}"}
+        response = self.execute_gql_with_retry(query, variables)
+        return response["repository"]["ref"] is not None
+    
     def create_branch(self, branch_name: str):
         """
         Create a new branch in the GitHub repository based on latest commit in main
         """
 
-        # Get the latest commit on the main branch
+        if self.check_branch_exists(branch_name):
+            print(f"Branch {branch_name} already exists")
+            latest_commit_oid = self.get_latest_commit_oid(branch_name)
+        else:
+            # Get the latest commit on the main branch
+            latest_commit_oid = self.get_latest_commit_oid("main")
+            print(f"Latest commit OID: {latest_commit_oid}")
+
+            query = gql("""
+            mutation($repositoryId: ID!, $branchName: String!, $oid: GitObjectID!) {
+                createRef(input: {repositoryId: $repositoryId, name: $branchName, oid: $oid}) {
+                    ref {
+                        name
+                    }
+                }
+            }
+            """)
+            variables = {"repositoryId": self.github_repo_id, "branchName": f"refs/heads/{branch_name}", "oid": latest_commit_oid}
+            response = self.execute_gql_with_retry(query, variables)
+            print(f"Branch created: {response}")
+
+        return latest_commit_oid
+    
+    def get_latest_commit_oid(self, branch: str):
+        """
+        Get the latest commit OID for the specified branch
+        """
+
         query = gql("""
-        query($owner: String!, $name: String!) {
+        query($owner: String!, $name: String!, $branch: String!) {
             repository(owner: $owner, name: $name) {
-                ref(qualifiedName: "main") {
+                ref(qualifiedName: $branch) {
                     target {
                         ... on Commit {
                             oid
@@ -147,26 +192,9 @@ class GitHubTools():
             }
         }
         """)
-        variables = {"owner": self.github_owner, "name": self.github_repo}
+        variables = {"owner": self.github_owner, "name": self.github_repo, "branch": branch}
         response = self.execute_gql_with_retry(query, variables)
-        print(response)
-        latest_commit_oid = response["repository"]["ref"]["target"]["oid"]
-        print(f"Latest commit OID: {latest_commit_oid}")
-
-        query = gql("""
-        mutation($repositoryId: ID!, $branchName: String!, $oid: GitObjectID!) {
-            createRef(input: {repositoryId: $repositoryId, name: $branchName, oid: $oid}) {
-                ref {
-                    name
-                }
-            }
-        }
-        """)
-        variables = {"repositoryId": self.github_repo_id, "branchName": f"refs/heads/{branch_name}", "oid": latest_commit_oid}
-        response = self.execute_gql_with_retry(query, variables)
-        print(f"Branch created: {response}")
-
-        return latest_commit_oid
+        return response["repository"]["ref"]["target"]["oid"]
     
     def commit_files(self, latest_commit_oid: str, branch: str, files: Files):
         """
@@ -175,8 +203,6 @@ class GitHubTools():
 
         additions = []
         for file in files.files:
-            print("***************************************************")
-            print(file)
             encoded_content = base64.b64encode(file.content.encode()).decode()
             parsed_name = file.name.split(":")[1]
             additions.append({
