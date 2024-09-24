@@ -4,6 +4,12 @@ import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare } from 'lucide-react';
 import './App.css';
 
+// Define mood and action strings as constants
+const MOOD_HAPPY = 'happy';
+const ACTION_ADOPTED = 'Adopted';
+const ACTION_FED = 'Fed';
+const ACTION_TALKED = 'Talked';
+
 const petTypes = [
   { name: 'Dog', icon: Dog },
   { name: 'Cat', icon: Cat },
@@ -18,7 +24,7 @@ const PetAction = ({ icon: Icon, label, onClick }) => (
 
 const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
-  const [mood] = useState('happy');
+  const [mood] = useState(MOOD_HAPPY);
   const [lastAction, setLastAction] = useState(null);
   const [darkMode, setDarkMode] = useState(() => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
@@ -45,7 +51,7 @@ const VirtualOfficePet = () => {
 
   const adoptPet = (petType) => {
     setPet(petType);
-    setLastAction('Adopted');
+    setLastAction(ACTION_ADOPTED);
   };
 
   const performAction = (action) => {
@@ -54,11 +60,7 @@ const VirtualOfficePet = () => {
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      // Periodically update pet's mood or trigger random events
-    }, 60000);
-
-    return () => clearInterval(timer);
+    // Removed empty setInterval as it was unnecessary
   }, []);
 
   return (
@@ -91,8 +93,8 @@ const VirtualOfficePet = () => {
                 {lastAction && <p>Last action: {lastAction}</p>}
               </div>
               <div className="grid grid-cols-2 gap-2">
-                <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
-                <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
+                <PetAction icon={Coffee} label="Feed" onClick={() => performAction(ACTION_FED)} />
+                <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction(ACTION_TALKED)} />
                 {/* Add more actions as needed */}
               </div>
             </div>

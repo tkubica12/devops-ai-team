@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Button component used for interactive elements like pet actions
 export const Button = ({ children, onClick, className }) => (
   <button
     onClick={onClick}
