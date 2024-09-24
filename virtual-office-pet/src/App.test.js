@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import VirtualOfficePet from './App'; // Import the VirtualOfficePet component
+import VirtualOfficePet from './App';
 
 test('adopts a pet and updates mood and last action', () => {
   render(<VirtualOfficePet />);
@@ -16,4 +16,21 @@ test('adopts a pet and updates mood and last action', () => {
   // Check if the pet's mood and last action are updated
   expect(screen.getByText(/Mood: excited/i)).toBeInTheDocument();
   expect(screen.getByText(/Last action: Adopted/i)).toBeInTheDocument();
+});
+
+test('performs pet actions and updates last action', () => {
+  render(<VirtualOfficePet />);
+
+  // Adopt a pet
+  fireEvent.click(screen.getByText(/Dog/i));
+
+  // Perform Feed action
+  const feedButton = screen.getByText(/Feed/i);
+  fireEvent.click(feedButton);
+  expect(screen.getByText(/Last action: Fed/i)).toBeInTheDocument();
+
+  // Perform Talk action
+  const talkButton = screen.getByText(/Talk/i);
+  fireEvent.click(talkButton);
+  expect(screen.getByText(/Last action: Talked/i)).toBeInTheDocument();
 });
