@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
-import { Dog, Cat, Coffee, MessageSquare } from 'lucide-react';
+import { Dog, Cat } from 'lucide-react';
 import DarkModeToggle from './components/DarkModeToggle';
 
 const petTypes = [
@@ -37,10 +37,10 @@ const VirtualOfficePet = () => {
     return () => clearInterval(intervalId);
   }, [intervalId]);
 
-  const startTimer = () => {
+  const startTimer = (interval = 60000) => {
     const id = setInterval(() => {
       // Periodically update pet's mood or trigger random events
-    }, 60000);
+    }, interval);
     setIntervalId(id);
   };
 
@@ -77,10 +77,10 @@ const VirtualOfficePet = () => {
                 {lastAction && <p>Last action: {lastAction}</p>}
               </div>
               <div className="grid grid-cols-2 gap-2">
-                <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
-                <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
+                <PetAction icon={Dog} label="Feed" onClick={() => performAction('Fed')} />
+                <PetAction icon={Cat} label="Talk" onClick={() => performAction('Talked')} />
               </div>
-              <Button onClick={startTimer} className="mt-4">Start Timer</Button>
+              <Button onClick={() => startTimer(30000)} className="mt-4">Start Timer</Button>
               <Button onClick={stopTimer} className="mt-2">Stop Timer</Button>
             </div>
           )}
