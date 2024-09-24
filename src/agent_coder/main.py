@@ -132,8 +132,11 @@ while True:
                 # Extract list of topics for search
                 intent = agent.extract_intent(message_input=event.event_data.message, conversation_id=event.conversation_id)
 
-                # Get relevant application files
-                files = github_tools.fetch_code_files()
+                # Get relevant application files from feature branch or from main branch if feature branch does not exist
+                if github_tools.check_branch_exists(branch=event.conversation_id):
+                    files = github_tools.fetch_code_files(branch=event.conversation_id)
+                else:
+                    files = github_tools.fetch_code_files()
 
                 # Generate code based on the intent and files
                 generated_files = agent.generate_code(instructions=agent.agent_config.instructions, task_description=intent, files=files)

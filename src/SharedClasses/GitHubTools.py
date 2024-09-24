@@ -47,7 +47,7 @@ class GitHubTools():
                 else:
                     raise
 
-    def fetch_code_files(self, branch = "main"):
+    def fetch_code_files(self, branch: str):
         """
         Fetch code files from the GitHub repository
         """
