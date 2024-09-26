@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
-import { Button } from './components/ui/Button';
+import PetAction from './components/PetAction';
+import PetSelect from './components/ui/PetSelect';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import './App.css';
@@ -9,13 +10,6 @@ const petTypes = [
   { name: 'Dog', icon: Dog, description: 'A loyal dog.' },
   { name: 'Cat', icon: Cat, description: 'A curious cat.' },
 ];
-
-const PetAction = ({ icon: Icon, label, onClick }) => (
-  <Button onClick={onClick} className="flex items-center space-x-2">
-    <Icon size={20} />
-    <span>{label}</span>
-  </Button>
-);
 
 const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
@@ -64,17 +58,7 @@ const VirtualOfficePet = () => {
         </CardHeader>
         <CardContent>
           {!pet ? (
-            <div>
-              <p>Choose your pet:</p>
-              <div className="button-container mt-4">
-                {petTypes.map((type) => (
-                  <Button key={type.name} onClick={() => adoptPet(type)} aria-label={`Adopt ${type.name}`} className="flex flex-col items-center">
-                    <type.icon size={40} alt={type.description} />
-                    <span>{type.name}</span>
-                  </Button>
-                ))}
-              </div>
-            </div>
+            <PetSelect petTypes={petTypes} adoptPet={adoptPet} />
           ) : (
             <div>
               <div className="text-center mb-4">

@@ -1,27 +1,36 @@
+:root {
+  --background-light: #f9f9f9;
+  --background-dark: #282c34;
+  --text-light: #ffffff;
+  --text-dark: #000000;
+  --primary-color: #007bff;
+  --primary-color-hover: #0056b3;
+}
+
 .App {
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: var(--background-light);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--background-dark);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #ffffff;
+  color: var(--text-light);
 }
 
 button {
-  background-color: #007bff;
-  color: #ffffff;
+  background-color: var(--primary-color);
+  color: var(--text-light);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -38,7 +47,7 @@ button span {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: var(--primary-color-hover);
 }
 
 .button-container {
