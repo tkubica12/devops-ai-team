@@ -16,24 +16,23 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #ffffff;
 }
 
 button {
   background-color: #007bff;
-  color: #fff;
+  color: #ffffff;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin: 5px; /* Add margin to buttons */
-  display: flex; /* Use Flexbox */
-  align-items: center; /* Align items vertically */
-  justify-content: center; /* Center items horizontally */
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Add some spacing between icon and text */
 button span {
   margin-left: 8px;
 }
@@ -42,9 +41,15 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* Ensure the button container is centered */
 .button-container {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap; /* Allow buttons to wrap if necessary */
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .button-container {
+    flex-direction: column;
+    padding: 10px;
+  }
 }
