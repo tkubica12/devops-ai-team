@@ -11,10 +11,14 @@ const themeConstraints = {
   }
 };
 
+function sanitizeThemeValue(value) {
+  return ALLOWED_THEMES.includes(value) ? value : DEFAULT_THEME;
+}
+
 const ThemeToggle = () => {
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
-    return !validate({theme: savedTheme}, themeConstraints) ? savedTheme : DEFAULT_THEME;
+    return sanitizeThemeValue(savedTheme);
   });
 
   const toggleTheme = () => {
