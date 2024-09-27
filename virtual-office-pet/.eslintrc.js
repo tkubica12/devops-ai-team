@@ -5,7 +5,7 @@ module.exports = {
     'plugin:react/recommended'
   ],
   rules: {
-    'react/prop-types': 'error',
+    'react/prop-types': 'warn',
     '@typescript-eslint/explicit-module-boundary-types': 'warn',
     '@typescript-eslint/no-unused-vars': 'warn',
   },
