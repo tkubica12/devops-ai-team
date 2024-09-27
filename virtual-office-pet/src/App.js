@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import VirtualOfficePetMainCard from './components/VOPComponents';
 import ResponsiveNavigation from './components/ResponsiveNavigation';
@@ -50,10 +50,10 @@ const VirtualOfficePet = () => {
   return (
     <Router>
       <AppLayout>
-        <Dashboard />
-        <VirtualOfficePetMainCard 
-          onFeedbackMessage={(message) => setFeedbackMessage(message)}
-        />
+        <Switch>
+          <Route exact path="/" component={Dashboard} />
+          <Route path="/virtual-office-pet" component={VirtualOfficePetMainCard} />
+        </Switch>
         {menuOpen && <CustomizationMenu onClose={() => setMenuOpen(false)} />}
         <FeedbackHandler message={feedbackMessage} onClose={() => setFeedbackMessage('')} />
         <NavigationHandler onNavigate={handleNavigation} />

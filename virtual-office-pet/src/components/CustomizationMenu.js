@@ -72,6 +72,7 @@ const CustomizationMenu = ({ pet, onClose }) => {
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter pet name"
           className="border p-2 rounded mb-2 w-full"
+          aria-label="Pet Name"
         />
         <button onClick={() => handleCustomization({ name: name || 'Custom Pet' })} className="mt-2 bg-blue-500 text-white rounded px-4 py-2">Apply Changes</button>
         <div className="mt-4">
