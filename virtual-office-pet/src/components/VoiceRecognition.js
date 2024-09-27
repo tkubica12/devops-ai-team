@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import sanitizeInput from './InputSanitizer';
 
 const VoiceRecognition = ({ performAction }) => {
+  const [isListening, setIsListening] = useState(false);
   const commands = [
     {
       command: '*',
@@ -20,10 +21,16 @@ const VoiceRecognition = ({ performAction }) => {
   const { transcript, resetTranscript } = useSpeechRecognition({ commands });
 
   useEffect(() => {
+    if (isListening) {
+      SpeechRecognition.startListening({ continuous: true });
+    } else {
+      SpeechRecognition.stopListening();
+    }
+
     return () => {
       resetTranscript();
     };
-  }, [resetTranscript]);
+  }, [isListening, resetTranscript]);
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     console.error('Speech recognition is not supported in this browser');
@@ -31,8 +38,11 @@ const VoiceRecognition = ({ performAction }) => {
   }
 
   return (
-    <button onClick={() => SpeechRecognition.startListening({ continuous: true })} className="bg-blue-500 text-white p-2 rounded">
-      Start Voice Recognition
+    <button 
+      onClick={() => setIsListening(!isListening)} 
+      className={`bg-blue-500 text-white p-2 rounded ${isListening ? 'bg-red-500' : ''}`}
+    >
+      {isListening ? 'Stop Voice Recognition' : 'Start Voice Recognition'}
     </button>
   );
 };
