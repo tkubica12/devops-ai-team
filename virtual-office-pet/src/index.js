@@ -9,3 +9,8 @@ root.render(
     <App />
   </React.StrictMode>
 );
+
+// Optionally remove console.log from reportWebVitals
+import { reportWebVitals } from './reportWebVitals';
+// reportWebVitals(console.log);
+reportWebVitals();
