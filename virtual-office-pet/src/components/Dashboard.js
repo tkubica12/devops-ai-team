@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Games from './Games';
 import Customization from './Customization';
 import Quotes from './Quotes';
+import Settings from './Settings';
 
 const Dashboard = () => (
   <Router>
@@ -20,11 +21,16 @@ const Dashboard = () => (
         <FaQuoteRight size={24} />
         <p>Quotes</p>
       </Link>
+      <Link to="/settings" className="text-center" aria-label="Settings">
+        <FaPaintBrush size={24} />
+        <p>Settings</p>
+      </Link>
     </div>
     <Switch>
       <Route path="/games" component={Games} />
       <Route path="/customization" component={Customization} />
       <Route path="/quotes" component={Quotes} />
+      <Route path="/settings" component={Settings} />
     </Switch>
   </Router>
 );

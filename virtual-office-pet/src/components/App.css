@@ -1,0 +1,93 @@
+@import './theme.css';
+
+.App {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--main-bg-color);
+  border-radius: 10px;
+  box-shadow: 0 0 10px var(--shadow-color);
+}
+
+.App-header {
+  background-color: var(--header-bg-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button span {
+  margin-left: 8px;
+}
+
+button:hover {
+  background-color: var(--hover-color);
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.text-small {
+  font-size: var(--text-size-small);
+}
+
+.text-medium {
+  font-size: var(--text-size-medium);
+}
+
+.text-large {
+  font-size: var(--text-size-large);
+}
+
+@media (max-width: 600px) {
+  .App {
+    padding: 10px;
+  }
+
+  .button-container {
+    flex-direction: column;
+  }
+
+  .Card {
+    margin: 0 10px;
+  }
+
+  .fixed.bottom-0 {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
+}
+
+@media (min-width: 601px) {
+  .App {
+    padding: 20px;
+  }
+}
+
+:root {
+  --text-size: 16px;
+} 
