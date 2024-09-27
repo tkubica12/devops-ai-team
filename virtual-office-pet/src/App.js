@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
-import { SpeechProvider, useSpeechContext } from '@speechly/react-client';
+import { SpeechProvider } from '@speechly/react-client';
 import validator from 'validator';
 import DOMPurify from 'dompurify';
 import './App.css';
+import VoiceCommands from './components/VoiceCommands';
+import SeasonalOutfits from './components/SeasonalOutfits';
+import Competitions from './components/Competitions';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -20,16 +23,10 @@ const PetAction = ({ icon: Icon, label, onClick }) => (
 );
 
 const VirtualOfficePet = () => {
-  const { segment } = useSpeechContext();
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
   const [moodScore, setMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
-
-  const sanitizeTranscript = (transcript) => {
-    const sanitized = DOMPurify.sanitize(validator.escape(transcript));
-    return ['play', 'sleep'].includes(sanitized) ? sanitized : null;
-  };
 
   const adoptPet = (petType) => {
     setPet(petType);
@@ -60,14 +57,6 @@ const VirtualOfficePet = () => {
       setMood('sad');
     }
   }, [moodScore]);
-
-  useEffect(() => {
-    if (segment && segment.isFinal) {
-      const command = sanitizeTranscript(segment.intent.intent);
-      if (command) performAction(command.charAt(0).toUpperCase() + command.slice(1));
-      console.log('Recognized command:', segment.intent.intent);
-    }
-  }, [segment]);
 
   return (
     <SpeechProvider appId="your-app-id">
@@ -105,14 +94,15 @@ const VirtualOfficePet = () => {
             )}
           </CardContent>
         </Card>
-        {segment && segment.words.length > 0 && (
-          <div className="mt-4 text-sm text-gray-600">
-            <p>Heard: {segment.words.map((w) => w.value).join(' ')}</p>
-          </div>
-        )}
-        <PushToTalkButtonContainer>
-          <PushToTalkButton captureKey=" " />
-        </PushToTalkButtonContainer>
+
+        {/* Voice Commands */}
+        <VoiceCommands onCommand={performAction} />
+
+        {/* Seasonal Outfits */}
+        <SeasonalOutfits />
+
+        {/* Competitions */}
+        <Competitions />
       </div>
     </SpeechProvider>
   );
