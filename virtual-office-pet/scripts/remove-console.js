@@ -10,7 +10,7 @@ fs.readdir(dir, (err, files) => {
     const filePath = path.join(dir, file);
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) throw err;
-      const result = data.replace(/console\.(log|info|debug|warn|error)\(.*?\);?/g, ''); // Added error
+      const result = data.replace(/console\.(log|info|debug|warn|error)\(.*?\);?/g, '');
       fs.writeFile(filePath, result, 'utf8', err => {
         if (err) throw err;
       });
