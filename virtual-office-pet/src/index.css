@@ -1,20 +1,20 @@
 :root {
-  --primary-color: #007bff;
-  --secondary-color: #f9f9f9;
-  --text-color: #333;
-  --header-bg-color: #282c34;
-  --card-bg-color: #ffffff;
-  --dark-bg-color: #2c2c2c;
-  --dark-btn-bg-color: #444;
-  --dark-text-color: #e4e4e4;
-  --dark-header-bg-color: #1e1e1e;
+  --custom-primary-color: #007bff;
+  --custom-secondary-color: #f9f9f9;
+  --custom-text-color: #333;
+  --custom-header-bg-color: #282c34;
+  --custom-card-bg-color: #ffffff;
+  --custom-dark-bg: #2c2c2c;
+  --custom-dark-btn-bg: #444;
+  --custom-dark-text-color: #e4e4e4;
+  --custom-dark-header-bg: #1e1e1e;
 }
 
 body.dark {
-  --primary-color: #0056b3;
-  --secondary-color: #333;
-  --text-color: #e4e4e4;
-  --header-bg-color: #1e1e1e;
+  --custom-primary-color: #0056b3;
+  --custom-secondary-color: #333;
+  --custom-text-color: #e4e4e4;
+  --custom-header-bg-color: #1e1e1e;
 }
 
 .App {
@@ -22,27 +22,27 @@ body.dark {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: var(--secondary-color);
+  background-color: var(--custom-secondary-color);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
 }
 
 .App-header {
-  background-color: var(--header-bg-color);
+  background-color: var(--custom-header-bg-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: var(--text-color);
+  color: var(--custom-text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button {
-  background-color: var(--primary-color);
-  color: var(--text-color);
+  background-color: var(--custom-primary-color);
+  color: var(--custom-text-color);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -55,7 +55,7 @@ button {
 }
 
 button:hover {
-  background-color: var(--header-bg-color);
+  background-color: var(--custom-header-bg-color);
 }
 
 button span {
@@ -78,7 +78,7 @@ button span {
 }
 
 .dark .dark-mode-toggle {
-  background-color: var(--dark-btn-bg-color);
+  background-color: var(--custom-dark-btn-bg);
 }
 
 .dark-mode-toggle span {
@@ -86,5 +86,5 @@ button span {
 }
 
 .dark-mode-toggle:hover {
-  background-color: var(--header-bg-color);
+  background-color: var(--custom-header-bg-color);
 }
