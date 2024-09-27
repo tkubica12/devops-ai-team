@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
-import { Dog, Cat, Coffee, MessageSquare, Play, Moon, Sun } from 'lucide-react';
+import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import './App.css';
 import ThemeToggle from './components/ThemeToggle';
 
