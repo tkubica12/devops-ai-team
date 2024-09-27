@@ -8,6 +8,7 @@
   --dark-mode-button-background: #444;
   --dark-mode-text-color: #e4e4e4;
   --dark-mode-header-background: #1e1e1e;
+  --button-hover-color: #0056b3;
 }
 
 body {
@@ -53,7 +54,7 @@ button {
 }
 
 button:hover {
-  background-color: var(--header-bg-color);
+  background-color: var(--button-hover-color);
 }
 
 button span {
