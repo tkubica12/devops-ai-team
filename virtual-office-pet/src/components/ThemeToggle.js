@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { validate } from 'validate.js';
+import DOMPurify from 'dompurify';
 
 const DEFAULT_THEME = 'light';
 const ALLOWED_THEMES = ['light', 'dark'];
 
-const themeConstraints = {
-  theme: {
-    inclusion: ALLOWED_THEMES,
-  }
-};
-
 function sanitizeThemeValue(value) {
-  return ALLOWED_THEMES.includes(value) ? value : DEFAULT_THEME;
+  const cleanValue = DOMPurify.sanitize(value);
+  return ALLOWED_THEMES.includes(cleanValue) ? cleanValue : DEFAULT_THEME;
 }
 
 const ThemeToggle = () => {

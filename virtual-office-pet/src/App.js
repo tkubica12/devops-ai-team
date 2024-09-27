@@ -58,14 +58,16 @@ const VirtualOfficePet = () => {
   }, [isDarkMode]);
 
   useEffect(() => {
+    let timer;
     try {
-      const timer = setInterval(() => {
+      timer = setInterval(() => {
         setMoodScore((prevScore) => Math.max(prevScore - 5, 0));
       }, 5000);
-      return () => clearInterval(timer);
     } catch (error) {
       console.error('Error in timer:', error);
+      clearInterval(timer);
     }
+    return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
