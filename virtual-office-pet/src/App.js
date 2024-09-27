@@ -26,24 +26,14 @@ const VirtualOfficePet = () => {
   const [lastAction, setLastAction] = useState(null);
 
   const sanitizeTranscript = (transcript) => {
-    const validCommands = ['play', 'sleep'];
-    if (validCommands.includes(transcript)) {
-      return transcript;
-    }
-    return null;
+    return ['play', 'sleep'].includes(transcript) ? transcript : null;
   };
 
   useEffect(() => {
-    if (segment) {
-      if (segment.isFinal) {
-        const command = sanitizeTranscript(segment.intent.intent);
-        if (command === 'play') {
-          performAction('Played');
-        } else if (command === 'sleep') {
-          performAction('Slept');
-        }
-        console.log('Recognized command:', segment.intent.intent);
-      }
+    if (segment && segment.isFinal) {
+      const command = sanitizeTranscript(segment.intent.intent);
+      if (command) performAction(command.charAt(0).toUpperCase() + command.slice(1));
+      console.log('Recognized command:', segment.intent.intent);
     }
   }, [segment]);
 
