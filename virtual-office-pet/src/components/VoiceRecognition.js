@@ -1,50 +1,34 @@
 import React, { useEffect, useRef } from 'react';
+import { useSpeechRecognition } from 'react-speech-recognition';
 import validator from 'validator';
 
 const VoiceRecognition = ({ performAction }) => {
-  const isMountedRef = useRef(true);
+  const commands = [
+    {
+      command: 'play',
+      callback: () => performAction('Played')
+    },
+    {
+      command: 'sleep',
+      callback: () => performAction('Slept')
+    }
+  ];
+
+  const { transcript, resetTranscript } = useSpeechRecognition({ commands });
 
   useEffect(() => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      console.error('Speech Recognition not supported in this browser');
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'en-US';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    recognition.onresult = (event) => {
-      let command = event.results[0][0].transcript.toLowerCase();
-      command = validator.escape(command);
-
-      if (command.includes('play')) {
-        performAction('Played');
-      } else if (command.includes('sleep')) {
-        performAction('Slept');
-      }
-    };
-
-    recognition.onerror = (event) => {
-      console.error('Speech recognition error detected: ' + event.error);
-    };
-
-    const startRecognition = () => {
-      if (isMountedRef.current) recognition.start();
-    };
-
-    startRecognition();
-
     return () => {
-      isMountedRef.current = false;
-      recognition.stop();
+      resetTranscript();
     };
-  }, [performAction]);
+  }, [resetTranscript]);
+
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    console.log('Speech recognition is not supported in this browser');
+    return null;
+  }
 
   return (
-    <button onClick={() => recognition.start()} className="bg-blue-500 text-white p-2 rounded">
+    <button onClick={() => SpeechRecognition.startListening({ continuous: true })} className="bg-blue-500 text-white p-2 rounded">
       Start Voice Recognition
     </button>
   );
