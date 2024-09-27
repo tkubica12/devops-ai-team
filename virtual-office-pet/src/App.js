@@ -9,6 +9,7 @@ import Competitions from './components/Competitions';
 import './App.css';
 import OnboardingTutorial from './components/OnboardingTutorial';
 import HelpSection from './components/HelpSection';
+import MultilingualSupport from './components/MultilingualSupport';
 import DOMPurify from 'dompurify';
 
 const petTypes = [
@@ -73,6 +74,7 @@ const VirtualOfficePet = () => {
           <CardTitle>Virtual Office Pet</CardTitle>
         </CardHeader>
         <CardContent>
+          <MultilingualSupport />
           <VoiceRecognition performAction={performAction} />
           {!pet ? (
             <div>
