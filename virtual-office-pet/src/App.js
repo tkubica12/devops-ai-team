@@ -52,7 +52,9 @@ const VirtualOfficePet = () => {
       console.error('Error in useEffect:', error);
       clearInterval(timer); // Ensure no stale interval continues running
     }
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   useEffect(() => {
