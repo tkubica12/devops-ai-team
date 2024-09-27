@@ -6,6 +6,7 @@ import VoiceRecognition from './components/VoiceRecognition';
 import Wardrobe from './components/Wardrobe';
 import Competitions from './components/Competitions';
 import './App.css';
+import OnboardingTutorial from './components/OnboardingTutorial';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -91,6 +92,7 @@ const VirtualOfficePet = () => {
           )}
           <Wardrobe />
           <Competitions />
+          <OnboardingTutorial />
         </CardContent>
       </Card>
     </div>
