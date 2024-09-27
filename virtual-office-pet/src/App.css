@@ -48,3 +48,15 @@ button:hover {
   justify-content: center;
   flex-wrap: wrap;
 }
+
+.text-small {
+  font-size: var(--text-size-small);
+}
+
+.text-medium {
+  font-size: var(--text-size-medium);
+}
+
+.text-large {
+  font-size: var(--text-size-large);
+} 
