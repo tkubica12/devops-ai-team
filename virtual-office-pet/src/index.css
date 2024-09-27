@@ -1,4 +1,4 @@
-.App {
+:root {
   --primary-color: #007bff;
   --secondary-color: #f9f9f9;
   --text-color: #333;
@@ -8,6 +8,9 @@
   --dark-btn-bg-color: #444;
   --dark-text-color: #e4e4e4;
   --dark-header-bg-color: #1e1e1e;
+}
+
+.App {
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
