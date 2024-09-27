@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import validator from 'validator';
 
 const VoiceRecognition = ({ performAction }) => {
+  const isMountedRef = useRef(true);
+
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
@@ -30,12 +32,13 @@ const VoiceRecognition = ({ performAction }) => {
     };
 
     const startRecognition = () => {
-      recognition.start();
+      if (isMountedRef.current) recognition.start();
     };
 
     startRecognition();
 
     return () => {
+      isMountedRef.current = false;
       recognition.stop();
     };
   }, [performAction]);
