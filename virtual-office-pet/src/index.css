@@ -3,6 +3,7 @@
   --secondary-color: #f9f9f9;
   --text-color: #ffffff;
   --header-bg-color: #282c34;
+  --card-bg-color: #ffffff;
 }
 
 body {
@@ -30,4 +31,18 @@ button {
 
 .App-header {
   background-color: var(--header-bg-color);
+}
+
+.dark .App {
+  background-color: #2c2c2c;
+  color: #e4e4e4;
+}
+
+.dark button {
+  background-color: #444;
+  color: #e4e4e4;
+}
+
+.dark .App-header {
+  background-color: #1e1e1e;
 }
