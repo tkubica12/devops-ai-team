@@ -32,19 +32,10 @@ const VirtualOfficePet = () => {
   }, []);
 
   const handleNavigation = (section) => {
-    switch (section) {
-      case 'customization':
-        setMenuOpen(true);
-        break;
-      case 'games':
-        setFeedbackMessage('Games feature coming soon!');
-        break;
-      case 'quotes':
-        setFeedbackMessage('Inspirational quotes: Believe in yourself!');
-        document.querySelector('button[aria-label="Quotes"]').focus();
-        break;
-      default:
-        break;
+    if (section === 'customization') {
+      setMenuOpen(true);
+    } else {
+      setFeedbackMessage(`${section.charAt(0).toUpperCase() + section.slice(1)} feature coming soon!`);
     }
   };
 
