@@ -14,6 +14,7 @@ import DOMPurify from 'dompurify';
 import { toast } from 'react-toastify';
 import InteractivePollsWithPets from './components/InteractivePollsWithPets';
 import SeasonalPetCareTips from './components/SeasonalPetCareTips';
+import { logInfo } from './components/SecureConsoleLogger';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -45,6 +46,7 @@ const VirtualOfficePet = () => {
     setMoodScore(70);
     setLastAction('Adopted');
     toast.success('You have successfully adopted a pet!');
+    logInfo('Pet adopted: ' + petType.name);
   };
 
   const performAction = (action) => {
@@ -52,6 +54,7 @@ const VirtualOfficePet = () => {
     setLastAction(sanitizedAction);
     setMoodScore((prevScore) => Math.min(prevScore + 10, 100));
     toast.info(`Performed action: ${sanitizedAction}`);
+    logInfo('Action performed: ' + sanitizedAction);
   };
 
   useEffect(() => {
