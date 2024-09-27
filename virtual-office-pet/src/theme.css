@@ -10,6 +10,7 @@
   --text-size-small: 14px;
   --text-size-medium: 16px;
   --text-size-large: 18px;
+  --focus-color: #ffcc00;
 }
 
 body {
@@ -27,6 +28,11 @@ button {
 
 button:hover {
   background-color: var(--hover-color);
+}
+
+button:focus {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
 }
 
 .App {
@@ -47,6 +53,12 @@ input {
   border-radius: 4px;
   padding: 8px;
   width: 100%;
+  margin-bottom: 10px;
+}
+
+input:focus {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
 }
 
 #feedback {
