@@ -1,17 +1,20 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useSpeechRecognition } from 'react-speech-recognition';
-import validator from 'validator';
+import sanitizeInput from './InputSanitizer';
 
 const VoiceRecognition = ({ performAction }) => {
   const commands = [
     {
-      command: 'play',
-      callback: () => performAction('Played')
+      command: '*',
+      callback: (command) => {
+        const sanitizedCommand = sanitizeInput(command);
+        if (sanitizedCommand === 'play') {
+          performAction('Played');
+        } else if (sanitizedCommand === 'sleep') {
+          performAction('Slept');
+        }
+      },
     },
-    {
-      command: 'sleep',
-      callback: () => performAction('Slept')
-    }
   ];
 
   const { transcript, resetTranscript } = useSpeechRecognition({ commands });
@@ -23,7 +26,7 @@ const VoiceRecognition = ({ performAction }) => {
   }, [resetTranscript]);
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    console.log('Speech recognition is not supported in this browser');
+    console.error('Speech recognition is not supported in this browser');
     return null;
   }
 
