@@ -103,6 +103,11 @@ const VirtualOfficePet = () => {
             )}
           </CardContent>
         </Card>
+        {segment && segment.words.length > 0 && (
+          <div className="mt-4 text-sm text-gray-600">
+            <p>Heard: {segment.words.map((w) => w.value).join(' ')}</p>
+          </div>
+        )}
         <PushToTalkButtonContainer>
           <PushToTalkButton captureKey=" " />
         </PushToTalkButtonContainer>
