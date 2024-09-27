@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
+import { Button } from './ui/Button';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Wardrobe = () => {
@@ -43,7 +43,7 @@ const Wardrobe = () => {
           )}
         </Droppable>
       </DragDropContext>
-      <Button variant="contained" color="primary" className="mt-4">
+      <Button className="mt-4">
         Get Notified for New Outfits
       </Button>
     </div>

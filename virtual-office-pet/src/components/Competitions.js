@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
+import { Button } from './ui/Button';
 
 const Competitions = () => {
   const [registered, setRegistered] = useState(false);
@@ -27,7 +27,7 @@ const Competitions = () => {
           <div className="mt-2">{renderLeaderboard()}</div>
         </div>
       ) : (
-        <Button variant="contained" color="primary" onClick={register} className="mt-4">
+        <Button onClick={register} className="mt-4">
           Register for Competitions
         </Button>
       )}
