@@ -1,21 +1,32 @@
 import React from 'react';
 import { FaGamepad, FaPaintBrush, FaQuoteRight } from 'react-icons/fa';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import Games from './Games';
+import Customization from './Customization';
+import Quotes from './Quotes';
 
 const Dashboard = () => (
-  <div className="flex justify-around p-4 bg-gray-200" aria-label="Dashboard">
-    <div className="text-center" aria-label="Games">
-      <FaGamepad size={24} />
-      <p>Games</p>
+  <Router>
+    <div className="flex justify-around p-4 bg-gray-200" aria-label="Dashboard">
+      <Link to="/games" className="text-center" aria-label="Games">
+        <FaGamepad size={24} />
+        <p>Games</p>
+      </Link>
+      <Link to="/customization" className="text-center" aria-label="Customize">
+        <FaPaintBrush size={24} />
+        <p>Customize</p>
+      </Link>
+      <Link to="/quotes" className="text-center" aria-label="Quotes">
+        <FaQuoteRight size={24} />
+        <p>Quotes</p>
+      </Link>
     </div>
-    <div className="text-center" aria-label="Customize">
-      <FaPaintBrush size={24} />
-      <p>Customize</p>
-    </div>
-    <div className="text-center" aria-label="Quotes">
-      <FaQuoteRight size={24} />
-      <p>Quotes</p>
-    </div>
-  </div>
+    <Switch>
+      <Route path="/games" component={Games} />
+      <Route path="/customization" component={Customization} />
+      <Route path="/quotes" component={Quotes} />
+    </Switch>
+  </Router>
 );
 
 export default Dashboard;

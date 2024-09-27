@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { VirtualOfficePetMainCard } from './components/VOPComponents';
 import './App.css';
 import Sidebar from './components/Sidebar';
-import CustomizationMenu from './components/CustomizationMenu';
 import Feedback from './components/Feedback';
 import Dashboard from './components/Dashboard';
 import { applyAccessibilityFeatures } from './components/Accessibility';
