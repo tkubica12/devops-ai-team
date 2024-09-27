@@ -82,7 +82,7 @@ button span {
 }
 
 .dark-mode-toggle:hover {
-  background-color: var(--header-bg-color);
+  background-color: var(--secondary-color);
 }
 
 .dark {
