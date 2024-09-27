@@ -7,10 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // Add any additional color customizations here if needed
+      colors: {
+        dark: '#444',
+        header: '#282c34',
+      },
     },
   },
-  plugins: [
-    // Add any Tailwind CSS plugins here if needed
-  ],
+  plugins: [],
 }
