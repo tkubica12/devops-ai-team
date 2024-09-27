@@ -5,7 +5,11 @@ module.exports = {
     './public/index.html' // Path to index.html
   ],
   theme: {
-    extend: {},
+    extend: {
+      // Add any additional color customizations here if needed
+    },
   },
-  plugins: [],
+  plugins: [
+    // Add any Tailwind CSS plugins here if needed
+  ],
 }
