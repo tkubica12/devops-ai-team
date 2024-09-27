@@ -41,6 +41,7 @@ const VirtualOfficePet = () => {
         break;
       case 'quotes':
         setFeedbackMessage('Inspirational quotes: Believe in yourself!');
+        document.querySelector('button[aria-label="Quotes"]').focus();
         break;
       default:
         break;

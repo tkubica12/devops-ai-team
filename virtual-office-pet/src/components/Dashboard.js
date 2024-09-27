@@ -9,7 +9,7 @@ import Settings from './Settings';
 const Dashboard = () => (
   <Router>
     <div className="flex flex-col md:flex-row bg-gray-200 min-h-screen">
-      <div className="md:w-1/4 p-4 bg-gray-800 text-white">
+      <div className="md:w-1/4 p-4 bg-gray-800 text-white sidebar">
         <h2 className="text-xl mb-4">Dashboard</h2>
         <nav>
           <ul>
@@ -40,7 +40,7 @@ const Dashboard = () => (
           </ul>
         </nav>
       </div>
-      <div className="md:w-3/4 p-4">
+      <div className="md:w-3/4 p-4 content">
         <Switch>
           <Route path="/games" component={Games} />
           <Route path="/customization" component={Customization} />
