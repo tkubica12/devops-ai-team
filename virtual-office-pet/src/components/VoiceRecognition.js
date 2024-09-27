@@ -34,12 +34,14 @@ const VoiceRecognition = ({ performAction }) => {
   ];
 
   const handleListeningToggle = () => {
-    if (isMounted.current) setIsListening(prevState => !prevState);
+    if (isMounted.current) setIsListening((prevState) => !prevState);
   };
 
   useEffect(() => {
     isMounted.current = true;
-    return () => { isMounted.current = false; };
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   if (!window.SpeechRecognition.browserSupportsSpeechRecognition()) {
