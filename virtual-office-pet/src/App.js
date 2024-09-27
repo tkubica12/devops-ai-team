@@ -7,6 +7,7 @@ import Sidebar from './components/Sidebar';
 import CustomizationMenu from './components/CustomizationMenu';
 import Feedback from './components/Feedback';
 import { speak } from './components/Accessibility';
+import Dashboard from './components/Dashboard';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -47,8 +48,11 @@ const VirtualOfficePet = () => {
   const handleNavigation = (section) => {
     if (section === 'customization') {
       setMenuOpen(true);
+    } else if (section === 'games') {
+      setFeedbackMessage('Games feature coming soon!');
+    } else if (section === 'quotes') {
+      setFeedbackMessage('Inspirational quotes: Believe in yourself!');
     }
-    // Handle other navigation if necessary
   };
 
   useEffect(() => {
@@ -71,6 +75,7 @@ const VirtualOfficePet = () => {
 
   return (
     <div className="App">
+      <Dashboard />
       <Card className="w-80 mx-auto mt-8">
         <CardHeader>
           <CardTitle>Virtual Office Pet</CardTitle>

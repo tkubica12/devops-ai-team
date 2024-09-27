@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const CustomizationMenu = ({ pet, onClose }) => {
   const [preview, setPreview] = useState(pet);
+  const [name, setName] = useState('');
 
   const handleCustomization = (newAppearance) => {
     setPreview(newAppearance);
@@ -14,12 +15,18 @@ const CustomizationMenu = ({ pet, onClose }) => {
         {/* Preview of customizations */}
         <div className="my-4">
           <div>
-            {/* Pet preview logic here */}
             <p>Preview: {preview.name}</p>
           </div>
         </div>
         {/* Customization options */}
-        <button onClick={() => handleCustomization({ name: 'Custom Dog' })}>Dog Appearance</button>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter pet name"
+          className="border p-2 rounded mb-2"
+        />
+        <button onClick={() => handleCustomization({ name: name || 'Custom Pet' })}>Apply Changes</button>
         <button onClick={onClose} className="mt-2 bg-red-500 text-white rounded px-4 py-2">Close</button>
       </div>
     </div>
