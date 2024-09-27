@@ -65,7 +65,6 @@ const VirtualOfficePet = () => {
       }, 5000);
     } catch (error) {
       console.error('Error in timer:', error);
-      // Fallback Behavior
       setMoodScore(50);
     }
     return () => {
