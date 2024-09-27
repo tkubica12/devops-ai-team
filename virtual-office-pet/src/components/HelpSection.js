@@ -1,4 +1,5 @@
 import React from 'react';
+import VoiceCommandsOnboarding from './VoiceCommandsOnboarding';
 
 const HelpSection = () => {
   return (
@@ -11,6 +12,7 @@ const HelpSection = () => {
         <li>Speak clearly and slowly for better recognition accuracy.</li>
         <li>Use the provided buttons as an alternative if recognition fails.</li>
       </ul>
+      <VoiceCommandsOnboarding />
     </div>
   );
 };
