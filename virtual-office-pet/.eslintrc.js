@@ -6,8 +6,8 @@ module.exports = {
     'plugin:@typescript-eslint/recommended'
   ],
   rules: {
-    'react/prop-types': 'warn',
-    '@typescript-eslint/explicit-module-boundary-types': 'warn',
+    'react/prop-types': 'error',
+    '@typescript-eslint/explicit-module-boundary-types': 'error',
     '@typescript-eslint/no-unused-vars': 'warn',
   },
   parser: '@typescript-eslint/parser',
