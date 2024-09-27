@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
+import { Sun, Moon } from 'lucide-react';
 
 const DEFAULT_THEME = 'light';
 const ALLOWED_THEMES = ['light', 'dark'];
@@ -33,7 +34,7 @@ const ThemeToggle = () => {
 
   return (
     <button onClick={toggleTheme} className="dark-mode-toggle">
-      {theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+      {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />} {theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
     </button>
   );
 };

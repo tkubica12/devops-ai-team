@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play, Moon, Sun } from 'lucide-react';
 import './App.css';
+import ThemeToggle from './components/ThemeToggle';
 
 const petTypes = [
   { id: 1, name: 'Dog', icon: Dog },
@@ -28,10 +29,6 @@ const VirtualOfficePet = () => {
   const [mood, setMood] = useState('happy');
   const [moodScore, setMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
-    return savedTheme ? savedTheme === 'dark' : false;
-  });
 
   const adoptPet = (petType) => {
     setPet(petType);
@@ -44,18 +41,6 @@ const VirtualOfficePet = () => {
     setLastAction(action);
     setMoodScore((prevScore) => Math.min(prevScore + 10, 100));
   };
-
-  const toggleDarkMode = () => {
-    setIsDarkMode((prevMode) => {
-      const newMode = !prevMode;
-      localStorage.setItem('theme', newMode ? 'dark' : 'light');
-      return newMode;
-    });
-  };
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', isDarkMode);
-  }, [isDarkMode]);
 
   useEffect(() => {
     try {
@@ -86,9 +71,7 @@ const VirtualOfficePet = () => {
           <CardTitle>Virtual Office Pet</CardTitle>
         </CardHeader>
         <CardContent>
-          <button onClick={toggleDarkMode} className="dark-mode-toggle">
-            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />} Toggle Dark Mode
-          </button>
+          <ThemeToggle />
           <div className="my-4">
             {!pet ? (
               <div>

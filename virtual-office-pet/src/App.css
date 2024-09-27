@@ -59,5 +59,22 @@ button span {
 }
 
 .dark .dark-mode-toggle {
-  background-color: var(--dark-btn-bg-color);
+  background-color: var(--dark-mode-button-background);
+} 
+
+:root {
+  --dark-mode-button-background: #444;
+} 
+
+.dark .App {
+  background-color: var(--dark-mode-background);
+} 
+
+.dark .App-header {
+  background-color: var(--dark-mode-header-background);
+  color: var(--dark-mode-text-color);
+} 
+
+.dark button {
+  color: var(--dark-mode-text-color);
 }
