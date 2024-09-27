@@ -7,6 +7,7 @@ import './App.css';
 import VoiceCommands from './components/VoiceCommands';
 import SeasonalOutfits from './components/SeasonalOutfits';
 import Competitions from './components/Competitions';
+import SetupGuide from './components/ui/SetupGuide';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -92,6 +93,9 @@ const VirtualOfficePet = () => {
             )}
           </CardContent>
         </Card>
+
+        {/* Setup Guide */}
+        <SetupGuide />
 
         {/* Voice Commands */}
         <VoiceCommands onCommand={performAction} />

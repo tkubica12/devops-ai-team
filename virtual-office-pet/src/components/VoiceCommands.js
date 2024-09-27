@@ -5,7 +5,7 @@ import validator from 'validator';
 
 const sanitizeTranscript = (transcript) => {
   const sanitized = DOMPurify.sanitize(validator.escape(transcript));
-  return ['play', 'sleep'].includes(sanitized) ? sanitized : null;
+  return ['play', 'sleep', 'eat'].includes(sanitized) ? sanitized : null;
 };
 
 const VoiceCommands = ({ onCommand }) => {
