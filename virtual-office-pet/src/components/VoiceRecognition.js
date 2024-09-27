@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import sanitizeInput from './InputSanitizer';
 
 const VoiceRecognition = ({ performAction }) => {
   const [isListening, setIsListening] = useState(false);
   const { transcript, resetTranscript } = useSpeechRecognition();
+  const isMounted = useRef(false);
 
   const commands = [
     {
@@ -21,8 +22,13 @@ const VoiceRecognition = ({ performAction }) => {
   ];
 
   const handleListeningToggle = () => {
-    setIsListening(prevState => !prevState);
+    if (isMounted.current) setIsListening(prevState => !prevState);
   };
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => { isMounted.current = false; };
+  }, []);
 
   if (!window.SpeechRecognition.browserSupportsSpeechRecognition()) {
     alert('Speech recognition is not supported in this browser');
