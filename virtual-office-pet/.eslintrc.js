@@ -4,7 +4,7 @@ module.exports = {
     'react-app/jest'
   ],
   rules: {
-    'react/prop-types': 'warn',
+    'react/prop-types': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
   },
