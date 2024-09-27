@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify';
 import { Sun, Moon } from 'lucide-react';
 
 const DEFAULT_THEME = 'light';
-const ALLOWED_THEMES = ['light', 'dark'];
+const ALLOWED_THEMES = ['light', 'dark', 'custom'];
 
 function sanitizeThemeValue(value) {
   if (!value) return DEFAULT_THEME;

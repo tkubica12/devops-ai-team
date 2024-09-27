@@ -49,7 +49,7 @@ const VirtualOfficePet = () => {
         setMoodScore((prevScore) => Math.max(prevScore - 5, 0));
       }, 5000);
     } catch (error) {
-      console.error('Error with interval:', error);
+      console.error('Error in useEffect:', error);
       clearInterval(timer); // Ensure no stale interval continues running
     }
     return () => clearInterval(timer);
