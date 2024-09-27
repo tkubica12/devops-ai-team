@@ -103,15 +103,3 @@ button span {
 .dark button {
   color: var(--dark-mode-text-color);
 } 
-
-:root {
-  --dark-mode-button-background: #444;
-} 
-
-:root {
-  --primary-color: #007bff;
-  --secondary-color: #f9f9f9;
-  --text-color: #333;
-  --header-bg-color: #282c34;
-  --button-hover-color: #0056b3;
-} 

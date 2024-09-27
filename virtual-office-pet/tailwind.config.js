@@ -6,12 +6,7 @@ module.exports = {
     './src/**/*.css' // Path to CSS files
   ],
   theme: {
-    extend: {
-      colors: {
-        dark: '#444',
-        header: '#282c34',
-      },
-    },
+    extend: {},
   },
   plugins: [],
 }
