@@ -15,7 +15,7 @@
     "validator": "13.9.0",
     "@mui/material": "^5.5.0",
     "@mui/icons-material": "^5.5.0",
-    "react-speech-recognition": "^3.8.2",
+    "react-speech-recognition": "^3.10.0",
     "react-beautiful-dnd": "^13.1.0"
   },
   "scripts": {
@@ -24,7 +24,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "audit": "npm audit",
-    "build:prod": "react-scripts build && node scripts/remove-console.js"
+    "build:prod": "react-scripts build && node scripts/remove-console.js",
+    "audit:fix": "npm audit fix"
   },
   "eslintConfig": {
   },

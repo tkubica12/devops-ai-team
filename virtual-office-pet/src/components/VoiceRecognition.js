@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import sanitizeInput from './InputSanitizer';
 
@@ -20,17 +20,6 @@ const VoiceRecognition = ({ performAction }) => {
     },
   ];
 
-  useEffect(() => {
-    if (isListening) {
-      window.SpeechRecognition.startListening({ continuous: true, language: 'en-US' });
-    } else {
-      window.SpeechRecognition.stopListening();
-    }
-    return () => {
-      resetTranscript();
-    };
-  }, [isListening, resetTranscript]);
-
   const handleListeningToggle = () => {
     setIsListening(prevState => !prevState);
   };
@@ -48,7 +37,7 @@ const VoiceRecognition = ({ performAction }) => {
       >
         {isListening ? 'Stop Voice Recognition' : 'Start Voice Recognition'}
       </button>
-      <p>Transcript: {transcript}</p>
+      <p>{isListening ? 'Listening...' : 'Click to start listening'}</p>
     </div>
   );
 };

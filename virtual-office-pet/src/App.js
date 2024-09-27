@@ -9,6 +9,7 @@ import Competitions from './components/Competitions';
 import './App.css';
 import OnboardingTutorial from './components/OnboardingTutorial';
 import HelpSection from './components/HelpSection';
+import DOMPurify from 'dompurify';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -42,7 +43,8 @@ const VirtualOfficePet = () => {
   };
 
   const performAction = (action) => {
-    setLastAction(action);
+    const sanitizedAction = DOMPurify.sanitize(action);
+    setLastAction(sanitizedAction);
     setMoodScore((prevScore) => Math.min(prevScore + 10, 100));
   };
 
