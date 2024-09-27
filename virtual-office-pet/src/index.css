@@ -80,3 +80,11 @@ button span {
 .dark .dark-mode-toggle {
   background-color: var(--dark-btn-bg-color);
 }
+
+.dark-mode-toggle span {
+  margin-left: 10px;
+}
+
+.dark-mode-toggle:hover {
+  background-color: var(--header-bg-color);
+}
