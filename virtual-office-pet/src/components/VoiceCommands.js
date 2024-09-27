@@ -5,7 +5,7 @@ import validator from 'validator';
 
 const sanitizeTranscript = (transcript) => {
   const sanitized = DOMPurify.sanitize(validator.escape(transcript));
-  return ['play', 'sleep', 'eat'].includes(sanitized) ? sanitized : null;
+  return ['play', 'sleep'].includes(sanitized) ? sanitized : null;
 };
 
 const VoiceCommands = ({ onCommand }) => {
@@ -15,11 +15,15 @@ const VoiceCommands = ({ onCommand }) => {
     if (segment && segment.isFinal) {
       const command = sanitizeTranscript(segment.intent.intent);
       if (command) onCommand(command.charAt(0).toUpperCase() + command.slice(1));
-      console.log('Recognized command:', segment.intent.intent);
+      console.log('Recognized command:', command);
     }
   }, [segment, onCommand]);
 
-  return null;
+  return (
+    <div className="voice-commands-feedback">
+      {segment && <p>Listening: {segment.words.map(w => w.value).join(' ')}</p>}
+    </div>
+  );
 };
 
 export default VoiceCommands;

@@ -58,7 +58,7 @@ const VirtualOfficePet = () => {
   }, [moodScore]);
 
   return (
-    <SpeechProvider appId="your-app-id">
+    <SpeechProvider appId="your-app-id" language="en-US">
       <div className="app">
         <Card className="w-80 mx-auto mt-8">
           <CardHeader>
