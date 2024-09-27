@@ -6,6 +6,7 @@ import VoiceRecognitionErrorHandling from './VoiceRecognitionErrorHandling';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LanguageSelector from './LanguageSelector';
+import Monetization from './Monetization';
 
 const VoiceRecognition = ({ performAction }) => {
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
@@ -83,6 +84,7 @@ const VoiceRecognition = ({ performAction }) => {
       <p>{isListening ? 'Listening...' : 'Click the button to start voice recognition'}</p>
       {feedbackMessage && <p className="text-green-600">{feedbackMessage}</p>}
       <LanguageSelector setLanguage={setLanguage} />
+      <Monetization />
       <VoiceRecognitionErrorHandling errorMessage={errorMessage} />
     </div>
   );
