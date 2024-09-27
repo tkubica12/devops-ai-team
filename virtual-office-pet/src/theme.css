@@ -7,6 +7,9 @@
   --text-color: #fff;
   --card-bg-color: #ffffff;
   --shadow-color: rgba(0, 0, 0, 0.1);
+  --text-size-small: 14px;
+  --text-size-medium: 16px;
+  --text-size-large: 18px;
 }
 
 body {
@@ -14,6 +17,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   color: var(--text-color);
+  font-size: var(--text-size-medium);
 }
 
 button {
