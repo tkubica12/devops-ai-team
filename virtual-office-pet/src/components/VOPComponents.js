@@ -68,7 +68,7 @@ export const VirtualOfficePetMainCard = ({ onFeedbackMessage }) => {
             <div className="button-container mt-4">
               {petTypes.map((type) => (
                 <Button key={type.name} onClick={() => adoptPet(type)} className="flex flex-col items-center">
-                  <type.icon size={40} aria-label={type.name} />
+                  <type.icon size={40} aria-label={type.name} alt={`${type.name} icon`} />
                   <span>{type.name}</span>
                 </Button>
               ))}
@@ -77,7 +77,7 @@ export const VirtualOfficePetMainCard = ({ onFeedbackMessage }) => {
         ) : (
           <div>
             <div className="text-center mb-4">
-              <pet.icon size={80} aria-label={`Pet ${pet.name}`} />
+              <pet.icon size={80} aria-label={`Pet ${pet.name}`} alt={`Icon of ${pet.name}`} />
               <p>Mood: {mood}</p>
               {lastAction && <p>Last action: {lastAction}</p>}
             </div>
