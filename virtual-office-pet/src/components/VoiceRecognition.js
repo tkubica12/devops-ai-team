@@ -9,19 +9,27 @@ const VoiceRecognition = ({ performAction }) => {
   const { transcript, resetTranscript } = useSpeechRecognition();
   const isMounted = useRef(false);
 
+  const handleCommand = (command) => {
+    const sanitizedCommand = sanitizeInput(command);
+    switch (sanitizedCommand) {
+      case 'play':
+      case 'jouer':
+        performAction('Played');
+        break;
+      case 'sleep':
+      case 'dormir':
+        performAction('Slept');
+        break;
+      default:
+        toast.error('Unrecognized command');
+        break;
+    }
+  };
+
   const commands = [
     {
       command: '*',
-      callback: (command) => {
-        const sanitizedCommand = sanitizeInput(command);
-        if (sanitizedCommand === 'play' || sanitizedCommand === 'jouer') {
-          performAction('Played');
-        } else if (sanitizedCommand === 'sleep' || sanitizedCommand === 'dormir') {
-          performAction('Slept');
-        } else {
-          toast.error('Unrecognized command');
-        }
-      },
+      callback: handleCommand,
     },
   ];
 
