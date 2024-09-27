@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import sanitizeInput from './InputSanitizer';
+import VoiceRecognitionButton from './VoiceRecognitionButton';
+import VoiceRecognitionErrorHandling from './VoiceRecognitionErrorHandling';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LanguageSelector from './LanguageSelector';
@@ -9,6 +11,7 @@ const VoiceRecognition = ({ performAction }) => {
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
   const [isListening, setIsListening] = useState(false);
   const [language, setLanguage] = useState('en-US');
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleCommand = (command) => {
     const sanitizedCommand = sanitizeInput(command);
@@ -31,6 +34,7 @@ const VoiceRecognition = ({ performAction }) => {
         performAction('Sat');
         break;
       default:
+        setErrorMessage('Unrecognized command');
         toast.error('Unrecognized command');
         break;
     }
@@ -38,6 +42,7 @@ const VoiceRecognition = ({ performAction }) => {
 
   useEffect(() => {
     if (!browserSupportsSpeechRecognition) {
+      setErrorMessage('Speech recognition not supported in this browser');
       toast.error('Speech recognition not supported in this browser');
     }
   }, [browserSupportsSpeechRecognition]);
@@ -65,14 +70,13 @@ const VoiceRecognition = ({ performAction }) => {
 
   return (
     <div className="voice-recognition">
-      <button 
-        onClick={handleListeningToggle} 
-        className={`bg-blue-500 text-white p-2 rounded ${isListening ? 'bg-red-500' : ''}`}
-      >
-        {isListening ? 'Stop Voice Recognition' : 'Start Voice Recognition'}
-      </button>
+      <VoiceRecognitionButton 
+        isListening={isListening} 
+        handleListeningToggle={handleListeningToggle} 
+      />
       <p>{isListening ? 'Listening...' : 'Click the button to start voice recognition'}</p>
       <LanguageSelector setLanguage={setLanguage} />
+      <VoiceRecognitionErrorHandling errorMessage={errorMessage} />
     </div>
   );
 };
