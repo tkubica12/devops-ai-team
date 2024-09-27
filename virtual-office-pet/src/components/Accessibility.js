@@ -38,9 +38,9 @@ export const setAccessibilityPreferences = () => {
   });
 
   // Set Alt text attributes
-  document.querySelectorAll('img, svg').forEach((img) => {
-    if (!img.alt) {
-      img.setAttribute('alt', '');
+  document.querySelectorAll('img, svg, button').forEach((element) => {
+    if (!element.alt && element.ariaLabel) {
+      element.setAttribute('alt', element.ariaLabel);
     }
   });
 };

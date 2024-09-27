@@ -4,6 +4,7 @@ import Slider from '@mui/material/Slider';
 const Settings = () => {
   const handleTextSizeChange = (event, newValue) => {
     document.documentElement.style.setProperty('--text-size', `${newValue}px`);
+    localStorage.setItem('textSize', `${newValue}px`);
   };
 
   return (
