@@ -43,11 +43,15 @@ const VirtualOfficePet = () => {
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setMoodScore((prevScore) => Math.max(prevScore - 5, 0));
-    }, 5000);
+    try {
+      const timer = setInterval(() => {
+        setMoodScore((prevScore) => Math.max(prevScore - 5, 0));
+      }, 5000);
 
-    return () => clearInterval(timer);
+      return () => clearInterval(timer);
+    } catch (error) {
+      console.error('Error with interval:', error);
+    }
   }, []);
 
   useEffect(() => {

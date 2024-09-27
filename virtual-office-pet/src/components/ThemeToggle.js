@@ -16,7 +16,7 @@ const ThemeToggle = () => {
   const [theme, setTheme] = useState(() => {
     const storedTheme = sanitizeThemeValue(localStorage.getItem('theme'));
     const systemPreference = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    return ALLOWED_THEMES.includes(storedTheme) ? storedTheme : systemPreference;
+    return storedTheme || systemPreference;
   });
 
   const toggleTheme = () => {
