@@ -73,7 +73,8 @@ button span {
   padding: 8px 16px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border: none;
 }
 
 .dark-mode-toggle span {
