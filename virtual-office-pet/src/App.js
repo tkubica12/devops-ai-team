@@ -66,7 +66,7 @@ const VirtualOfficePet = () => {
     } catch (error) {
       console.error('Error in timer:', error);
       // Fallback Behavior
-      setMoodScore(50); // Resets mood to neutral if error occurs
+      setMoodScore(50);
     }
     return () => {
       if (timer) clearInterval(timer);
