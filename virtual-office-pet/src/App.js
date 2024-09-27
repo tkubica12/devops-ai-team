@@ -1,21 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { VirtualOfficePetMainCard } from './components/VOPComponents';
-import './App.css';
-import ResponsiveNavigation from './components/ResponsiveNavigation';
-import Feedback from './components/Feedback';
-import Dashboard from './components/Dashboard';
-import { applyAccessibilityFeatures } from './components/Accessibility';
-import { setAccessibilityPreferences } from './components/Accessibility';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import VirtualOfficePetMainCard from './components/VOPComponents';
+import ResponsiveNavigation from './components/ResponsiveNavigation';
+import CustomizationMenu from './components/CustomizationMenu';
+import Feedback from './components/Feedback';
+import './App.css';
 
 const VirtualOfficePet = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [feedbackMessage, setFeedbackMessage] = useState('');
-
-  useEffect(() => {
-    applyAccessibilityFeatures();
-    setAccessibilityPreferences();
-  }, []);
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const [feedbackMessage, setFeedbackMessage] = React.useState('');
 
   const handleNavigation = (section) => {
     switch (section) {

@@ -1,8 +1,9 @@
 import React from 'react';
-export const Button = ({ children, onClick, className }) => (
+
+export const Button = ({ children, onClick, className = '' }) => (
   <button
     onClick={onClick}
-    className={`btn ${className}`}
+    className={`flex items-center justify-center py-2 px-4 rounded ${className}`}
   >
     {children}
   </button>
