@@ -1,7 +1,8 @@
 module.exports = {
   extends: [
     'react-app',
-    'react-app/jest'
+    'react-app/jest',
+    'plugin:react/recommended'
   ],
   rules: {
     'react/prop-types': 'error',
