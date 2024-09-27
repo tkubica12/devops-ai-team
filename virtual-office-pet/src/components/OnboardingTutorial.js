@@ -10,7 +10,7 @@ const OnboardingTutorial = () => {
         <li>Click the "Start Voice Recognition" button to begin listening.</li>
         <li>Try saying commands like "play" or "sleep" to interact with your virtual pet.</li>
         <li>Click the "Stop Voice Recognition" button to end the session.</li>
-        <li>Now supporting multiple languages! Try commands in different languages like "jouer" (French) or "dormir" (Spanish).</li>
+        <li>Now supporting multiple languages! Try commands in different languages like "jouer" (French), "spielen" (German), or "jugar" (Spanish).</li>
       </ol>
     </div>
   );

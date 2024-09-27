@@ -11,7 +11,11 @@ const Competitions = () => {
   ]);
   const [participants, setParticipants] = useState(['Sam', 'Jill', 'Tom']);
 
-  const register = () => setRegistered(true);
+  const register = () => {
+    setRegistered(true);
+    toast.info('You have registered for the competition!');
+  };
+
   const renderLeaderboard = () =>
     leaderboard.map((entry, index) => (
       <div key={`leaderboard-${index}`} className="flex justify-between p-2 border-b">

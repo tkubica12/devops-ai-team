@@ -20,7 +20,8 @@
     "react-i18next": "^12.1.0",
     "i18next": "^21.1.0",
     "react-toastify": "^10.0.1",  
-    "winston": "^3.9.0"
+    "winston": "^3.9.0",
+    "speech-recognition-polyfill": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

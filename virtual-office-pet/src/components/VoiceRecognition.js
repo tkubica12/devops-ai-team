@@ -52,6 +52,7 @@ const VoiceRecognition = ({ performAction }) => {
     if (isListening) {
       const recognition = new window.SpeechRecognition();
       recognition.continuous = true;
+      recognition.lang = 'en-US';  // Set language here
       recognition.onresult = (event) => {
         handleCommand(event.results[0][0].transcript);
       };
