@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const VoiceRecognition = ({ performAction }) => {
   const [isListening, setIsListening] = useState(false);
-  const { transcript, resetTranscript } = useSpeechRecognition();
+  const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
   const isMounted = useRef(false);
 
   const handleCommand = (command) => {
@@ -44,10 +44,11 @@ const VoiceRecognition = ({ performAction }) => {
     };
   }, []);
 
-  if (!window.SpeechRecognition.browserSupportsSpeechRecognition()) {
-    alert('Speech recognition is not supported in this browser');
-    return null;
-  }
+  useEffect(() => {
+    if (!browserSupportsSpeechRecognition) {
+      toast.error('Speech recognition not supported in this browser');
+    }
+  }, [browserSupportsSpeechRecognition]);
 
   return (
     <div className="voice-recognition">
