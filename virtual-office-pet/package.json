@@ -12,7 +12,8 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^3.3.1",
     "@speechly/react-client": "^1.5.1",
-    "@speechly/react-ui": "^1.5.1"
+    "@speechly/react-ui": "^1.5.1",
+    "validator": "^13.9.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -45,6 +46,7 @@
     "eslint": "^8.50.0",
     "postcss": "^8.4.47",
     "prop-types": "^15.8.1",
-    "tailwindcss": "^3.5.8"
+    "tailwindcss": "^3.5.8",
+    "dompurify": "^2.3.10"
   }
 }

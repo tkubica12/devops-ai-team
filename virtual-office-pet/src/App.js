@@ -4,6 +4,7 @@ import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import { SpeechProvider, useSpeechContext } from '@speechly/react-client';
 import { PushToTalkButton, PushToTalkButtonContainer } from '@speechly/react-ui';
+import validator from 'validator';
 import './App.css'; 
 
 const petTypes = [
@@ -26,7 +27,8 @@ const VirtualOfficePet = () => {
   const [lastAction, setLastAction] = useState(null);
 
   const sanitizeTranscript = (transcript) => {
-    return ['play', 'sleep'].includes(transcript) ? transcript : null;
+    const sanitized = validator.escape(transcript);
+    return ['play', 'sleep'].includes(sanitized) ? sanitized : null;
   };
 
   useEffect(() => {
