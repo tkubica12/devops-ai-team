@@ -49,11 +49,12 @@ const VoiceRecognition = ({ performAction }) => {
 
   useEffect(() => {
     if (isListening) {
-      const recognition = new window.SpeechRecognition();
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
       recognition.continuous = true;
       recognition.lang = language;
       recognition.onresult = (event) => {
-        handleCommand(event.results[0][0].transcript);
+        handleCommand(event.results[event.results.length - 1][0].transcript);
       };
       recognition.start();
 

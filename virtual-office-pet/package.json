@@ -31,7 +31,8 @@
     "audit": "npm audit",
     "build:prod": "react-scripts build && node scripts/remove-console.js",
     "audit:fix": "npm audit fix",
-    "update:dependencies": "npm update"
+    "update:dependencies": "npm update",
+    "check:updates": "node src/scripts/checkForUpdates.js"
   },
   "eslintConfig": {},
   "browserslist": {
