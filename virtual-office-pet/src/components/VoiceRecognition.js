@@ -26,13 +26,6 @@ const VoiceRecognition = ({ performAction }) => {
     }
   };
 
-  const commands = [
-    {
-      command: '*',
-      callback: handleCommand,
-    },
-  ];
-
   const handleListeningToggle = () => {
     if (isMounted.current) setIsListening((prevState) => !prevState);
   };

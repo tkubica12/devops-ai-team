@@ -1,6 +1,7 @@
 const sanitizeInput = (input) => {
-  // Basic sanitization
-  return input.replace(/[<>"'/]/g, "");
+  if (!input) return '';
+  // Basic sanitization - removing potentially harmful characters
+  return input.replace(/[<>"'/]/g, '');
 };
 
 export default sanitizeInput;
