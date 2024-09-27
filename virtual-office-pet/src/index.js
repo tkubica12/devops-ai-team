@@ -10,5 +10,6 @@ root.render(
   </React.StrictMode>
 );
 
-import { reportWebVitals } from './reportWebVitals';
-reportWebVitals();
+if (process.env.NODE_ENV === 'development'){
+  import('./reportWebVitals').then(({ reportWebVitals }) => reportWebVitals(console.log));
+}

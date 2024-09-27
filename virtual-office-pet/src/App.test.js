@@ -11,18 +11,15 @@ const openMenuAndCheck = (buttonText, expectedText) => {
 
 test('should display customization menu correctly', () => {
   render(<VirtualOfficePet />);
-  fireEvent.click(screen.getByText(/Customize/i));
-  expect(screen.getByText(/Customize Your Pet/i)).toBeInTheDocument();
+  openMenuAndCheck(/Customize/i, /Customize Your Pet/i);
 });
 
 test('should display feedback when games is selected', () => {
   render(<VirtualOfficePet />);
-  fireEvent.click(screen.getByText(/Games/i));
-  expect(screen.getByText('Games feature coming soon!')).toBeInTheDocument();
+  openMenuAndCheck(/Games/i, 'Games feature coming soon!');
 });
 
 test('should display feedback when quotes is selected', () => {
   render(<VirtualOfficePet />);
-  fireEvent.click(screen.getByText(/Quotes/i));
-  expect(screen.getByText('Inspirational quotes: Believe in yourself!')).toBeInTheDocument();
+  openMenuAndCheck(/Quotes/i, 'Inspirational quotes: Believe in yourself!');
 });
