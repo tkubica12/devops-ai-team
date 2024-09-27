@@ -96,7 +96,7 @@ const VirtualOfficePet = () => {
                 <p>Choose your pet:</p>
                 <div className="button-container mt-4">
                   {petTypes.map((type) => (
-                    <Button key={type.name + Math.random()} onClick={() => adoptPet(type)} className="flex flex-col items-center">
+                    <Button key={type.name} onClick={() => adoptPet(type)} className="flex flex-col items-center">
                       <type.icon size={40} />
                       <span>{type.name}</span>
                     </Button>
@@ -113,8 +113,7 @@ const VirtualOfficePet = () => {
                 <div className="button-container grid grid-cols-2 gap-2">
                   <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
                   <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
-                  <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} /> {/* New Play action */}
-                  {/* Add more actions as needed */}
+                  <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} />
                 </div>
               </div>
             )}
