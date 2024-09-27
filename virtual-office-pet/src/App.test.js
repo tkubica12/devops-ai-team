@@ -9,15 +9,20 @@ const openMenuAndCheck = (buttonText, expectedText) => {
   expect(screen.getByText(expectedText)).toBeInTheDocument();
 };
 
-test('handles user interactions correctly', () => {
+test('handles user interactions for customization menu', () => {
   render(<VirtualOfficePet />);
 
-  // Customize Interaction
   openMenuAndCheck(/Customize/i, /Customize Your Pet/i);
-  
-  // Games Feedback
-  openMenuAndCheck(/Games/i, 'Games feature coming soon!');
+});
 
-  // Quotes Feedback
+test('displays games feedback message', () => {
+  render(<VirtualOfficePet />);
+
+  openMenuAndCheck(/Games/i, 'Games feature coming soon!');
+});
+
+test('displays quotes feedback message', () => {
+  render(<VirtualOfficePet />);
+
   openMenuAndCheck(/Quotes/i, 'Inspirational quotes: Believe in yourself!');
 });
