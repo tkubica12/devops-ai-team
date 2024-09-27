@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Button } from './ui/Button';
 
 const Competitions = () => {
@@ -33,6 +34,16 @@ const Competitions = () => {
       )}
     </div>
   );
+};
+
+Competitions.propTypes = {
+  registered: PropTypes.bool,
+  leaderboard: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      score: PropTypes.number.isRequired
+    })
+  )
 };
 
 export default Competitions;

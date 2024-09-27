@@ -11,7 +11,6 @@ const VoiceRecognition = ({ performAction }) => {
       command: '*',
       callback: (command) => {
         const sanitizedCommand = sanitizeInput(command);
-        // Multilingual command support
         if (sanitizedCommand === 'play' || sanitizedCommand === 'jouer') {
           performAction('Played');
         } else if (sanitizedCommand === 'sleep' || sanitizedCommand === 'dormir') {
@@ -23,24 +22,28 @@ const VoiceRecognition = ({ performAction }) => {
 
   useEffect(() => {
     if (isListening) {
-      SpeechRecognition.startListening({ continuous: true, language: 'en-US' });
+      window.SpeechRecognition.startListening({ continuous: true, language: 'en-US' });
     } else {
-      SpeechRecognition.stopListening();
+      window.SpeechRecognition.stopListening();
     }
     return () => {
       resetTranscript();
     };
   }, [isListening, resetTranscript]);
 
-  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    console.error('Speech recognition is not supported in this browser');
+  const handleListeningToggle = () => {
+    setIsListening(prevState => !prevState);
+  };
+
+  if (!window.SpeechRecognition.browserSupportsSpeechRecognition()) {
+    alert('Speech recognition is not supported in this browser');
     return null;
   }
 
   return (
     <div className="voice-recognition">
       <button 
-        onClick={() => setIsListening(!isListening)} 
+        onClick={handleListeningToggle} 
         className={`bg-blue-500 text-white p-2 rounded ${isListening ? 'bg-red-500' : ''}`}
       >
         {isListening ? 'Stop Voice Recognition' : 'Start Voice Recognition'}
