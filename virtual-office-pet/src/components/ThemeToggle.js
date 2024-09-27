@@ -6,6 +6,7 @@ const DEFAULT_THEME = 'light';
 const ALLOWED_THEMES = ['light', 'dark'];
 
 function sanitizeThemeValue(value) {
+  if (!value) return DEFAULT_THEME;
   const cleanValue = DOMPurify.sanitize(value);
   return ALLOWED_THEMES.includes(cleanValue) ? cleanValue : DEFAULT_THEME;
 }
