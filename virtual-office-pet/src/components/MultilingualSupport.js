@@ -14,6 +14,7 @@ const MultilingualSupport = () => {
       <button onClick={() => changeLanguage('en')}>English</button>
       <button onClick={() => changeLanguage('fr')}>Français</button>
       <button onClick={() => changeLanguage('es')}>Español</button>
+      <button onClick={() => changeLanguage('de')}>Deutsch</button>
     </div>
   );
 };

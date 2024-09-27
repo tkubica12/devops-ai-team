@@ -14,10 +14,12 @@ const VoiceRecognition = ({ performAction }) => {
     switch (sanitizedCommand) {
       case 'play':
       case 'jouer':
+      case 'spielen':
         performAction('Played');
         break;
       case 'sleep':
       case 'dormir':
+      case 'schlafen':
         performAction('Slept');
         break;
       default:
@@ -42,6 +44,16 @@ const VoiceRecognition = ({ performAction }) => {
       toast.error('Speech recognition not supported in this browser');
     }
   }, [browserSupportsSpeechRecognition]);
+
+  useEffect(() => {
+    if (isListening) {
+      SpeechRecognition.startListening({ continuous: true });
+    } else {
+      SpeechRecognition.stopListening();
+      handleCommand(transcript);
+      resetTranscript();
+    }
+  }, [isListening, transcript, resetTranscript]);
 
   return (
     <div className="voice-recognition">
