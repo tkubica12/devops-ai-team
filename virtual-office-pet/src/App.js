@@ -48,6 +48,8 @@ const VirtualOfficePet = () => {
         setMoodScore((prevScore) => Math.max(prevScore - 5, 0));
       } catch (error) {
         console.error("Error in timer:", error);
+        // Fallback logic
+        setMoodScore(50); // Resetting to neutral state
       }
     }, 5000);
     return () => clearInterval(timer);
