@@ -34,3 +34,7 @@ code {
     padding: 20px;
   }
 }
+
+:root {
+  --text-size: 16px;
+}

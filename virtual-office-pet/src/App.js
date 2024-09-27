@@ -6,10 +6,16 @@ import ResponsiveNavigation from './components/ResponsiveNavigation';
 import CustomizationMenu from './components/CustomizationMenu';
 import Feedback from './components/Feedback';
 import './App.css';
+import { applyAccessibilityFeatures, setAccessibilityPreferences } from './components/Accessibility';
 
 const VirtualOfficePet = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [feedbackMessage, setFeedbackMessage] = React.useState('');
+
+  React.useEffect(() => {
+    applyAccessibilityFeatures();
+    setAccessibilityPreferences();
+  }, []);
 
   const handleNavigation = (section) => {
     switch (section) {
