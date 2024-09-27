@@ -12,7 +12,9 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
     "dompurify": "2.3.11",
-    "validator": "13.9.0"
+    "validator": "13.9.0",
+    "@mui/material": "^5.5.0",
+    "@mui/icons-material": "^5.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

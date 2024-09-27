@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
-import VoiceRecognition from './components/VoiceRecognition'; // Import VoiceRecognition component
+import VoiceRecognition from './components/VoiceRecognition';
+import Wardrobe from './components/Wardrobe';
+import Competitions from './components/Competitions';
 import './App.css';
 
 const petTypes = [
@@ -20,31 +22,30 @@ const PetAction = ({ icon: Icon, label, onClick }) => (
 const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
-  const [moodScore, setMoodScore] = useState(50); // Initial mood score
+  const [moodScore, setMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
 
   const adoptPet = (petType) => {
     setPet(petType);
     setMood('excited');
-    setMoodScore(70); // Set initial mood score when pet is adopted
+    setMoodScore(70);
     setLastAction('Adopted');
   };
 
   const performAction = (action) => {
     setLastAction(action);
-    setMoodScore((prevScore) => Math.min(prevScore + 10, 100)); // Increase mood score, max 100
+    setMoodScore((prevScore) => Math.min(prevScore + 10, 100));
   };
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setMoodScore((prevScore) => Math.max(prevScore - 5, 0)); // Decrease mood score, min 0
-    }, 5000); // Decrease mood score every 5 seconds
+      setMoodScore((prevScore) => Math.max(prevScore - 5, 0));
+    }, 5000);
 
     return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
-    // Update mood based on mood score
     if (moodScore >= 70) {
       setMood('happy');
     } else if (moodScore >= 40) {
@@ -61,7 +62,7 @@ const VirtualOfficePet = () => {
           <CardTitle>Virtual Office Pet</CardTitle>
         </CardHeader>
         <CardContent>
-          <VoiceRecognition performAction={performAction} /> {/* Add VoiceRecognition */}
+          <VoiceRecognition performAction={performAction} />
           {!pet ? (
             <div>
               <p>Choose your pet:</p>
@@ -88,6 +89,8 @@ const VirtualOfficePet = () => {
               </div>
             </div>
           )}
+          <Wardrobe />
+          <Competitions />
         </CardContent>
       </Card>
     </div>
