@@ -5,6 +5,7 @@ import { initReactI18next } from 'react-i18next';
 import translationEN from './locales/en/translation.json';
 import translationFR from './locales/fr/translation.json';
 import translationES from './locales/es/translation.json';
+import translationDE from './locales/de/translation.json';
 
 // Set up the i18n instance
 i18n
@@ -14,6 +15,7 @@ i18n
       en: { translation: translationEN },
       fr: { translation: translationFR },
       es: { translation: translationES },
+      de: { translation: translationDE },
     },
     lng: 'en', // Default language
     fallbackLng: 'en',
