@@ -46,7 +46,8 @@ const ThemeToggle = () => {
 
   return (
     <button onClick={toggleTheme} className="dark-mode-toggle">
-      {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />} {theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+      {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}{" "}
+      {theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
     </button>
   );
 };
