@@ -9,17 +9,17 @@ const openMenuAndCheck = (buttonText, expectedText) => {
   expect(screen.getByText(expectedText)).toBeInTheDocument();
 };
 
-test('should display customization menu correctly', () => {
+test('should show customization menu', () => {
   render(<VirtualOfficePet />);
   openMenuAndCheck(/Customize/i, /Customize Your Pet/i);
 });
 
-test('should display feedback when games is selected', () => {
+test('should show feedback when games is selected', () => {
   render(<VirtualOfficePet />);
   openMenuAndCheck(/Games/i, 'Games feature coming soon!');
 });
 
-test('should display feedback when quotes is selected', () => {
+test('should show feedback when quotes is selected', () => {
   render(<VirtualOfficePet />);
   openMenuAndCheck(/Quotes/i, 'Inspirational quotes: Believe in yourself!');
 });
