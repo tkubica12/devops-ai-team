@@ -15,9 +15,9 @@ const petTypes = [
 ];
 
 const PetAction = ({ icon: Icon, label, onClick }) => (
-  <Button onClick={onClick} className="flex items-center space-x-2">
+  <Button onClick={onClick} className="flex items-center space-x-2 unique-button">
     <Icon size={20} />
-    <span>{label}</span>
+    <span className="unique-button__label">{label}</span>
   </Button>
 );
 
@@ -70,9 +70,9 @@ const VirtualOfficePet = () => {
                 <p>Choose your pet:</p>
                 <div className="button-container mt-4">
                   {petTypes.map((type) => (
-                    <Button key={type.name} onClick={() => adoptPet(type)} className="flex flex-col items-center">
+                    <Button key={type.name} onClick={() => adoptPet(type)} className="flex flex-col items-center unique-button">
                       <type.icon size={40} />
-                      <span>{type.name}</span>
+                      <span className="unique-button__label">{type.name}</span>
                     </Button>
                   ))}
                 </div>
