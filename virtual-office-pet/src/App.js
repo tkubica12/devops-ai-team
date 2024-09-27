@@ -65,7 +65,7 @@ const VirtualOfficePet = () => {
       }, 5000);
     } catch (error) {
       console.error('Error in timer:', error);
-      clearInterval(timer);
+      if (timer) clearInterval(timer);
     }
     return () => clearInterval(timer);
   }, []);
