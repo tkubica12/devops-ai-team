@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
-import { SpeechProvider, SpeechSegment, useSpeechContext } from '@speechly/react-client';
+import { SpeechProvider, useSpeechContext } from '@speechly/react-client';
 import { PushToTalkButton, PushToTalkButtonContainer } from '@speechly/react-ui';
 import './App.css'; 
 
@@ -25,12 +25,21 @@ const VirtualOfficePet = () => {
   const [moodScore, setMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
 
+  const sanitizeTranscript = (transcript) => {
+    const validCommands = ['play', 'sleep'];
+    if (validCommands.includes(transcript)) {
+      return transcript;
+    }
+    return null;
+  };
+
   useEffect(() => {
     if (segment) {
       if (segment.isFinal) {
-        if (segment.intent.intent === 'play') {
+        const command = sanitizeTranscript(segment.intent.intent);
+        if (command === 'play') {
           performAction('Played');
-        } else if (segment.intent.intent === 'sleep') {
+        } else if (command === 'sleep') {
           performAction('Slept');
         }
         console.log('Recognized command:', segment.intent.intent);
