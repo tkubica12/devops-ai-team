@@ -7,10 +7,14 @@ import CustomizationMenu from './components/CustomizationMenu';
 import Feedback from './components/Feedback';
 import './App.css';
 import { applyAccessibilityFeatures, setAccessibilityPreferences } from './components/Accessibility';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 const AppLayout = ({ children }) => (
   <div className="App">
+    <Header />
     {children}
+    <Footer />
   </div>
 );
 
