@@ -11,7 +11,7 @@ const VoiceRecognition = ({ performAction }) => {
       command: '*',
       callback: (command) => {
         const sanitizedCommand = sanitizeInput(command);
-        // Multilingual command support, for example:
+        // Multilingual command support
         if (sanitizedCommand === 'play' || sanitizedCommand === 'jouer') {
           performAction('Played');
         } else if (sanitizedCommand === 'sleep' || sanitizedCommand === 'dormir') {
@@ -23,7 +23,7 @@ const VoiceRecognition = ({ performAction }) => {
 
   useEffect(() => {
     if (isListening) {
-      SpeechRecognition.startListening({ continuous: true, language: 'en-US' }); // Add support for different languages
+      SpeechRecognition.startListening({ continuous: true, language: 'en-US' });
     } else {
       SpeechRecognition.stopListening();
     }
@@ -45,7 +45,7 @@ const VoiceRecognition = ({ performAction }) => {
       >
         {isListening ? 'Stop Voice Recognition' : 'Start Voice Recognition'}
       </button>
-      <p>Transcript: {transcript}</p> {/* Show the transcript for feedback */}
+      <p>Transcript: {transcript}</p>
     </div>
   );
 };
