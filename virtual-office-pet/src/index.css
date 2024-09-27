@@ -2,9 +2,10 @@
   --primary-color: #007bff;
   --secondary-color: #f9f9f9;
   --header-bg-color: #282c34;
-  --dark-mode-background: #2c2c2c;
+  --text-color: #333;
+  --dark-mode-background: #121212;
   --dark-mode-button-background: #444;
-  --dark-mode-text-color: #e4e4e4;
+  --dark-mode-text-color: #E0E0E0;
   --dark-mode-header-background: #1e1e1e;
   --button-hover-color: #0056b3;
 }
@@ -15,7 +16,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--secondary-color);
-  transition: background-color 0.3s ease;
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .App {
@@ -34,13 +36,13 @@ body {
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: var(--dark-mode-text-color);
+  color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button {
   background-color: var(--primary-color);
-  color: var(--dark-mode-text-color);
+  color: var(--text-color);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -71,7 +73,7 @@ button span {
   padding: 8px 16px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease color 0.3s ease;
 }
 
 .dark-mode-toggle span {
@@ -84,8 +86,8 @@ button span {
 
 .dark {
   --primary-color: #0056b3;
-  --secondary-color: #333;
-  --text-color: #e4e4e4;
+  --secondary-color: #121212;
+  --text-color: #E0E0E0;
   --header-bg-color: #1e1e1e;
 } 
 
