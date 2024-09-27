@@ -107,4 +107,8 @@ const VirtualOfficePet = () => {
   );
 };
 
+VirtualOfficePet.propTypes = {
+  theme: PropTypes.string,
+};
+
 export default VirtualOfficePet;
