@@ -10,6 +10,13 @@
   --dark-header-bg-color: #1e1e1e;
 }
 
+body.dark {
+  --primary-color: #0056b3;
+  --secondary-color: #333;
+  --text-color: #e4e4e4;
+  --header-bg-color: #1e1e1e;
+}
+
 .App {
   text-align: center;
   max-width: 800px;
@@ -48,7 +55,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: var(--header-bg-color);
 }
 
 button span {
