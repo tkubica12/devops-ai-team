@@ -4,7 +4,6 @@ module.exports = {
     'react-app/jest'
   ],
   rules: {
-    'react/prop-types': 'error', // Enable prop-types checking at error level
-    // Add more rules as needed
+    'react/prop-types': 'error',
   }
 };

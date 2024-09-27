@@ -65,7 +65,6 @@ const VirtualOfficePet = () => {
       return () => clearInterval(timer);
     } catch (error) {
       console.error('Error in timer:', error);
-      // Integrate here with an error tracking system like Sentry
     }
   }, []);
 
