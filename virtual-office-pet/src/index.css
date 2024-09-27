@@ -10,11 +10,20 @@
   --dark-mode-header-background: #1e1e1e;
 }
 
-body.dark {
+.dark {
   --primary-color: #0056b3;
   --secondary-color: #333;
   --text-color: #e4e4e4;
   --header-bg-color: #1e1e1e;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--secondary-color);
+  transition: background-color 0.3s ease;
 }
 
 .App {
@@ -47,11 +56,11 @@ button {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
   margin: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -75,10 +84,6 @@ button span {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
-
-.dark .dark-mode-toggle {
-  background-color: var(--dark-mode-button-background);
 }
 
 .dark-mode-toggle span {

@@ -5,7 +5,10 @@ module.exports = {
     './public/index.html'
   ],
   theme: {
-    extend: {}
+    extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+  ],
 }
