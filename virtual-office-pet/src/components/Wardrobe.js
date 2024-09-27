@@ -56,4 +56,13 @@ const Wardrobe = () => {
   );
 };
 
+Wardrobe.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired
+    })
+  )
+};
+
 export default Wardrobe;

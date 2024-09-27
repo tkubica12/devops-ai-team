@@ -75,4 +75,8 @@ const VoiceRecognition = ({ performAction }) => {
   );
 };
 
+VoiceRecognition.propTypes = {
+  performAction: PropTypes.func.isRequired
+};
+
 export default VoiceRecognition;

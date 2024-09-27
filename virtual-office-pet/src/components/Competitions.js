@@ -14,7 +14,7 @@ const Competitions = () => {
   const register = () => setRegistered(true);
   const renderLeaderboard = () =>
     leaderboard.map((entry, index) => (
-      <div key={index} className="flex justify-between p-2 border-b">
+      <div key={`leaderboard-${index}`} className="flex justify-between p-2 border-b">
         <span>{entry.name}</span>
         <span>{entry.score}</span>
       </div>
@@ -22,7 +22,7 @@ const Competitions = () => {
 
   const renderParticipants = () =>
     participants.map((name, index) => (
-      <div key={index} className="flex justify-between p-2 border-b">
+      <div key={`participant-${index}`} className="flex justify-between p-2 border-b">
         <span>{name}</span>
       </div>
     ));
@@ -53,7 +53,8 @@ Competitions.propTypes = {
       name: PropTypes.string.isRequired,
       score: PropTypes.number.isRequired
     })
-  )
+  ),
+  participants: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default Competitions;
