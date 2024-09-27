@@ -5,6 +5,7 @@ import ResponsiveNavigation from './components/ResponsiveNavigation';
 import Feedback from './components/Feedback';
 import Dashboard from './components/Dashboard';
 import { applyAccessibilityFeatures } from './components/Accessibility';
+import { setAccessibilityPreferences } from './components/Accessibility';
 
 const VirtualOfficePet = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,6 +13,7 @@ const VirtualOfficePet = () => {
 
   useEffect(() => {
     applyAccessibilityFeatures();
+    setAccessibilityPreferences();
   }, []);
 
   const handleNavigation = (section) => {

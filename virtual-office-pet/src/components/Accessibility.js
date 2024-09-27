@@ -25,3 +25,22 @@ export const applyAccessibilityFeatures = () => {
 
   setTextToSpeech();
 };
+
+export const setAccessibilityPreferences = () => {
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(button => {
+    button.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        button.click();
+      }
+    });
+  });
+
+  // Set Alt text attributes
+  document.querySelectorAll('img, svg').forEach((img) => {
+    if (!img.alt) {
+      img.setAttribute('alt', '');
+    }
+  });
+};
