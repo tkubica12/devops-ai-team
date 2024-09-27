@@ -96,9 +96,9 @@ const VirtualOfficePet = () => {
                   {lastAction && <p>Last action: {lastAction}</p>}
                 </div>
                 <div className="button-container grid grid-cols-2 gap-2">
-                  <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
-                  <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
-                  <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} />
+                  <PetAction key="1" icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
+                  <PetAction key="2" icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
+                  <PetAction key="3" icon={Play} label="Play" onClick={() => performAction('Played')} />
                 </div>
               </div>
             )}
@@ -110,7 +110,7 @@ const VirtualOfficePet = () => {
 };
 
 VirtualOfficePet.propTypes = {
-  theme: PropTypes.string,
+  theme: PropTypes.string
 };
 
 export default VirtualOfficePet;

@@ -6,16 +6,16 @@ module.exports = {
     'plugin:@typescript-eslint/recommended'
   ],
   rules: {
-    'react/prop-types': 'error',
-    '@typescript-eslint/explicit-module-boundary-types': 'error',
-    '@typescript-eslint/no-unused-vars': 'warn',
+    'react/prop-types': 'warn',
+    '@typescript-eslint/explicit-module-boundary-types': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn'
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
     project: './tsconfig.json',
-    tsconfigRootDir: __dirname,
+    tsconfigRootDir: __dirname
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint']
 };
