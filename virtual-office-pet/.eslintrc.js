@@ -2,7 +2,8 @@ module.exports = {
   extends: [
     'react-app',
     'react-app/jest',
-    'plugin:react/recommended'
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended'
   ],
   rules: {
     'react/prop-types': 'warn',
