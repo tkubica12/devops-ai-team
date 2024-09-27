@@ -12,6 +12,7 @@ const VoiceRecognition = ({ performAction }) => {
   const [isListening, setIsListening] = useState(false);
   const [language, setLanguage] = useState('en-US');
   const [errorMessage, setErrorMessage] = useState(null);
+  const [feedbackMessage, setFeedbackMessage] = useState('');
 
   const handleCommand = (command) => {
     const sanitizedCommand = sanitizeInput(command);
@@ -21,17 +22,20 @@ const VoiceRecognition = ({ performAction }) => {
       case 'spielen':
       case 'jugar':
         performAction('Played');
+        setFeedbackMessage('Command executed: Play');
         break;
       case 'sleep':
       case 'dormir':
       case 'schlafen':
         performAction('Slept');
+        setFeedbackMessage('Command executed: Sleep');
         break;
       case 'sit':
       case 'asseoir':
       case 'sitzen':
       case 'sentar':
         performAction('Sat');
+        setFeedbackMessage('Command executed: Sit');
         break;
       default:
         setErrorMessage('Unrecognized command');
@@ -66,6 +70,7 @@ const VoiceRecognition = ({ performAction }) => {
 
   const handleListeningToggle = () => {
     setIsListening((prevState) => !prevState);
+    setFeedbackMessage('');
     if (isListening) resetTranscript();
   };
 
@@ -76,6 +81,7 @@ const VoiceRecognition = ({ performAction }) => {
         handleListeningToggle={handleListeningToggle} 
       />
       <p>{isListening ? 'Listening...' : 'Click the button to start voice recognition'}</p>
+      {feedbackMessage && <p className="text-green-600">{feedbackMessage}</p>}
       <LanguageSelector setLanguage={setLanguage} />
       <VoiceRecognitionErrorHandling errorMessage={errorMessage} />
     </div>
