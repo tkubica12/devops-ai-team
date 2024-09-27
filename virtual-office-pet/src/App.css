@@ -59,4 +59,28 @@ button:hover {
 
 .text-large {
   font-size: var(--text-size-large);
+}
+
+@media (max-width: 600px) {
+  .App {
+    padding: 10px;
+  }
+
+  .button-container {
+    flex-direction: column;
+  }
+
+  .Card {
+    margin: 0 10px;
+  }
+}
+
+@media (min-width: 601px) {
+  .App {
+    padding: 20px;
+  }
+}
+
+:root {
+  --text-size: 16px;
 } 

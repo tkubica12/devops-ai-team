@@ -3,12 +3,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import VirtualOfficePet from './App';
 
-// Test interactions
-// Ensure the Customize menu opens correctly
-// Ensure games feedback is displayed
-// Verify quotes functionality
-// Cleanup
-
 const openMenuAndCheck = (buttonText, expectedText) => {
   const button = screen.getByText(buttonText);
   fireEvent.click(button);
