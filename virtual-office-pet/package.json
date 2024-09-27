@@ -25,7 +25,8 @@
     "eject": "react-scripts eject",
     "audit": "npm audit",
     "build:prod": "react-scripts build && node scripts/remove-console.js",
-    "audit:fix": "npm audit fix"
+    "audit:fix": "npm audit fix",
+    "update:dependencies": "npm update"
   },
   "eslintConfig": {
   },
