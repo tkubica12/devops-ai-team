@@ -16,7 +16,8 @@
     "react-router-dom": "^5.3.0",
     "react-responsive": "^9.0.0",
     "@reach/tooltip": "^0.16.0",
-    "react-speech-kit": "^3.9.0"
+    "react-speech-kit": "^3.9.0",
+    "@mui/material": "^5.8.7"
   },
   "scripts": {
     "start": "react-scripts start",
