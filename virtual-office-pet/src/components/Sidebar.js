@@ -1,9 +1,10 @@
 import React from 'react';
-import { FaGamepad, FaPaintBrush, FaQuoteRight } from 'react-icons/fa';
+import { FaGamepad, FaPaintBrush, FaQuoteRight, FaCog } from 'react-icons/fa';
 import { Tooltip } from '@reach/tooltip';
 
 const Sidebar = ({ onSelect }) => (
-  <div className="fixed top-0 left-0 bottom-0 bg-gray-800 text-white w-60 p-4" aria-label="Sidebar">
+  <div className="sidebar" aria-label="Sidebar">
+    <h2 className="text-xl mb-4">Main Menu</h2>
     <Tooltip label="Games">
       <button onClick={() => onSelect('games')} className="flex items-center mb-4" aria-label="Games" tabIndex="0">
         <FaGamepad size={24} aria-hidden="true" />
@@ -17,9 +18,15 @@ const Sidebar = ({ onSelect }) => (
       </button>
     </Tooltip>
     <Tooltip label="Quotes">
-      <button onClick={() => onSelect('quotes')} className="flex items-center" aria-label="Quotes" tabIndex="0">
+      <button onClick={() => onSelect('quotes')} className="flex items-center mb-4" aria-label="Quotes" tabIndex="0">
         <FaQuoteRight size={24} aria-hidden="true" />
         <span className="ml-2">Quotes</span>
+      </button>
+    </Tooltip>
+    <Tooltip label="Settings">
+      <button onClick={() => onSelect('settings')} className="flex items-center" aria-label="Settings" tabIndex="0">
+        <FaCog size={24} aria-hidden="true" />
+        <span className="ml-2">Settings</span>
       </button>
     </Tooltip>
   </div>
