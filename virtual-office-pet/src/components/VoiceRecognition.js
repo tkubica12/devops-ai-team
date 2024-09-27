@@ -70,7 +70,7 @@ const VoiceRecognition = ({ performAction }) => {
       >
         {isListening ? 'Stop Voice Recognition' : 'Start Voice Recognition'}
       </button>
-      <p>{isListening ? 'Listening...' : 'Click to start listening'}</p>
+      <p>{isListening ? 'Listening...' : 'Click the button to start voice recognition'}</p>
     </div>
   );
 };
