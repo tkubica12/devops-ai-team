@@ -14,6 +14,7 @@ import DOMPurify from 'dompurify';
 import { toast } from 'react-toastify';
 import InteractivePollsWithPets from './components/InteractivePollsWithPets';
 import SeasonalPetCareTips from './components/SeasonalPetCareTips';
+import NewOutfits from './components/NewOutfits'; // New import
 import { logInfo } from './components/SecureConsoleLogger';
 
 const petTypes = [
@@ -113,6 +114,7 @@ const VirtualOfficePet = () => {
             </div>
           )}
           <Wardrobe />
+          <NewOutfits /> {/* Add NewOutfits component */}
           <Competitions />
           <OnboardingTutorial />
           <HelpSection />
