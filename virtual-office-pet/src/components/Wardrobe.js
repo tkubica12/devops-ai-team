@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from './ui/Button';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { toast } from 'react-toastify';
 
 const Wardrobe = () => {
   const [items, setItems] = useState([
@@ -15,6 +16,10 @@ const Wardrobe = () => {
     const [removed] = reorderedItems.splice(result.source.index, 1);
     reorderedItems.splice(result.destination.index, 0, removed);
     setItems(reorderedItems);
+  };
+
+  const notifyNewOutfit = () => {
+    toast.info('New outfits are now available! Check the store.');
   };
 
   return (
@@ -43,7 +48,7 @@ const Wardrobe = () => {
           )}
         </Droppable>
       </DragDropContext>
-      <Button className="mt-4">
+      <Button className="mt-4" onClick={notifyNewOutfit}>
         Get Notified for New Outfits
       </Button>
     </div>

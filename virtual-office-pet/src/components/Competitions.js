@@ -9,6 +9,7 @@ const Competitions = () => {
     { name: 'Bob', score: 120 },
     { name: 'Charlie', score: 100 },
   ]);
+  const [participants, setParticipants] = useState(['Sam', 'Jill', 'Tom']);
 
   const register = () => setRegistered(true);
   const renderLeaderboard = () =>
@@ -19,6 +20,13 @@ const Competitions = () => {
       </div>
     ));
 
+  const renderParticipants = () =>
+    participants.map((name, index) => (
+      <div key={index} className="flex justify-between p-2 border-b">
+        <span>{name}</span>
+      </div>
+    ));
+
   return (
     <div className="competitions mt-8">
       <h3 className="text-lg font-bold">Virtual Competitions</h3>
@@ -26,6 +34,8 @@ const Competitions = () => {
         <div>
           <h4 className="font-semibold mt-4">Leaderboard</h4>
           <div className="mt-2">{renderLeaderboard()}</div>
+          <h4 className="font-semibold mt-4">Participants</h4>
+          <div className="mt-2">{renderParticipants()}</div>
         </div>
       ) : (
         <Button onClick={register} className="mt-4">

@@ -11,10 +11,11 @@ const VoiceRecognition = ({ performAction }) => {
 
   const handleCommand = (command) => {
     const sanitizedCommand = sanitizeInput(command);
-    switch (sanitizedCommand) {
+    switch (sanitizedCommand.toLowerCase()) {
       case 'play':
       case 'jouer':
       case 'spielen':
+      case 'jugar': // Spanish
         performAction('Played');
         break;
       case 'sleep':
@@ -47,9 +48,9 @@ const VoiceRecognition = ({ performAction }) => {
 
   useEffect(() => {
     if (isListening) {
-      SpeechRecognition.startListening({ continuous: true });
+      window.SpeechRecognition.startListening({ continuous: true });
     } else {
-      SpeechRecognition.stopListening();
+      window.SpeechRecognition.stopListening();
       handleCommand(transcript);
       resetTranscript();
     }
