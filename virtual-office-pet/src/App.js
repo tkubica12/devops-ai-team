@@ -8,6 +8,20 @@ import Feedback from './components/Feedback';
 import './App.css';
 import { applyAccessibilityFeatures, setAccessibilityPreferences } from './components/Accessibility';
 
+const AppLayout = ({ children }) => (
+  <div className="App">
+    {children}
+  </div>
+);
+
+const NavigationHandler = ({ onNavigate }) => (
+  <ResponsiveNavigation onSelect={onNavigate} />
+);
+
+const FeedbackHandler = ({ message, onClose }) => (
+  message && <Feedback message={message} onClose={onClose} />
+);
+
 const VirtualOfficePet = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [feedbackMessage, setFeedbackMessage] = React.useState('');
@@ -35,15 +49,15 @@ const VirtualOfficePet = () => {
 
   return (
     <Router>
-      <div className="App">
+      <AppLayout>
         <Dashboard />
         <VirtualOfficePetMainCard 
           onFeedbackMessage={(message) => setFeedbackMessage(message)}
         />
         {menuOpen && <CustomizationMenu onClose={() => setMenuOpen(false)} />}
-        {feedbackMessage && <Feedback message={feedbackMessage} onClose={() => setFeedbackMessage('')} />}
-        <ResponsiveNavigation onSelect={handleNavigation} />
-      </div>
+        <FeedbackHandler message={feedbackMessage} onClose={() => setFeedbackMessage('')} />
+        <NavigationHandler onNavigate={handleNavigation} />
+      </AppLayout>
     </Router>
   );
 };
