@@ -54,12 +54,16 @@ const VirtualOfficePet = () => {
   }, []);
 
   useEffect(() => {
-    if (moodScore >= 70) {
-      setMood('happy');
-    } else if (moodScore >= 40) {
-      setMood('okay');
-    } else {
-      setMood('sad');
+    try {
+      if (moodScore >= 70) {
+        setMood('happy');
+      } else if (moodScore >= 40) {
+        setMood('okay');
+      } else {
+        setMood('sad');
+      }
+    } catch (error) {
+      console.error("Error in useEffect:", error);
     }
   }, [moodScore]);
 
