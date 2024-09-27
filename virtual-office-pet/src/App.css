@@ -62,8 +62,16 @@ button span {
 } 
 
 :root {
+  --primary-color: #007bff;
+  --secondary-color: #f9f9f9;
+  --header-bg-color: #282c34;
+  --text-color: #333;
+  --dark-mode-background: #2a2a2a;
   --dark-mode-button-background: #444;
-} 
+  --dark-mode-text-color: #eaeaea;
+  --dark-mode-header-background: #1e1e1e;
+  --button-hover-color: #0056b3;
+}
 
 .dark .App {
   background-color: var(--dark-mode-background);
