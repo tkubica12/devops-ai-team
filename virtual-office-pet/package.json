@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^6.1.4",
-    "@testing-library/react": "^14.0.1",
-    "@testing-library/user-event": "^14.4.4",
-    "lucide-react": "^0.457.0",
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.0.2",
+    "@testing-library/user-event": "^14.4.5",
+    "lucide-react": "^0.463.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.2",
-    "web-vitals": "^3.3.2",
-    "@speechly/react-client": "^1.5.2",
-    "@speechly/react-ui": "^1.5.2",
+    "react-scripts": "5.0.3",
+    "web-vitals": "^3.3.3",
+    "@speechly/react-client": "^1.5.3",
+    "@speechly/react-ui": "^1.5.3",
     "validator": "^13.9.1"
   },
   "scripts": {
@@ -41,13 +41,13 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.22.5",
-    "autoprefixer": "^10.4.23",
-    "eslint": "^8.51.0",
-    "postcss": "^8.4.50",
-    "prop-types": "^15.8.2",
-    "tailwindcss": "^3.5.9",
-    "dompurify": "^2.4.0",
-    "sanitize-html": "^2.8.2"
+    "@babel/plugin-proposal-private-property-in-object": "^7.22.9",
+    "autoprefixer": "^10.4.24",
+    "eslint": "^8.55.0",
+    "postcss": "^8.4.51",
+    "prop-types": "^15.8.3",
+    "tailwindcss": "^3.5.10",
+    "dompurify": "^2.4.1",
+    "sanitize-html": "^3.0.0"
   }
 }

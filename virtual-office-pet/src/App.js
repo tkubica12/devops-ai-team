@@ -3,8 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import { SpeechProvider } from '@speechly/react-client';
-import validator from 'validator';
-import DOMPurify from 'dompurify';
 import './App.css';
 import VoiceCommands from './components/VoiceCommands';
 import SeasonalOutfits from './components/SeasonalOutfits';

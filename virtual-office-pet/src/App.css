@@ -19,7 +19,8 @@
   color: white;
 }
 
-.unique-button {
+/* Scoped button styles using BEM */
+.button {
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -33,11 +34,11 @@
   justify-content: center;
 }
 
-.unique-button span {
+.button__label {
   margin-left: 8px;
 }
 
-.unique-button:hover {
+.button:hover {
   background-color: #0056b3;
 }
 
