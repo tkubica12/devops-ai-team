@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import sanitizeInput from './InputSanitizer';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const VoiceRecognition = ({ performAction }) => {
   const [isListening, setIsListening] = useState(false);
@@ -16,6 +18,8 @@ const VoiceRecognition = ({ performAction }) => {
           performAction('Played');
         } else if (sanitizedCommand === 'sleep' || sanitizedCommand === 'dormir') {
           performAction('Slept');
+        } else {
+          toast.error('Unrecognized command');
         }
       },
     },

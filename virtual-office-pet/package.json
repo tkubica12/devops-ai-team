@@ -18,7 +18,9 @@
     "react-speech-recognition": "^3.10.0",
     "react-beautiful-dnd": "^13.1.0",
     "react-i18next": "^11.15.3",
-    "i18next": "^19.8.4"
+    "i18next": "^19.8.4",
+    "react-toastify": "^9.0.0",
+    "winston": "^3.3.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -30,19 +32,10 @@
     "audit:fix": "npm audit fix",
     "update:dependencies": "npm update"
   },
-  "eslintConfig": {
-  },
+  "eslintConfig": {},
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "production": [">0.2%","not dead","not op_mini all"],
+    "development": ["last 1 chrome version","last 1 firefox version","last 1 safari version"]
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
