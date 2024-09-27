@@ -8,6 +8,11 @@ const CustomizationMenu = ({ pet, onClose }) => {
     setPreview(newAppearance);
   };
 
+  const handleTextSizeChange = (size) => {
+    document.documentElement.style.setProperty('--text-size', size);
+    localStorage.setItem('textSize', size);
+  };
+
   return (
     <div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-4 rounded-lg">
@@ -27,6 +32,12 @@ const CustomizationMenu = ({ pet, onClose }) => {
           className="border p-2 rounded mb-2"
         />
         <button onClick={() => handleCustomization({ name: name || 'Custom Pet' })}>Apply Changes</button>
+        <div className="mt-4">
+          <h3>Text Size</h3>
+          <button onClick={() => handleTextSizeChange('small')}>Small</button>
+          <button onClick={() => handleTextSizeChange('medium')}>Medium</button>
+          <button onClick={() => handleTextSizeChange('large')}>Large</button>
+        </div>
         <button onClick={onClose} className="mt-2 bg-red-500 text-white rounded px-4 py-2">Close</button>
       </div>
     </div>

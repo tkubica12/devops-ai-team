@@ -5,10 +5,15 @@ import Sidebar from './components/Sidebar';
 import CustomizationMenu from './components/CustomizationMenu';
 import Feedback from './components/Feedback';
 import Dashboard from './components/Dashboard';
+import { applyAccessibilityFeatures } from './components/Accessibility';
 
 const VirtualOfficePet = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState('');
+
+  useEffect(() => {
+    applyAccessibilityFeatures();
+  }, []);
 
   const handleNavigation = (section) => {
     if (section === 'customization') {
