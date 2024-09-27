@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { validate } from 'validate.js';
 
 const DEFAULT_THEME = 'light';
 const ALLOWED_THEMES = ['light', 'dark'];
 
+const themeConstraints = {
+  theme: {
+    inclusion: ALLOWED_THEMES,
+  }
+};
+
 const ThemeToggle = () => {
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
-    return ALLOWED_THEMES.includes(savedTheme) ? savedTheme : DEFAULT_THEME;
+    return !validate({theme: savedTheme}, themeConstraints) ? savedTheme : DEFAULT_THEME;
   });
 
   const toggleTheme = () => {
