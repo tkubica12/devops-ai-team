@@ -58,11 +58,15 @@ const VirtualOfficePet = () => {
   }, [isDarkMode]);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setMoodScore((prevScore) => Math.max(prevScore - 5, 0)); // Decrease mood score, min 0
-    }, 5000); // Decrease mood score every 5 seconds
+    try {
+      const timer = setInterval(() => {
+        setMoodScore((prevScore) => Math.max(prevScore - 5, 0)); // Decrease mood score, min 0
+      }, 5000); // Decrease mood score every 5 seconds
 
-    return () => clearInterval(timer);
+      return () => clearInterval(timer);
+    } catch (error) {
+      console.error('Error in timer:', error);
+    }
   }, []);
 
   useEffect(() => {

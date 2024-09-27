@@ -4,6 +4,10 @@
   --text-color: #ffffff;
   --header-bg-color: #282c34;
   --card-bg-color: #ffffff;
+  --dark-bg-color: #2c2c2c;
+  --dark-btn-bg-color: #444;
+  --dark-text-color: #e4e4e4;
+  --dark-header-bg-color: #1e1e1e;
 }
 
 body {
@@ -34,15 +38,15 @@ button {
 }
 
 .dark .App {
-  background-color: #2c2c2c;
-  color: #e4e4e4;
+  background-color: var(--dark-bg-color);
+  color: var(--dark-text-color);
 }
 
 .dark button {
-  background-color: #444;
-  color: #e4e4e4;
+  background-color: var(--dark-btn-bg-color);
+  color: var(--dark-text-color);
 }
 
 .dark .App-header {
-  background-color: #1e1e1e;
+  background-color: var(--dark-header-bg-color);
 }
