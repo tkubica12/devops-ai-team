@@ -11,5 +11,5 @@ root.render(
 );
 
 if (process.env.NODE_ENV === 'development'){
-  import('./reportWebVitals').then(({ reportWebVitals }) => reportWebVitals(console.log));
+  import('./reportWebVitals').then(({ reportWebVitals }) => reportWebVitals());
 }
