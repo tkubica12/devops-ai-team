@@ -11,6 +11,7 @@ import OnboardingTutorial from './components/OnboardingTutorial';
 import HelpSection from './components/HelpSection';
 import MultilingualSupport from './components/MultilingualSupport';
 import DOMPurify from 'dompurify';
+import { toast } from 'react-toastify';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -41,12 +42,14 @@ const VirtualOfficePet = () => {
     setMood('excited');
     setMoodScore(70);
     setLastAction('Adopted');
+    toast.success('You have successfully adopted a pet!');
   };
 
   const performAction = (action) => {
     const sanitizedAction = DOMPurify.sanitize(action);
     setLastAction(sanitizedAction);
     setMoodScore((prevScore) => Math.min(prevScore + 10, 100));
+    toast.info(`Performed action: ${sanitizedAction}`);
   };
 
   useEffect(() => {

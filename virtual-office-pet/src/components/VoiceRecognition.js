@@ -5,8 +5,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const VoiceRecognition = ({ performAction }) => {
-  const [isListening, setIsListening] = useState(false);
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+  const [isListening, setIsListening] = useState(false);
   const isMounted = useRef(false);
 
   const handleCommand = (command) => {
@@ -35,10 +35,6 @@ const VoiceRecognition = ({ performAction }) => {
     }
   };
 
-  const handleListeningToggle = () => {
-    if (isMounted.current) setIsListening((prevState) => !prevState);
-  };
-
   useEffect(() => {
     isMounted.current = true;
     return () => {
@@ -54,13 +50,22 @@ const VoiceRecognition = ({ performAction }) => {
 
   useEffect(() => {
     if (isListening) {
-      window.SpeechRecognition.startListening({ continuous: true });
-    } else {
-      window.SpeechRecognition.stopListening();
-      handleCommand(transcript);
-      resetTranscript();
+      const recognition = new window.SpeechRecognition();
+      recognition.continuous = true;
+      recognition.onresult = (event) => {
+        handleCommand(event.results[0][0].transcript);
+      };
+      recognition.start();
+
+      return () => {
+        recognition.stop();
+      };
     }
-  }, [isListening, transcript, resetTranscript]);
+  }, [isListening]);
+
+  const handleListeningToggle = () => {
+    setIsListening((prevState) => !prevState);
+  };
 
   return (
     <div className="voice-recognition">
