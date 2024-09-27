@@ -1,9 +1,7 @@
 :root {
   --primary-color: #007bff;
   --secondary-color: #f9f9f9;
-  --text-color: #333;
   --header-bg-color: #282c34;
-  --card-bg-color: #ffffff;
   --dark-mode-background: #2c2c2c;
   --dark-mode-button-background: #444;
   --dark-mode-text-color: #e4e4e4;
@@ -36,13 +34,13 @@ body {
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: var(--text-color);
+  color: var(--dark-mode-text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button {
   background-color: var(--primary-color);
-  color: var(--text-color);
+  color: var(--dark-mode-text-color);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;

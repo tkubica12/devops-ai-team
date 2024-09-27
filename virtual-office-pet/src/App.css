@@ -6,7 +6,7 @@
   background-color: var(--secondary-color);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .App-header {
@@ -18,7 +18,6 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button {
@@ -28,7 +27,7 @@ button {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
   margin: 5px;
   display: flex;
   align-items: center;
@@ -55,7 +54,7 @@ button span {
   padding: 8px 16px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .dark .dark-mode-toggle {
