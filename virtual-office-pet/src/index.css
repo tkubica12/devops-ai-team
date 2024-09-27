@@ -3,9 +3,9 @@
   --secondary-color: #f9f9f9;
   --header-bg-color: #282c34;
   --text-color: #333;
-  --dark-mode-background: #121212;
+  --dark-mode-background: #2a2a2a;
   --dark-mode-button-background: #444;
-  --dark-mode-text-color: #E0E0E0;
+  --dark-mode-text-color: #eaeaea;
   --dark-mode-header-background: #1e1e1e;
   --button-hover-color: #0056b3;
 }
@@ -86,8 +86,8 @@ button span {
 
 .dark {
   --primary-color: #0056b3;
-  --secondary-color: #121212;
-  --text-color: #E0E0E0;
+  --secondary-color: #2a2a2a;
+  --text-color: #eaeaea;
   --header-bg-color: #1e1e1e;
 } 
 

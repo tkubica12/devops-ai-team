@@ -32,6 +32,18 @@ const ThemeToggle = () => {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    const systemThemeChangeHandler = (e) => {
+      const systemTheme = e.matches ? 'dark' : 'light';
+      setTheme(sanitizeThemeValue(localStorage.getItem('theme')) || systemTheme);
+    };
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', systemThemeChangeHandler);
+
+    return () => mediaQuery.removeEventListener('change', systemThemeChangeHandler);
+  }, []);
+
   return (
     <button onClick={toggleTheme} className="dark-mode-toggle">
       {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />} {theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
