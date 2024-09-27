@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play, Moon, Sun } from 'lucide-react';
-import './App.css'; // Import the CSS file
+import './App.css';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -26,7 +26,7 @@ PetAction.propTypes = {
 const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
-  const [moodScore, setMoodScore] = useState(50); // Initial mood score
+  const [moodScore, setMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -36,17 +36,17 @@ const VirtualOfficePet = () => {
   const adoptPet = (petType) => {
     setPet(petType);
     setMood('excited');
-    setMoodScore(70); // Set initial mood score when pet is adopted
+    setMoodScore(70);
     setLastAction('Adopted');
   };
 
   const performAction = (action) => {
     setLastAction(action);
-    setMoodScore((prevScore) => Math.min(prevScore + 10, 100)); // Increase mood score, max 100
+    setMoodScore((prevScore) => Math.min(prevScore + 10, 100));
   };
 
   const toggleDarkMode = () => {
-    setIsDarkMode(prevMode => {
+    setIsDarkMode((prevMode) => {
       const newMode = !prevMode;
       localStorage.setItem('theme', newMode ? 'dark' : 'light');
       return newMode;
@@ -60,9 +60,8 @@ const VirtualOfficePet = () => {
   useEffect(() => {
     try {
       const timer = setInterval(() => {
-        setMoodScore((prevScore) => Math.max(prevScore - 5, 0)); // Decrease mood score, min 0
-      }, 5000); // Decrease mood score every 5 seconds
-
+        setMoodScore((prevScore) => Math.max(prevScore - 5, 0));
+      }, 5000);
       return () => clearInterval(timer);
     } catch (error) {
       console.error('Error in timer:', error);
@@ -70,7 +69,6 @@ const VirtualOfficePet = () => {
   }, []);
 
   useEffect(() => {
-    // Update mood based on mood score
     if (moodScore >= 70) {
       setMood('happy');
     } else if (moodScore >= 40) {

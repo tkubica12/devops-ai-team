@@ -1,7 +1,7 @@
 :root {
   --primary-color: #007bff;
   --secondary-color: #f9f9f9;
-  --text-color: #ffffff;
+  --text-color: #333;
   --header-bg-color: #282c34;
   --card-bg-color: #ffffff;
   --dark-bg-color: #2c2c2c;
@@ -17,6 +17,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 code {
@@ -26,6 +27,7 @@ code {
 
 .App {
   background-color: var(--secondary-color);
+  color: var(--text-color);
 }
 
 button {

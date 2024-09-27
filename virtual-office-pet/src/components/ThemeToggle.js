@@ -19,11 +19,13 @@ const ThemeToggle = () => {
   };
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
 
   return (
-    <button onClick={toggleTheme}>Toggle Theme</button>
+    <button onClick={toggleTheme} className="dark-mode-toggle">
+      {theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+    </button>
   );
 };
 

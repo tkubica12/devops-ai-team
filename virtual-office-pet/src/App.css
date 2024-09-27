@@ -3,48 +3,61 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: var(--secondary-color);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--header-bg-color);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button {
-  background-color: #007bff;
-  color: #fff;
+  background-color: var(--primary-color);
+  color: var(--text-color);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin: 5px; /* Add margin to buttons */
-  display: flex; /* Use Flexbox */
-  align-items: center; /* Align items vertically */
-  justify-content: center; /* Center items horizontally */
-}
-
-/* Add some spacing between icon and text */
-button span {
-  margin-left: 8px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button:hover {
   background-color: #0056b3;
 }
 
-/* Ensure the button container is centered */
+button span {
+  margin-left: 8px;
+}
+
 .button-container {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap; /* Allow buttons to wrap if necessary */
+  flex-wrap: wrap;
+}
+
+.dark-mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dark .dark-mode-toggle {
+  background-color: var(--dark-btn-bg-color);
 }
