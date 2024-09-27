@@ -10,5 +10,4 @@ root.render(
   </React.StrictMode>
 );
 
-// reportWebVitals have been configured and removed for production efficiency.
-
+// Cleaned up console logs for production.

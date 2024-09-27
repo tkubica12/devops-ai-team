@@ -15,12 +15,18 @@ const VirtualOfficePet = () => {
   }, []);
 
   const handleNavigation = (section) => {
-    if (section === 'customization') {
-      setMenuOpen(true);
-    } else if (section === 'games') {
-      setFeedbackMessage('Games feature coming soon!');
-    } else if (section === 'quotes') {
-      setFeedbackMessage('Inspirational quotes: Believe in yourself!');
+    switch (section) {
+      case 'customization':
+        setMenuOpen(true);
+        break;
+      case 'games':
+        setFeedbackMessage('Games feature coming soon!');
+        break;
+      case 'quotes':
+        setFeedbackMessage('Inspirational quotes: Believe in yourself!');
+        break;
+      default:
+        break;
     }
   };
 
