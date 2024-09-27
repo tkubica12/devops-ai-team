@@ -12,6 +12,8 @@ import HelpSection from './components/HelpSection';
 import MultilingualSupport from './components/MultilingualSupport';
 import DOMPurify from 'dompurify';
 import { toast } from 'react-toastify';
+import InteractivePollsWithPets from './components/InteractivePollsWithPets';
+import SeasonalPetCareTips from './components/SeasonalPetCareTips';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -79,6 +81,7 @@ const VirtualOfficePet = () => {
         <CardContent>
           <MultilingualSupport />
           <VoiceRecognition performAction={performAction} />
+          <InteractivePollsWithPets />
           {!pet ? (
             <div>
               <p>Choose your pet:</p>
@@ -103,6 +106,7 @@ const VirtualOfficePet = () => {
                 <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
                 <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} />
               </div>
+              <SeasonalPetCareTips />
             </div>
           )}
           <Wardrobe />
