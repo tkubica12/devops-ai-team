@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
@@ -15,6 +16,12 @@ const PetAction = ({ icon: Icon, label, onClick }) => (
     <span>{label}</span>
   </Button>
 );
+
+PetAction.propTypes = {
+  icon: PropTypes.elementType.isRequired,
+  label: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
@@ -65,7 +72,7 @@ const VirtualOfficePet = () => {
               <p>Choose your pet:</p>
               <div className="button-container mt-4">
                 {petTypes.map((type) => (
-                  <Button key={type.name} onClick={() => adoptPet(type)} className="flex flex-col items-center">
+                  <Button key={type.name + Math.random()} onClick={() => adoptPet(type)} className="flex flex-col items-center">
                     <type.icon size={40} />
                     <span>{type.name}</span>
                   </Button>
