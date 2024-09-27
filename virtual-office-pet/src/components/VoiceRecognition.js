@@ -15,13 +15,19 @@ const VoiceRecognition = ({ performAction }) => {
       case 'play':
       case 'jouer':
       case 'spielen':
-      case 'jugar': // Spanish
+      case 'jugar':
         performAction('Played');
         break;
       case 'sleep':
       case 'dormir':
       case 'schlafen':
         performAction('Slept');
+        break;
+      case 'sit':
+      case 'asseoir':
+      case 'sitzen':
+      case 'sentar':
+        performAction('Sat');
         break;
       default:
         toast.error('Unrecognized command');

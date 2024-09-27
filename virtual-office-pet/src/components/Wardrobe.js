@@ -25,10 +25,11 @@ const Wardrobe = () => {
   return (
     <div className="wardrobe mt-8">
       <h3 className="text-lg font-bold">Wardrobe</h3>
+      <p className="text-sm text-gray-500">Customize your pet's outfits for every season.</p>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="wardrobe">
           {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
+            <div className="my-4" {...provided.droppableProps} ref={provided.innerRef}>
               {items.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided) => (
@@ -36,7 +37,7 @@ const Wardrobe = () => {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className="bg-gray-200 p-2 mt-2 rounded"
+                      className="bg-gray-200 p-2 rounded mt-2"
                     >
                       {item.content}
                     </div>
