@@ -3,10 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import { SpeechProvider, useSpeechContext } from '@speechly/react-client';
-import { PushToTalkButton, PushToTalkButtonContainer } from '@speechly/react-ui';
 import validator from 'validator';
 import DOMPurify from 'dompurify';
-import './App.css'; 
+import './App.css';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -31,14 +30,6 @@ const VirtualOfficePet = () => {
     const sanitized = DOMPurify.sanitize(validator.escape(transcript));
     return ['play', 'sleep'].includes(sanitized) ? sanitized : null;
   };
-
-  useEffect(() => {
-    if (segment && segment.isFinal) {
-      const command = sanitizeTranscript(segment.intent.intent);
-      if (command) performAction(command.charAt(0).toUpperCase() + command.slice(1));
-      console.log('Recognized command:', segment.intent.intent);
-    }
-  }, [segment]);
 
   const adoptPet = (petType) => {
     setPet(petType);
@@ -70,9 +61,17 @@ const VirtualOfficePet = () => {
     }
   }, [moodScore]);
 
+  useEffect(() => {
+    if (segment && segment.isFinal) {
+      const command = sanitizeTranscript(segment.intent.intent);
+      if (command) performAction(command.charAt(0).toUpperCase() + command.slice(1));
+      console.log('Recognized command:', segment.intent.intent);
+    }
+  }, [segment]);
+
   return (
     <SpeechProvider appId="your-app-id">
-      <div className="App">
+      <div className="app">
         <Card className="w-80 mx-auto mt-8">
           <CardHeader>
             <CardTitle>Virtual Office Pet</CardTitle>

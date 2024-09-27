@@ -3,17 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^6.1.3",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
-    "lucide-react": "^0.455.0",
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.0.1",
+    "@testing-library/user-event": "^14.4.4",
+    "lucide-react": "^0.457.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^3.3.1",
-    "@speechly/react-client": "^1.5.1",
-    "@speechly/react-ui": "^1.5.1",
-    "validator": "^13.9.0"
+    "react-scripts": "5.0.2",
+    "web-vitals": "^3.3.2",
+    "@speechly/react-client": "^1.5.2",
+    "@speechly/react-ui": "^1.5.2",
+    "validator": "^13.9.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,13 +41,13 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.22.0",
-    "autoprefixer": "^10.4.20",
-    "eslint": "^8.50.0",
-    "postcss": "^8.4.47",
-    "prop-types": "^15.8.1",
-    "tailwindcss": "^3.5.8",
-    "dompurify": "^2.3.10",
-    "sanitize-html": "^2.8.1"
+    "@babel/plugin-proposal-private-property-in-object": "^7.22.5",
+    "autoprefixer": "^10.4.23",
+    "eslint": "^8.51.0",
+    "postcss": "^8.4.50",
+    "prop-types": "^15.8.2",
+    "tailwindcss": "^3.5.9",
+    "dompurify": "^2.4.0",
+    "sanitize-html": "^2.8.2"
   }
 }

@@ -1,4 +1,4 @@
-.App {
+.app {
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
@@ -8,7 +8,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.App-header {
+.app-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -19,7 +19,7 @@
   color: white;
 }
 
-.button {
+.unique-button {
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -33,11 +33,11 @@
   justify-content: center;
 }
 
-.button span {
+.unique-button span {
   margin-left: 8px;
 }
 
-.button:hover {
+.unique-button:hover {
   background-color: #0056b3;
 }
 
@@ -45,4 +45,4 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-}
+} 
