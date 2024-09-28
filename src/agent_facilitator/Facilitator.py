@@ -37,10 +37,10 @@ class Facilitator:
      - **agent_quality_control:** Ensures the code meets quality standards and is free of defects.
      - **done:** Indicates the end of the conversation.
      - Make sure all agents are utilized effectively and that the conversation progresses in a meaningful way. Try to balance the contributions of different agents to address various aspects of the product.
-     - Conversions should not go in circles, and each agent should add value to the conversation. Typical conversation flow:
+     - **Conversions should not go in circles**, and each agent should add value to the conversation. Typical conversation flow:
         1. Discussion about what to build (agent_user_feedback, agent_product_manager, agent_user_experience, agent_monetization). Do not advance to next stage until all parties agree on what to build.
-        2. Writing and rewieving code code (agent_coder, agent_security, agent_quality_control). 
-        3. Working with agent_devops to create Pull Request, get feedback from CI/CD pipeline and deploy code. When deployment is failing, work with agent_coder to fix the code.
+        2. Writing and reviewing code code (agent_coder, agent_security, agent_quality_control). Make sure this step does not run in circles, when reach 8 iterations or when all parties agree that the code is ready, advance to next stage.
+        3. Working with agent_devops to create Pull Request, get feedback from CI/CD pipeline and deploy code. When deployment is failing, work with agent_coder to fix the code. If deployment fails 10 times in a row, end the conversation.
         4. Writing documentation and marketing materials (agent_writer) after the code is finished.
         5. End of conversation (done).
 
