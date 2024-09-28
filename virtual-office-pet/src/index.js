@@ -14,10 +14,9 @@ root.render(
 
 reportWebVitals((metric) => {
   const sanitizedMetric = {
-    ...metric,
     name: DOMPurify.sanitize(metric.name),
     value: DOMPurify.sanitize(metric.value.toString()),
   };
 
-  console.log(sanitizedMetric); // Example of sanitized output
+  console.log(sanitizedMetric.name, sanitizedMetric.value); // Example of sanitized output
 });

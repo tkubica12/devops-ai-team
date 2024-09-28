@@ -107,9 +107,9 @@ const VirtualOfficePet = () => {
                 {lastAction && <p>Last action: {lastAction}</p>}
               </div>
               <div className="button-container grid grid-cols-2 gap-2">
-                <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
-                <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
-                <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} />
+                <PetAction icon={Coffee} label="Feed" onClick={() => confirmAction('Fed')} />
+                <PetAction icon={MessageSquare} label="Talk" onClick={() => confirmAction('Talked')} />
+                <PetAction icon={Play} label="Play" onClick={() => confirmAction('Played')} />
               </div>
             </div>
           )}

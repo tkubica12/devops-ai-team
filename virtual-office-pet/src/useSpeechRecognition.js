@@ -19,7 +19,12 @@ const useSpeechRecognition = (language = 'en', threshold = 0.75) => {
     return () => VoiceRecognition.stop();
   }, [language, threshold]);
 
-  return { command, error, showModal, setShowModal };
+  const handleCloseModal = () => {
+    setError(null);
+    setShowModal(false);
+  };
+
+  return { command, error, showModal, handleCloseModal };
 };
 
 export default useSpeechRecognition;
