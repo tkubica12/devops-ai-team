@@ -24,21 +24,18 @@ const PetAction = ({ icon: Icon, label, onClick }) => (
 );
 
 const VirtualOfficePet = () => {
-  const [pet, setPet] = useState(null);
-  const [mood, setMood] = useState('happy');
-  const [moodScore, setMoodScore] = useState(50);
-  const [lastAction, setLastAction] = useState(null);
+  const [state, setState] = useState({ pet: null, mood: 'happy', moodScore: 50, lastAction: null });
 
   const adoptPet = (petType) => {
-    setPet(petType);
-    setMood('excited');
-    setMoodScore(70);
-    setLastAction('Adopted');
+    setState({ ...state, pet: petType, mood: 'excited', moodScore: 70, lastAction: 'Adopted' });
   };
 
   const performAction = (action) => {
-    setLastAction(sanitizeInput(action));
-    setMoodScore((prevScore) => Math.min(prevScore + 10, 100));
+    setState((prevState) => ({
+      ...prevState,
+      lastAction: sanitizeInput(action),
+      moodScore: Math.min(prevState.moodScore + 10, 100),
+    }));
   };
 
   const handleVoiceCommand = (command) => {
@@ -50,21 +47,16 @@ const VirtualOfficePet = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setMoodScore((prevScore) => Math.max(prevScore - 5, 0));
+      setState((prevState) => ({ ...prevState, moodScore: Math.max(prevState.moodScore - 5, 0) }));
     }, 5000);
 
     return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
-    if (moodScore >= 70) {
-      setMood('happy');
-    } else if (moodScore >= 40) {
-      setMood('okay');
-    } else {
-      setMood('sad');
-    }
-  }, [moodScore]);
+    const mood = state.moodScore >= 70 ? 'happy' : state.moodScore >= 40 ? 'okay' : 'sad';
+    setState((prevState) => ({ ...prevState, mood }));
+  }, [state.moodScore]);
 
   return (
     <div className="App">
@@ -73,7 +65,7 @@ const VirtualOfficePet = () => {
           <CardTitle>Virtual Office Pet</CardTitle>
         </CardHeader>
         <CardContent>
-          {!pet ? (
+          {!state.pet ? (
             <div>
               <p>Choose your pet:</p>
               <div className="button-container mt-4">
@@ -88,9 +80,9 @@ const VirtualOfficePet = () => {
           ) : (
             <div>
               <div className="text-center mb-4">
-                <pet.icon size={80} />
-                <p>Mood: {mood}</p>
-                {lastAction && <p>Last action: {lastAction}</p>}
+                <state.pet.icon size={80} />
+                <p>Mood: {state.mood}</p>
+                {state.lastAction && <p>Last action: {state.lastAction}</p>}
               </div>
               <div className="button-container grid grid-cols-2 gap-2">
                 <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />

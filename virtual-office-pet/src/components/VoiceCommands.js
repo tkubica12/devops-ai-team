@@ -1,22 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button } from './ui/Button';
 
 const VoiceCommands = ({ onCommand }) => {
-  useEffect(() => {
-    const handleVoiceCommand = (command) => {
-      // Removed console.log for security
-      onCommand(command);
-    };
-
-    const commands = ['play', 'sleep'];
-    commands.forEach((command) => {
-      setTimeout(() => handleVoiceCommand(command), 3000);
-    });
-
-    return () => {
-      // Clean up resources, if any
-    };
-  }, [onCommand]);
+  // Simulate real voice command handling or integrate a third-party service here.
 
   return (
     <div>

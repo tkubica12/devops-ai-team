@@ -1,9 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import VirtualOfficePet from './App'; // Import the VirtualOfficePet component
-
-const mockCommandHandler = jest.fn();
+import VirtualOfficePet from './App';
 
 jest.mock('./components/VoiceCommands', () => ({ onCommand }) => (
   <div>
