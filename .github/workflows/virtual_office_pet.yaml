@@ -34,16 +34,26 @@ jobs:
       working-directory: ./virtual-office-pet
       run: |
         if [ -f package-lock.json ]; then
-          npm ci
+          npm ci 2>&1 | tee setup.log; test ${PIPESTATUS} -eq 0
         else
-          npm install
+          npm install 2>&1 | tee setup.log; test ${PIPESTATUS} -eq 0
         fi
+
+    - name: Capture setup logs on failure
+      if: failure()
+      run: |
+        echo "Failure detected"
+        url="https://ca-actions-event-processor.gentlebay-c1f53198.germanywestcentral.azurecontainerapps.io/api/actions_event"
+        pr_title=$(jq -r '.pull_request.title' "$GITHUB_EVENT_PATH")
+        log_content=$(cat ./virtual-office-pet/setup.log | jq -Rs .)
+        echo "{\"conversation_id\":\"${pr_title}\", \"log\":${log_content}}" > message.json
+        curl -X POST -H "Content-Type: application/json" -d @message.json $url
 
     - name: Build
       run: SKIP_PREFLIGHT_CHECK=true npm run build --if-present --no-audit 2>&1 | tee build.log; test ${PIPESTATUS} -eq 0
       working-directory: ./virtual-office-pet
 
-    - name: Capture logs on failure
+    - name: Capture build logs on failure
       if: failure()
       run: |
         echo "Failure detected"
