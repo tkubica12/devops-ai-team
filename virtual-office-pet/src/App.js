@@ -4,6 +4,7 @@ import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import './App.css';
 import { useSpeechRecognition } from './hooks/useSpeechRecognition';
+import DOMPurify from 'dompurify';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -23,7 +24,7 @@ const VirtualOfficePet = () => {
   const [moodScore, setMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
 
-  const { listen, listening, stop, voiceCommand } = useSpeechRecognition();
+  const { listen, listening, stop, voiceCommand, error } = useSpeechRecognition();
 
   useEffect(() => {
     if (voiceCommand) {
@@ -32,7 +33,8 @@ const VirtualOfficePet = () => {
   }, [voiceCommand]);
 
   const handleVoiceCommand = (command) => {
-    switch (command) {
+    const sanitizedCommand = DOMPurify.sanitize(command);
+    switch (sanitizedCommand) {
       case 'play':
         performAction('Played');
         break;
@@ -81,6 +83,7 @@ const VirtualOfficePet = () => {
           <CardTitle>Virtual Office Pet</CardTitle>
         </CardHeader>
         <CardContent>
+          {error && <p className="text-red-500">Error: {error}</p>}
           {!pet ? (
             <div>
               <p>Choose your pet:</p>

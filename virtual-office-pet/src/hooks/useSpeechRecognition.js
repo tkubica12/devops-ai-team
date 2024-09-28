@@ -4,31 +4,50 @@ import * as speechCommands from '@tensorflow-models/speech-commands';
 export const useSpeechRecognition = () => {
   const [listening, setListening] = useState(false);
   const [voiceCommand, setVoiceCommand] = useState(null);
-  const recognizer = speechCommands.create('BROWSER_FFT');
+  const [error, setError] = useState(null);
+  let recognizer;
 
   useEffect(() => {
-    const loadRecognizer = async () => {
-      await recognizer.ensureModelLoaded();
+    const initialize = async () => {
+      try {
+        recognizer = await speechCommands.create('BROWSER_FFT');
+        await recognizer.ensureModelLoaded();
+      } catch (err) {
+        setError(err.message);
+        console.error('Error loading recognizer:', err);
+      }
     };
-    loadRecognizer();
-  }, [recognizer]);
+    initialize();
+  }, []);
 
   const listen = () => {
-    recognizer.listen(result => {
-      const scores = result.scores;
-      const commands = recognizer.wordLabels();
-      const highestScoreIndex = scores.reduce((bestIndex, currentScore, index, array) =>
-        currentScore > array[bestIndex] ? index : bestIndex, 0);
+    if (!recognizer) return;
 
-      setVoiceCommand(commands[highestScoreIndex]);
-    }, { probabilityThreshold: 0.75 });
+    recognizer.listen(
+      result => {
+        const scores = result.scores;
+        const commands = recognizer.wordLabels();
+        const highestScoreIndex = scores.reduce(
+          (bestIndex, currentScore, index, array) =>
+            currentScore > array[bestIndex] ? index : bestIndex,
+          0
+        );
+
+        setVoiceCommand(commands[highestScoreIndex]);
+      },
+      {
+        probabilityThreshold: 0.75, // could be made configurable
+      }
+    );
     setListening(true);
   };
 
   const stop = () => {
-    recognizer.stopListening();
-    setListening(false);
+    if (recognizer) {
+      recognizer.stopListening();
+      setListening(false);
+    }
   };
 
-  return { listen, listening, stop, voiceCommand };
+  return { listen, listening, stop, voiceCommand, error };
 };
