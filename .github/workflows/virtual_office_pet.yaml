@@ -40,7 +40,7 @@ jobs:
         fi
 
     - name: Build
-      run: SKIP_PREFLIGHT_CHECK=true npm run build --if-present --no-audit
+      run: SKIP_PREFLIGHT_CHECK=true npm run build --if-present --no-audit 2>&1 | tee build.log
       working-directory: ./virtual-office-pet
 
     - name: Capture logs on failure
