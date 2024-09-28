@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import './App.css';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
-import './App.css';
 import { useSpeechRecognition } from './hooks/useSpeechRecognition';
 import DOMPurify from 'dompurify';
 import { voiceCommands } from './hooks/voiceCommands';
 import { Feedback } from './components/Feedback';
+import { SeasonalOutfits } from './components/SeasonalOutfits';
+import { Competitions } from './components/Competitions';
+import { useSeasonalOutfits } from './hooks/useSeasonalOutfits';
+import { useCompetitions } from './hooks/useCompetitions';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -28,6 +32,8 @@ const VirtualOfficePet = () => {
   const [language, setLanguage] = useState('en');
 
   const { listen, listening, stop, voiceCommand, error } = useSpeechRecognition();
+  const { ownedOutfits, purchaseOutfitPack } = useSeasonalOutfits();
+  const { competitions, joinCompetition } = useCompetitions();
 
   useEffect(() => {
     if (voiceCommand) {
@@ -112,6 +118,8 @@ const VirtualOfficePet = () => {
               )}
             </div>
           )}
+          <SeasonalOutfits onPurchase={purchaseOutfitPack} />
+          <Competitions onJoin={joinCompetition} />
         </CardContent>
       </Card>
     </div>
