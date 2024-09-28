@@ -1,15 +1,7 @@
-name: Virtual Office Pet
+name: Virtual Office Pet ORIGINAL
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'virtual-office-pet/**'
-    branches: [ main ]
-  pull_request:
-    paths:
-      - 'virtual-office-pet/**'
-    branches: [ main ]
 
 permissions:
   id-token: write
@@ -43,16 +35,6 @@ jobs:
       run: SKIP_PREFLIGHT_CHECK=true npm run build --if-present --no-audit 2>&1 | tee build.log; test ${PIPESTATUS} -eq 0
       working-directory: ./virtual-office-pet
 
-    - name: Capture logs on failure
-      if: failure()
-      run: |
-        echo "Failure detected"
-        url="https://ca-actions-event-processor.gentlebay-c1f53198.germanywestcentral.azurecontainerapps.io/api/actions_event"
-        pr_title=$(jq -r '.pull_request.title' "$GITHUB_EVENT_PATH")
-        log_content=$(cat ./virtual-office-pet/build.log | jq -Rs .)
-        echo "{\"conversation_id\":\"${pr_title}\", \"log\":${log_content}}" > message.json
-        curl -X POST -H "Content-Type: application/json" -d @message.json $url
-
     - name: Login to GitHub Packages Docker registry
       uses: docker/login-action@v1
       with:
@@ -65,7 +47,7 @@ jobs:
       with:
         context: ./virtual-office-pet
         push: true
-        tags: ghcr.io/${{ github.repository }}/virtual-office-pet:${{ github.run_id }}    
+        tags: ghcr.io/${{ github.repository }}/virtual-office-pet:original    
 
     - name: 'Az CLI login'
       uses: azure/login@v2
@@ -78,8 +60,8 @@ jobs:
       uses: azure/container-apps-deploy-action@v1
       with:
         registryUrl: ghcr.io
-        containerAppName: virtual-office-pet
+        containerAppName: virtual-office-pet-original
         resourceGroup: rg-ai-team-qcga
-        imageToDeploy: ghcr.io/${{ github.repository }}/virtual-office-pet:${{ github.run_id }}
+        imageToDeploy: ghcr.io/${{ github.repository }}/virtual-office-pet:original
         targetPort: 80
         ingress: external
