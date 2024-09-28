@@ -42,7 +42,7 @@ async def actions_event(actions_event: ActionsEvent):
     print(f"Log from GitHub Actions:\n{actions_event.log}\n")
     try:
         event_data = AgentCommunicationData(
-            message=f"# Error when building application\n\nCheck the logs for more information and fix issues in code.\n\n{actions_event.log}",
+            message=f"**Error when building application**\n\nCheck the logs for more information and fix issues in code.\n\n{actions_event.log}",
             next_agent="agent_coder"
         )
         event = Event(
