@@ -1,8 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Message from './Message';
-import { v4 as uuidv4 } from 'uuid';
 import { FaSync } from 'react-icons/fa'; // Import FontAwesome sync icon
+
+const adjectives = [
+  'green', 'blue', 'red', 'yellow', 'happy', 'sad', 'fast', 'slow',
+  'bright', 'dark', 'cheerful', 'gloomy', 'quick', 'lazy', 'brave', 'timid',
+  'strong', 'weak', 'smart', 'dull', 'friendly', 'hostile', 'calm', 'angry'
+];
+
+const nouns = [
+  'Dog', 'Cat', 'Bird', 'Fish', 'Lion', 'Tiger', 'Bear', 'Shark',
+  'Elephant', 'Wolf', 'Fox', 'Rabbit', 'Deer', 'Horse', 'Monkey', 'Giraffe',
+  'Panda', 'Koala', 'Kangaroo', 'Leopard', 'Zebra', 'Cheetah', 'Hawk', 'Eagle'
+];
+
+function generateCodename() {
+  const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+  const noun = nouns[Math.floor(Math.random() * nouns.length)];
+  return `${adjective}${noun}`;
+}
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -61,7 +78,7 @@ function App() {
     if (e.key === 'Enter' && inputMessage.trim()) {
       let newConversationId = conversationId;
       if (!conversationId) {
-        newConversationId = uuidv4();
+        newConversationId = generateCodename(); // Generate a codename instead of UUID
         setConversationId(newConversationId);
         setConversations((prevConversations) => [...prevConversations, newConversationId]);
       }
