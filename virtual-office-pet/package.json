@@ -12,7 +12,8 @@
     "react-scripts": "5.0.1",
     "web-vitals": "2.1.4",
     "@tensorflow-models/speech-commands": "0.4.0",
-    "dompurify": "2.3.4"
+    "dompurify": "2.3.4",
+    "winston": "^3.8.2"
   },
   "scripts": {
     "start": "react-scripts start",
