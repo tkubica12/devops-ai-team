@@ -131,6 +131,7 @@ while True:
             if event.event_type in ["agent_communication"] and event.event_data.next_agent == agent_config.event_producer:
                 # Extract list of topics for search
                 intent = agent.extract_intent(message_input=event.event_data.message, conversation_id=event.conversation_id)
+                task_description = f"**Intent:** {intent}\n\n**Exact last message:** {event.event_data.message}"
 
                 # Get relevant application files from feature branch or from main branch if feature branch does not exist
                 if github_tools.check_branch_exists(branch=event.conversation_id):
@@ -139,7 +140,7 @@ while True:
                     files = github_tools.fetch_code_files(path="main:virtual-office-pet")
 
                 # Generate code based on the intent and files
-                generated_files = agent.generate_code(instructions=agent.agent_config.instructions, task_description=intent, files=files)
+                generated_files = agent.generate_code(instructions=agent.agent_config.instructions, task_description=task_description, files=files)
 
                 # Create branch and commit the generated code
                 latest_commit_oid = github_tools.create_branch(event.conversation_id)
