@@ -6,6 +6,7 @@ import './App.css';
 import { useSpeechRecognition } from './hooks/useSpeechRecognition';
 import DOMPurify from 'dompurify';
 import { voiceCommands } from './hooks/voiceCommands';
+import { Feedback } from './components/Feedback';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -24,6 +25,7 @@ const VirtualOfficePet = () => {
   const [mood, setMood] = useState('happy');
   const [moodScore, setMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
+  const [language, setLanguage] = useState('en');
 
   const { listen, listening, stop, voiceCommand, error } = useSpeechRecognition();
 
@@ -35,8 +37,8 @@ const VirtualOfficePet = () => {
 
   const handleVoiceCommand = (command) => {
     const sanitizedCommand = DOMPurify.sanitize(command);
-    if (voiceCommands[sanitizedCommand]) {
-      performAction(voiceCommands[sanitizedCommand]);
+    if (voiceCommands[language][sanitizedCommand]) {
+      performAction(voiceCommands[language][sanitizedCommand]);
     }
   };
 
@@ -77,7 +79,7 @@ const VirtualOfficePet = () => {
           <CardTitle>Virtual Office Pet</CardTitle>
         </CardHeader>
         <CardContent>
-          {error && <p className="text-red-500">Error: {error}</p>}
+          {error && <Feedback type="error" message={error} />}
           {!pet ? (
             <div>
               <p>Choose your pet:</p>

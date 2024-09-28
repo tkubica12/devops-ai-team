@@ -8,21 +8,21 @@ module.exports = {
   },
   resolve: {
     fallback: {
-      "util": require.resolve("util/"),
-      "fs": false
-    }
+      util: require.resolve('util/'),
+      fs: false,
+    },
   },
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: 'babel-loader',
       },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
-      }
+      },
     ],
   },
 };

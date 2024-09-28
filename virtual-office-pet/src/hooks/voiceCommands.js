@@ -1,6 +1,14 @@
 export const voiceCommands = {
-  play: 'Played',
-  sleep: 'Slept',
-  feed: 'Fed',
-  talk: 'Talked',
+  en: {
+    play: 'Played',
+    sleep: 'Slept',
+    feed: 'Fed',
+    talk: 'Talked',
+  },
+  es: {
+    jugar: 'Jugado',
+    dormir: 'Dormido',
+    alimentar: 'Alimentado',
+    hablar: 'Hablado',
+  }
 };
