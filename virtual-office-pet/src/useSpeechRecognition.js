@@ -6,7 +6,7 @@ const useSpeechRecognition = (language = 'en', threshold = 0.75) => {
 
   useEffect(() => {
     try {
-      VoiceRecognition.start(setCommand, language);
+      VoiceRecognition.start(setCommand, language, threshold);
     } catch (error) {
       console.error('Error initializing voice recognition:', error);
     }

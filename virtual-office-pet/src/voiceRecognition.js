@@ -11,9 +11,9 @@ const VoiceRecognition = {
     this.currentCommands = voiceCommandsConfig.commands[language] || voiceCommandsConfig.commands['en'];
   },
 
-  start(callback, language = 'en') {
+  start(callback, language = 'en', threshold = 0.75) {
     if (!this.recognizer) {
-      this.initialize(language).then(() => this.start(callback, language));
+      this.initialize(language).then(() => this.start(callback, language, threshold));
       return;
     }
 
@@ -27,7 +27,7 @@ const VoiceRecognition = {
       }
     }, {
       overlapFactor: 0.5,
-      probabilityThreshold: 0.75
+      probabilityThreshold: threshold
     });
   },
 
