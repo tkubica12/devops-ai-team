@@ -12,7 +12,7 @@ const petTypes = [
   { name: 'Cat', icon: Cat },
 ];
 
-const sanitizeInput = (input) => DOMPurify.sanitize(input);
+const sanitizeInput = (input) => DOMPurify.sanitize(input, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
 
 const PetAction = ({ icon: Icon, label, onClick }) => (
   <Button onClick={onClick} className="flex items-center space-x-2">
@@ -43,9 +43,9 @@ const VirtualOfficePet = () => {
   useEffect(() => {
     VoiceRecognition.start((command) => {
       const sanitizedCommand = sanitizeInput(command);
-      if (sanitizedCommand === 'feed') confirmAction('Fed');
-      else if (sanitizedCommand === 'talk') confirmAction('Talked');
-      else if (sanitizedCommand === 'play') confirmAction('Played');
+      if (sanitizedCommand === 'feed') confirmAction('Feed');
+      else if (sanitizedCommand === 'talk') confirmAction('Talk');
+      else if (sanitizedCommand === 'play') confirmAction('Play');
     });
   }, []);
 
@@ -107,9 +107,9 @@ const VirtualOfficePet = () => {
                 {lastAction && <p>Last action: {lastAction}</p>}
               </div>
               <div className="button-container grid grid-cols-2 gap-2">
-                <PetAction icon={Coffee} label="Feed" onClick={() => confirmAction('Fed')} />
-                <PetAction icon={MessageSquare} label="Talk" onClick={() => confirmAction('Talked')} />
-                <PetAction icon={Play} label="Play" onClick={() => confirmAction('Played')} />
+                <PetAction icon={Coffee} label="Feed" onClick={() => confirmAction('Feed')} />
+                <PetAction icon={MessageSquare} label="Talk" onClick={() => confirmAction('Talk')} />
+                <PetAction icon={Play} label="Play" onClick={() => confirmAction('Play')} />
               </div>
             </div>
           )}
