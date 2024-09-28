@@ -5,13 +5,13 @@ import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import './App.css';
 import VoiceRecognition from './voiceRecognition';
 import DOMPurify from 'dompurify';
+import Modal from './components/ui/Modal';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
   { name: 'Cat', icon: Cat },
 ];
 
-// Sanitize input function
 const sanitizeInput = (input) => DOMPurify.sanitize(input);
 
 const PetAction = ({ icon: Icon, label, onClick }) => (
@@ -26,13 +26,26 @@ const VirtualOfficePet = () => {
   const [mood, setMood] = useState('happy');
   const [moodScore, setMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [pendingCommand, setPendingCommand] = useState(null);
+
+  const confirmAction = (command) => {
+    setPendingCommand(command);
+    setShowModal(true);
+  };
+
+  const executePendingCommand = () => {
+    performAction(pendingCommand);
+    setPendingCommand(null);
+    setShowModal(false);
+  };
 
   useEffect(() => {
     VoiceRecognition.start((command) => {
       const sanitizedCommand = sanitizeInput(command);
-      if (sanitizedCommand === 'feed') performAction('Fed');
-      if (sanitizedCommand === 'talk') performAction('Talked');
-      if (sanitizedCommand === 'play') performAction('Played');
+      if (sanitizedCommand === 'feed') confirmAction('Fed');
+      else if (sanitizedCommand === 'talk') confirmAction('Talked');
+      else if (sanitizedCommand === 'play') confirmAction('Played');
     });
   }, []);
 
@@ -102,6 +115,12 @@ const VirtualOfficePet = () => {
           )}
         </CardContent>
       </Card>
+
+      <Modal show={showModal} onClose={() => setShowModal(false)}>
+        <p>Are you sure you want to perform the action: {pendingCommand}?</p>
+        <Button onClick={executePendingCommand}>Confirm</Button>
+        <Button onClick={() => setShowModal(false)}>Cancel</Button>
+      </Modal>
     </div>
   );
 };
