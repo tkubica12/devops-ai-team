@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
-import './App.css'; // Import the CSS file
+import styles from './App.module.css'; // Import CSS module
 
 const INITIAL_MOOD_SCORE = 50;
 const MOOD_SCORE_INCREMENT = 10;
@@ -17,7 +17,7 @@ const petTypes = [
 ];
 
 const PetAction = ({ icon: Icon, label, onClick }) => (
-  <button onClick={onClick} className="button-local">
+  <button onClick={onClick} className={styles.ButtonLocal}>
     <Icon size={20} />
     <span>{label}</span>
   </button>
@@ -60,7 +60,7 @@ const VirtualOfficePet = () => {
   }, [moodScore]);
 
   return (
-    <div className="App">
+    <div className={styles.App}>
       <Card className="w-80 mx-auto mt-8">
         <CardHeader>
           <CardTitle>Virtual Office Pet</CardTitle>
@@ -69,9 +69,9 @@ const VirtualOfficePet = () => {
           {!pet ? (
             <div>
               <p>Choose your pet:</p>
-              <div className="button-container mt-4">
+              <div className={styles.ButtonContainer + ' mt-4'}>
                 {petTypes.map((type) => (
-                  <button key={type.name} onClick={() => adoptPet(type)} className="button-local flex flex-col items-center">
+                  <button key={type.name} onClick={() => adoptPet(type)} className={styles.ButtonLocal + ' flex flex-col items-center'}>
                     <type.icon size={40} />
                     <span>{type.name}</span>
                   </button>
@@ -85,7 +85,7 @@ const VirtualOfficePet = () => {
                 <p>Mood: {mood}</p>
                 {lastAction && <p>Last action: {lastAction}</p>}
               </div>
-              <div className="button-container grid grid-cols-2 gap-2">
+              <div className={styles.ButtonContainer + ' grid grid-cols-2 gap-2'}>
                 <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
                 <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
                 <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} />
