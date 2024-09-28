@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
-import styles from './App.module.css'; // Import CSS module
+import styles from './App.module.css';
 
 const INITIAL_MOOD_SCORE = 50;
 const MOOD_SCORE_INCREMENT = 10;
