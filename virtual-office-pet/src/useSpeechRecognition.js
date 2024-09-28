@@ -11,8 +11,8 @@ const useSpeechRecognition = (language = 'en', threshold = 0.75) => {
     try {
       VoiceRecognition.start(setCommand, language, threshold);
     } catch (err) {
-      console.error('Error initializing voice recognition:', err);
-      setError(err.message);
+      console.error('Error initializing voice recognition:', err.message);
+      setError('Voice recognition initialization failed. Please try again.');
       setShowModal(true);
     }
 

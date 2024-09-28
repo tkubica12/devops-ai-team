@@ -7,6 +7,9 @@ module.exports = {
     filename: 'bundle.js'
   },
   resolve: {
-    fallback: { 'util': require.resolve('util/') }
+    fallback: { 
+      'util': require.resolve('util/'),
+      'fs': false
+    }
   }
 };
