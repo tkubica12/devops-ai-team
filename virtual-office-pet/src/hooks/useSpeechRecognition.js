@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import * as speechCommands from '@tensorflow-models/speech-commands';
-import { Feedback } from '../components/Feedback';
 
 export const useSpeechRecognition = ({ probabilityThreshold = 0.75 } = {}) => {
   const [listening, setListening] = useState(false);
