@@ -10,9 +10,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY main.py .
 COPY Event.py .
 
-# Copy the frontend build artifacts
-COPY --from=frontend-build /app/build ./ui
-
 # Expose the port the app runs on
 EXPOSE 8000
 
