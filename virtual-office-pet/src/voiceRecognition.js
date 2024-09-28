@@ -1,26 +1,26 @@
 import * as tf from '@tensorflow/tfjs';
 import * as speech from '@tensorflow-models/speech-commands';
-
-const VOICE_COMMANDS = ['feed', 'talk', 'play'];
+import { voiceCommandsConfig } from './voiceCommandsConfig';
 
 const VoiceRecognition = {
   recognizer: null,
 
-  async initialize() {
+  async initialize(language = 'en') {
     this.recognizer = speech.create('BROWSER_FFT');
     await this.recognizer.ensureModelLoaded();
+    this.currentCommands = voiceCommandsConfig.commands[language] || voiceCommandsConfig.commands['en'];
   },
 
-  start(callback) {
+  start(callback, language = 'en') {
     if (!this.recognizer) {
-      this.initialize().then(() => this.start(callback));
+      this.initialize(language).then(() => this.start(callback, language));
       return;
     }
 
     this.recognizer.listen(result => {
       const { scores } = result;
       const index = scores.indexOf(Math.max(...scores));
-      const command = VOICE_COMMANDS[index];
+      const command = this.currentCommands[index];
 
       if (command) {
         callback(command);

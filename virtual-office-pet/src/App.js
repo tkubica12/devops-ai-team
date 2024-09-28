@@ -4,11 +4,15 @@ import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import './App.css';
 import VoiceRecognition from './voiceRecognition';
+import DOMPurify from 'dompurify';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
   { name: 'Cat', icon: Cat },
 ];
+
+// Sanitize input function
+const sanitizeInput = (input) => DOMPurify.sanitize(input);
 
 const PetAction = ({ icon: Icon, label, onClick }) => (
   <Button onClick={onClick} className="flex items-center space-x-2">
@@ -25,21 +29,23 @@ const VirtualOfficePet = () => {
 
   useEffect(() => {
     VoiceRecognition.start((command) => {
-      if (command === 'feed') performAction('Fed');
-      if (command === 'talk') performAction('Talked');
-      if (command === 'play') performAction('Played');
+      const sanitizedCommand = sanitizeInput(command);
+      if (sanitizedCommand === 'feed') performAction('Fed');
+      if (sanitizedCommand === 'talk') performAction('Talked');
+      if (sanitizedCommand === 'play') performAction('Played');
     });
   }, []);
 
   const adoptPet = (petType) => {
+    const sanitizedPetType = sanitizeInput(petType.name);
     setPet(petType);
     setMood('excited');
     setMoodScore(70);
-    setLastAction('Adopted');
+    setLastAction(`Adopted ${sanitizedPetType}`);
   };
 
   const performAction = (action) => {
-    setLastAction(action);
+    setLastAction(sanitizeInput(action));
     setMoodScore((prevScore) => Math.min(prevScore + 10, 100));
   };
 
