@@ -99,3 +99,5 @@ const VirtualOfficePet = () => {
 };
 
 export default VirtualOfficePet;
+
+// Updated icon component names according to React convention. Ensure components are used as <Icon />, not <icon />.
