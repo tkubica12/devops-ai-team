@@ -76,7 +76,8 @@ function App() {
 
   const handleInputSubmit = async (e) => {
     if (e.key === 'Enter' && inputMessage.trim()) {
-      setConversationId(generateCodename());
+      let newConversationId = generateCodename();
+      setConversationId(newConversationId);
       setConversations((prevConversations) => [...prevConversations, newConversationId]);
 
       const newMessage = {
