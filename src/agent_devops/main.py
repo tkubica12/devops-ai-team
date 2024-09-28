@@ -112,7 +112,7 @@ while True:
             event = Event(**doc)
             if event.event_type in ["agent_communication"] and event.event_data.next_agent == agent_config.event_producer:
                 if not github_tools.check_open_pr_exists(branch=event.conversation_id) and github_tools.check_branch_exists(branch=event.conversation_id):
-                    pr_id = github_tools.create_pr(branch=event.conversation_id, title="Test PR")
+                    pr_id = github_tools.create_pr(branch=event.conversation_id, title=event.conversation_id)
                     agent.create_event(message=json.dumps({"pull_request_id": pr_id}), next_agent="agent_facilitator", conversation_id=event.conversation_id)
 
 
