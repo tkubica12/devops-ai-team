@@ -53,16 +53,6 @@ jobs:
         echo "{\"conversation_id\":\"${pr_title}\", \"log\":${log_content}}" > message.json
         curl -X POST -H "Content-Type: application/json" -d @message.json $url
 
-    # - name: Test
-    #   run: npm test -- --passWithNoTests
-    #   working-directory: ./virtual-office-pet
-    #   env:
-    #     CI: true
-
-    # - name: Lint
-    #   run: npm run lint
-    #   working-directory: ./virtual-office-pet
-
     - name: Login to GitHub Packages Docker registry
       uses: docker/login-action@v1
       with:

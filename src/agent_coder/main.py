@@ -63,7 +63,7 @@ agent_config = AgentConfiguration(
 
 You are skilled programmer in React, Javascript and CSS. 
 
-You will receive a task description and a JSON list of files with their content. The JSON list is an array of files objects, each with the attributes `name` and `content`. Your task is to implement the feature described in the task description by modifying the appropriate files from the JSON list. You may also create new files if necessary by adding them to the JSON list. Your output must be a pure JSON array of objects with the updated `name` and `content`.
+You will receive a task description or JSON report with suggested fixes and a JSON list of files with their content. The JSON list is an array of files objects, each with the attributes `name` and `content`. Your task is to implement the feature described in the task description by modifying the appropriate files from the JSON list. You may also create new files if necessary by adding them to the JSON list. Your output must be a pure JSON array of objects with the updated `name` and `content`.
 
 **Example:**
 
@@ -71,9 +71,32 @@ Task: Log different message and add a new file
 
 Input:
 {
+  "report": [
+    {
+      "file": "redHawk:virtual-office-pet/src/App.js",
+      "issues": [
+        {
+          "problem": "Incorrect usage of lowercase component names in JSX.",
+          "suggestion": "Change <pet.Icon /> to <Pet.Icon />. Ensure component names start with uppercase letters as per React conventions."
+        }
+      ]
+    },
+    {
+      "file": "redHawk:virtual-office-pet/src/components/BackgroundSelector.js",
+      "issues": [
+        {
+          "problem": "Use of both BackgroundSelector.css and BackgroundSelector.module.css leading to potential duplicated styles.",
+          "suggestion": "Consolidate styles into BackgroundSelector.module.css and remove BackgroundSelector.css if not used. Use CSS Modules for scoped styling."
+        }
+      ]
+    }
+  ]
+}
+
+{
   "files": [
     {
-      "name": "file1.js",
+      "name": "redHawk:virtual-office-pet/src/App.js",
       "content": "console.log('Hello, world!');"
     }
   ]
@@ -83,7 +106,7 @@ Output:
 {
   "files": [
     {
-      "name": "file1.js",
+      "name": "redHawk:virtual-office-pet/src/App.js",
       "content": "console.log('Hello, world changed!');"
     },
     {
@@ -130,8 +153,9 @@ while True:
             event = Event(**doc)
             if event.event_type in ["agent_communication"] and event.event_data.next_agent == agent_config.event_producer:
                 # Extract list of topics for search
-                intent = agent.extract_intent(message_input=event.event_data.message, conversation_id=event.conversation_id)
-                task_description = f"**Intent:** {intent}\n\n**Exact last message:** {event.event_data.message}"
+                # intent = agent.extract_intent(message_input=event.event_data.message, conversation_id=event.conversation_id)
+                # task_description = f"**Intent:** {intent}\n\n**Exact last message:** {event.event_data.message}"
+                task_description = event.event_data.message
 
                 # Get relevant application files from feature branch or from main branch if feature branch does not exist
                 if github_tools.check_branch_exists(branch=event.conversation_id):
@@ -139,7 +163,7 @@ while True:
                 else:
                     files = github_tools.fetch_code_files(path="main:virtual-office-pet")
 
-                # Generate code based on the intent and files
+                # Generate code
                 generated_files = agent.generate_code(instructions=agent.agent_config.instructions, task_description=task_description, files=files)
 
                 # Create branch and commit the generated code
@@ -147,7 +171,7 @@ while True:
                 github_tools.commit_files(branch=event.conversation_id, latest_commit_oid=latest_commit_oid, files=generated_files)
 
                 # Create event for the next agent
-                agent.create_event(message="Code generation completed and commited to new branch", next_agent="agent_facilitator", conversation_id=event.conversation_id)
+                agent.create_event(message=f"Code generation completed and commited to {event.conversation_id} branch", next_agent="agent_facilitator", conversation_id=event.conversation_id)
 
         continuation_token = response.continuation_token
 

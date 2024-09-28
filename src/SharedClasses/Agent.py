@@ -104,8 +104,8 @@ class Agent:
 
         messages = []
         messages.append({"role": "system", "content": instructions})
-        messages.append({"role": "user", "content": task_description})
-        messages.append({"role": "user", "content": files})
+        messages.append({"role": "assistant", "content": task_description})
+        messages.append({"role": "assistant", "content": files})
 
         # Send the messages to the model
         response = self.openai_client.beta.chat.completions.parse(
@@ -126,8 +126,8 @@ class Agent:
 
         messages = []
         messages.append({"role": "system", "content": instructions})
-        messages.append({"role": "user", "content": history})
-        messages.append({"role": "user", "content": files})
+        messages.append({"role": "assistant", "content": history})
+        messages.append({"role": "assistant", "content": files})
 
         # Send the messages to the model
         response = self.openai_client.beta.chat.completions.parse(
