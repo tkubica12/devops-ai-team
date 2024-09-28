@@ -5,6 +5,7 @@ import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import './App.css';
 import { useSpeechRecognition } from './hooks/useSpeechRecognition';
 import DOMPurify from 'dompurify';
+import { voiceCommands } from './hooks/voiceCommands';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -34,15 +35,8 @@ const VirtualOfficePet = () => {
 
   const handleVoiceCommand = (command) => {
     const sanitizedCommand = DOMPurify.sanitize(command);
-    switch (sanitizedCommand) {
-      case 'play':
-        performAction('Played');
-        break;
-      case 'sleep':
-        performAction('Slept');
-        break;
-      default:
-        break;
+    if (voiceCommands[sanitizedCommand]) {
+      performAction(voiceCommands[sanitizedCommand]);
     }
   };
 

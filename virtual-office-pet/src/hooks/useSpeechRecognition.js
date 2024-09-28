@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as speechCommands from '@tensorflow-models/speech-commands';
 
-export const useSpeechRecognition = () => {
+export const useSpeechRecognition = ({ probabilityThreshold = 0.75 } = {}) => {
   const [listening, setListening] = useState(false);
   const [voiceCommand, setVoiceCommand] = useState(null);
   const [error, setError] = useState(null);
@@ -36,7 +36,7 @@ export const useSpeechRecognition = () => {
         setVoiceCommand(commands[highestScoreIndex]);
       },
       {
-        probabilityThreshold: 0.75, // could be made configurable
+        probabilityThreshold: probabilityThreshold, // configurable threshold
       }
     );
     setListening(true);

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import logger from './utils/logger';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,8 +14,8 @@ root.render(
 
 reportWebVitals((metric) => {
   try {
-    console.log(metric);
+    logger.log(metric);
   } catch (error) {
-    console.error('Error reporting web vitals:', error);
+    logger.error('Error reporting web vitals:', error);
   }
 });
