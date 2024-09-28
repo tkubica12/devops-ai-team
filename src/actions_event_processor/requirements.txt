@@ -1,0 +1,7 @@
+python-dotenv
+azure-cosmos
+azure-identity
+pydantic
+fastapi
+uuid
+uvicorn

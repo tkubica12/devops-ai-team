@@ -26,14 +26,14 @@ cosmos_client = CosmosClient(url=COSMOS_ENDPOINT, credential=credential)
 cosmos_database = cosmos_client.get_database_client(COSMOS_DATABASE_NAME)
 cosmos_events_container = cosmos_database.get_container_client(COSMOS_EVENTS_CONTAINER_NAME)
 
-# Add CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
-    allow_credentials=True,
-    allow_methods=["*"],  # Allow all methods
-    allow_headers=["*"],  # Allow all headers
-)
+# # Add CORS middleware
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],  # Allow all origins
+#     allow_credentials=True,
+#     allow_methods=["*"],  # Allow all methods
+#     allow_headers=["*"],  # Allow all headers
+# )
 
 class UserMessage(BaseModel):
     message: str
