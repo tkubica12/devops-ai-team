@@ -83,3 +83,10 @@ jobs:
         imageToDeploy: ghcr.io/${{ github.repository }}/virtual-office-pet:${{ github.run_id }}
         targetPort: 80
         ingress: external
+
+  post-build:
+    runs-on: ubuntu-latest
+    needs: build
+    if: failure()
+    steps:
+    - run: ls ${{ runner.temp }}/_github_workflow/

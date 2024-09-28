@@ -11,14 +11,14 @@ terraform {
   }
   backend "azurerm" { # Change this to "local" for local backend
     resource_group_name  = "rg-base"
-    storage_account_name = "tomaskubica"
+    storage_account_name = "tomaskubicatf"
     container_name       = "tfstate"
     key                  = "devops-ai-team.tfstate"
   }
 }
 
 provider "azurerm" {
-  subscription_id = "3a2de84a-dfa4-479b-bf09-b590a54c1fad"
+  subscription_id = "673af34d-6b28-41dc-bc7b-f507418045e6"
   features {
     resource_group {
       prevent_deletion_if_contains_resources = false
