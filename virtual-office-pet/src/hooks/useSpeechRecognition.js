@@ -34,6 +34,7 @@ export const useSpeechRecognition = ({ probabilityThreshold = 0.75 } = {}) => {
         );
 
         setVoiceCommand(commands[highestScoreIndex]);
+        alert(`Command recognized: ${commands[highestScoreIndex]}`); // Auditory feedback
       },
       {
         probabilityThreshold: probabilityThreshold, // configurable threshold

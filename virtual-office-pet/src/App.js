@@ -105,6 +105,9 @@ const VirtualOfficePet = () => {
               <Button onClick={!listening ? listen : stop} className="mt-4">
                 {!listening ? 'Start Listening' : 'Stop Listening'}
               </Button>
+              {voiceCommand && (
+                <p className="mt-2">Command recognized: {voiceCommand}</p>
+              )}
             </div>
           )}
         </CardContent>
