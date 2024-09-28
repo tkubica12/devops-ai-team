@@ -14,7 +14,7 @@
     "@tensorflow-models/speech-commands": "^0.5.4",
     "dompurify": "^3.0.2",
     "winston": "^3.10.1",
-    "util": "^0.13.5"  
+    "util": "^0.13.5"
   },
   "scripts": {
     "start": "react-scripts start",
