@@ -48,7 +48,7 @@ async def actions_event(actions_event: ActionsEvent):
         event = Event(
             conversation_id=actions_event.conversation_id,
             id=str(uuid4()),
-            event_type="agents_communication",
+            event_type="agent_communication",
             event_producer="github_actions",
             event_data=event_data,
             timestamp=int(time.time())
