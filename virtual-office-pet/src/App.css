@@ -48,3 +48,25 @@ button:hover {
   justify-content: center;
   flex-wrap: wrap; /* Allow buttons to wrap if necessary */
 }
+
+.interactive-backgrounds {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #eff3fc, #ffffff);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.suggestions {
+  background-color: #ffebd1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.suggestion-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
