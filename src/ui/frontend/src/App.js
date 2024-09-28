@@ -78,7 +78,7 @@ function App() {
     if (e.key === 'Enter' && inputMessage.trim()) {
       let newConversationId = conversationId;
       if (!conversationId) {
-        newConversationId = generateCodename(); // Generate a codename instead of UUID
+        newConversationId = generateCodename();
         setConversationId(newConversationId);
         setConversations((prevConversations) => [...prevConversations, newConversationId]);
       }

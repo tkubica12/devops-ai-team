@@ -37,6 +37,7 @@ app.add_middleware(
 
 class UserMessage(BaseModel):
     message: str
+    conversation_id: str
 
 @app.post("/api/user_message")
 async def user_message(user_message: UserMessage):
@@ -47,7 +48,7 @@ async def user_message(user_message: UserMessage):
             next_agent="agent_facilitator"
         )
         event = Event(
-            conversation_id=str(uuid4()),
+            conversation_id=user_message.conversation_id,
             id=str(uuid4()),
             event_type="user_message",
             event_producer="user",
