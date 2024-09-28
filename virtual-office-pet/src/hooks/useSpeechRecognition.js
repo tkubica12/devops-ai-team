@@ -33,11 +33,12 @@ export const useSpeechRecognition = ({ probabilityThreshold = 0.75 } = {}) => {
           0
         );
 
-        setVoiceCommand(commands[highestScoreIndex]);
-        alert(`Command recognized: ${commands[highestScoreIndex]}`); // Auditory feedback
+        if (scores[highestScoreIndex] >= probabilityThreshold) {
+          setVoiceCommand(commands[highestScoreIndex]);
+        }
       },
       {
-        probabilityThreshold: probabilityThreshold, // configurable threshold
+        probabilityThreshold: probabilityThreshold,
       }
     );
     setListening(true);
