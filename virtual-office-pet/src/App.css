@@ -19,7 +19,7 @@
   color: white;
 }
 
-.btn {
+.button-local {
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -33,11 +33,11 @@
   justify-content: center;
 }
 
-.btn span {
+.button-local span {
   margin-left: 8px;
 }
 
-.btn:hover {
+.button-local:hover {
   background-color: #0056b3;
 }
 

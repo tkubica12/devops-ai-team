@@ -4,46 +4,52 @@ import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import './App.css'; // Import the CSS file
 
+const INITIAL_MOOD_SCORE = 50;
+const MOOD_SCORE_INCREMENT = 10;
+const MOOD_SCORE_DECREMENT = 5;
+const MOOD_UPDATE_INTERVAL = 5000;
+const MAX_MOOD_SCORE = 100;
+const MIN_MOOD_SCORE = 0;
+
 const petTypes = [
   { name: 'Dog', icon: Dog },
   { name: 'Cat', icon: Cat },
 ];
 
 const PetAction = ({ icon: Icon, label, onClick }) => (
-  <Button onClick={onClick} className="flex items-center space-x-2">
+  <button onClick={onClick} className="button-local">
     <Icon size={20} />
     <span>{label}</span>
-  </Button>
+  </button>
 );
 
 const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
-  const [moodScore, setMoodScore] = useState(50); // Initial mood score
+  const [moodScore, setMoodScore] = useState(INITIAL_MOOD_SCORE);
   const [lastAction, setLastAction] = useState(null);
 
   const adoptPet = (petType) => {
     setPet(petType);
     setMood('excited');
-    setMoodScore(70); // Set initial mood score when pet is adopted
+    setMoodScore(70);
     setLastAction('Adopted');
   };
 
   const performAction = (action) => {
     setLastAction(action);
-    setMoodScore((prevScore) => Math.min(prevScore + 10, 100)); // Increase mood score, max 100
+    setMoodScore((prevScore) => Math.min(prevScore + MOOD_SCORE_INCREMENT, MAX_MOOD_SCORE));
   };
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setMoodScore((prevScore) => Math.max(prevScore - 5, 0)); // Decrease mood score, min 0
-    }, 5000); // Decrease mood score every 5 seconds
+      setMoodScore((prevScore) => Math.max(prevScore - MOOD_SCORE_DECREMENT, MIN_MOOD_SCORE));
+    }, MOOD_UPDATE_INTERVAL);
 
     return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
-    // Update mood based on mood score
     if (moodScore >= 70) {
       setMood('happy');
     } else if (moodScore >= 40) {
@@ -65,10 +71,10 @@ const VirtualOfficePet = () => {
               <p>Choose your pet:</p>
               <div className="button-container mt-4">
                 {petTypes.map((type) => (
-                  <Button key={type.name} onClick={() => adoptPet(type)} className="flex flex-col items-center">
+                  <button key={type.name} onClick={() => adoptPet(type)} className="button-local flex flex-col items-center">
                     <type.icon size={40} />
                     <span>{type.name}</span>
-                  </Button>
+                  </button>
                 ))}
               </div>
             </div>
@@ -82,8 +88,7 @@ const VirtualOfficePet = () => {
               <div className="button-container grid grid-cols-2 gap-2">
                 <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
                 <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
-                <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} /> {/* New Play action */}
-                {/* Add more actions as needed */}
+                <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} />
               </div>
             </div>
           )}
