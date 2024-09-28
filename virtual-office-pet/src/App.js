@@ -5,6 +5,12 @@ import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import './App.css';
 import VoiceCommands from './components/VoiceCommands';
 
+const sanitizeInput = (input) => {
+  const element = document.createElement('div');
+  element.innerText = input;
+  return element.innerHTML;
+};
+
 const petTypes = [
   { name: 'Dog', icon: Dog },
   { name: 'Cat', icon: Cat },
@@ -31,13 +37,14 @@ const VirtualOfficePet = () => {
   };
 
   const performAction = (action) => {
-    setLastAction(action);
+    setLastAction(sanitizeInput(action));
     setMoodScore((prevScore) => Math.min(prevScore + 10, 100));
   };
 
   const handleVoiceCommand = (command) => {
-    if (['play', 'sleep'].includes(command)) {
-      performAction(command.charAt(0).toUpperCase() + command.slice(1) + ' Commanded');
+    const sanitizedCommand = sanitizeInput(command);
+    if (['play', 'sleep'].includes(sanitizedCommand)) {
+      performAction(sanitizedCommand.charAt(0).toUpperCase() + sanitizedCommand.slice(1) + ' Commanded');
     }
   };
 

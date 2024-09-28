@@ -4,13 +4,10 @@ import { Button } from './ui/Button';
 const VoiceCommands = ({ onCommand }) => {
   useEffect(() => {
     const handleVoiceCommand = (command) => {
-      console.log(`Voice command received: ${command}`);
-      // Call the onCommand callback with the command
+      // Removed console.log for security
       onCommand(command);
     };
 
-    // Dummy implementation for recognizing voice commands
-    // In real implementation, this would be replaced with actual voice recognition logic
     const commands = ['play', 'sleep'];
     commands.forEach((command) => {
       setTimeout(() => handleVoiceCommand(command), 3000);
