@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
-import './App.css'; // Import the CSS file
+import './App.css';
+import VoiceRecognition from './voiceRecognition';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -19,31 +20,38 @@ const PetAction = ({ icon: Icon, label, onClick }) => (
 const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
-  const [moodScore, setMoodScore] = useState(50); // Initial mood score
+  const [moodScore, setMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
+
+  useEffect(() => {
+    VoiceRecognition.start((command) => {
+      if (command === 'feed') performAction('Fed');
+      if (command === 'talk') performAction('Talked');
+      if (command === 'play') performAction('Played');
+    });
+  }, []);
 
   const adoptPet = (petType) => {
     setPet(petType);
     setMood('excited');
-    setMoodScore(70); // Set initial mood score when pet is adopted
+    setMoodScore(70);
     setLastAction('Adopted');
   };
 
   const performAction = (action) => {
     setLastAction(action);
-    setMoodScore((prevScore) => Math.min(prevScore + 10, 100)); // Increase mood score, max 100
+    setMoodScore((prevScore) => Math.min(prevScore + 10, 100));
   };
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setMoodScore((prevScore) => Math.max(prevScore - 5, 0)); // Decrease mood score, min 0
-    }, 5000); // Decrease mood score every 5 seconds
+      setMoodScore((prevScore) => Math.max(prevScore - 5, 0));
+    }, 5000);
 
     return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
-    // Update mood based on mood score
     if (moodScore >= 70) {
       setMood('happy');
     } else if (moodScore >= 40) {
@@ -82,8 +90,7 @@ const VirtualOfficePet = () => {
               <div className="button-container grid grid-cols-2 gap-2">
                 <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
                 <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
-                <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} /> {/* New Play action */}
-                {/* Add more actions as needed */}
+                <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} />
               </div>
             </div>
           )}
