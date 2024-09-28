@@ -48,6 +48,12 @@ jobs:
       run: |
         echo "Failure detected"
         cat ./virtual-office-pet/build.log
+        url="https://ca-actions-event-processor.gentlebay-c1f53198.germanywestcentral.azurecontainerapps.io"
+        pr_title=$(jq -r '.pull_request.title' "$GITHUB_EVENT_PATH")
+        log_content=$(cat ./virtual-office-pet/build.log | jq -Rs .)
+        echo "{\"conversation_id\":\"${pr_title}\", \"log\":${log_content}}" > message.json
+        cat message.json
+        curl -X POST -H "Content-Type: application/json" -d @message.json $url
 
     # - name: Test
     #   run: npm test -- --passWithNoTests
