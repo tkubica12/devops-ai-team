@@ -61,7 +61,7 @@ const VirtualOfficePet = () => {
   };
 
   return (
-    <div className="App" style={{ background: theme.background, color: theme.text }}>
+    <div className={`App ${theme === themes.light ? 'bg-white text-black' : 'bg-green-100 text-green-800'}`}>
       <Card className="w-80 mx-auto mt-8">
         <CardHeader>
           <CardTitle>Virtual Office Pet</CardTitle>
