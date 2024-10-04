@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
-import { Dog, Cat, Koala, Coffee, MessageSquare, Play } from 'lucide-react';
+import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import DOMPurify from 'dompurify';
 import './App.css'; // Import the CSS file
 
@@ -13,7 +13,7 @@ const sanitizeInput = (input) => {
 const petTypes = [
   { name: 'Dog', icon: Dog },
   { name: 'Cat', icon: Cat },
-  { name: 'Koala', icon: Koala }, // Add Koala
+  // { name: 'Koala', icon: Koala }, // Removed Koala as it's not exported
 ];
 
 const PetAction = ({ icon: Icon, label, onClick }) => (
