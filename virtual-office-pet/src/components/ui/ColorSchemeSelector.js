@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 const themes = [
-  { name: 'Default', color: '#f9f9f9' },
-  { name: 'Green Mint', color: '#A8D5BA' },
-  { name: 'Forest', color: '#6B8E23' },
-  { name: 'Emerald', color: '#50C878' },
+  { name: 'Default', color: 'default-theme' },
+  { name: 'Green Mint', color: 'green-mint-theme' },
+  { name: 'Forest', color: 'forest-theme' },
+  { name: 'Emerald', color: 'emerald-theme' },
 ];
 
 const ColorSchemeSelector = ({ onChangeTheme }) => {
