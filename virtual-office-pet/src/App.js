@@ -12,7 +12,7 @@ const petTypes = [
 
 const PetAction = ({ icon: Icon, label, onClick }) => (
   <Button onClick={onClick} className="flex items-center space-x-2">
-    <Icon size={20} />
+    {Icon ? <Icon size={20} /> : <span>Icon Missing</span>}
     <span>{label}</span>
   </Button>
 );
@@ -67,7 +67,7 @@ const VirtualOfficePet = () => {
               <div className="button-container mt-4">
                 {petTypes.map((type) => (
                   <Button key={type.name} onClick={() => adoptPet(type)} className="flex flex-col items-center justify-center">
-                    <type.icon size={40} />
+                    {type.icon ? <type.icon size={40} /> : <span>Icon Missing</span>}
                     <span>{type.name}</span>
                   </Button>
                 ))}
@@ -76,7 +76,7 @@ const VirtualOfficePet = () => {
           ) : (
             <div>
               <div className="text-center mb-4">
-                <pet.icon size={80} />
+                {pet.icon ? <pet.icon size={80} /> : <span>Icon Missing</span>}
                 <p>Mood: {mood}</p>
                 {lastAction && <p>Last action: {lastAction}</p>}
               </div>
