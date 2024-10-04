@@ -20,25 +20,25 @@ const PetAction = ({ icon: Icon, label, onClick }) => (
 const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
-  const [moodScore, setMoodScore] = useState(50);
+  const [moodScore, updateMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
   const [themeColor, setThemeColor] = useState('#f9f9f9');
 
   const adoptPet = (petType) => {
     setPet(petType);
     setMood('excited');
-    setMoodScore(70);
+    updateMoodScore(70);
     setLastAction('Adopted');
   };
 
   const performAction = (action) => {
     setLastAction(action);
-    setMoodScore((prevScore) => Math.min(prevScore + 10, 100));
+    updateMoodScore((prevScore) => Math.min(prevScore + 10, 100));
   };
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setMoodScore((prevScore) => Math.max(prevScore - 5, 0));
+      updateMoodScore((prevScore) => Math.max(prevScore - 5, 0));
     }, 5000);
 
     return () => clearInterval(timer);
