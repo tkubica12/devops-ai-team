@@ -58,6 +58,11 @@ const VirtualOfficePet = () => {
     console.log(`Theme color changed to: ${themeColor}`);
   }, [themeColor]);
 
+  const onChangeTheme = (color) => {
+    console.log(`Changing theme color to ${color}`);
+    setThemeColor(color);
+  };
+
   return (
     <div className={`App ${themeColor}`}>
       <Card className="w-80 mx-auto mt-8">
@@ -93,10 +98,7 @@ const VirtualOfficePet = () => {
           )}
         </CardContent>
       </Card>
-      <ColorSchemeSelector onChangeTheme={(color) => {
-        console.log(`Changing theme color to ${color}`);
-        setThemeColor(color);
-      }} />
+      <ColorSchemeSelector onChangeTheme={onChangeTheme} />
     </div>
   );
 };
