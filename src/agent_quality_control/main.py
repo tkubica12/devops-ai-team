@@ -103,7 +103,7 @@ agent = Agent(openai_client=openai_client, agent_config=agent_config, cosmos_eve
 
 # Check for existing continuation token in checkpoints container
 print("Checking for existing continuation token")
-query = "SELECT * FROM c WHERE c.id = 'agent_facilitator'"
+query = "SELECT * FROM c WHERE c.id = 'agent_quality_control'"
 items = list(cosmos_checkpoints_container.query_items(query=query, enable_cross_partition_query=True))
 
 if items:
@@ -139,7 +139,7 @@ while True:
 
         # Save the continuation token to the checkpoints container
         checkpoint_document = {
-            'id': 'agent_facilitator',
+            'id': 'agent_quality_control',
             'continuation_token': continuation_token
         }
         cosmos_checkpoints_container.upsert_item(checkpoint_document)
