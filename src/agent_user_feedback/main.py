@@ -13,6 +13,7 @@ load_dotenv()
 COSMOS_ENDPOINT = os.getenv("COSMOS_ENDPOINT")
 COSMOS_DATABASE_NAME = os.getenv("COSMOS_DATABASE_NAME")
 COSMOS_EVENTS_CONTAINER_NAME = "events"
+COSMOS_CHECKPOINTS_CONTAINER_NAME = "checkpoints"
 COSMOS_RAG_CONTAINER_NAME = os.getenv("COSMOS_RAG_CONTAINER_NAME")
 AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY")
 AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
@@ -28,6 +29,7 @@ cosmos_client = CosmosClient(url=COSMOS_ENDPOINT, credential=credential)
 cosmos_database = cosmos_client.get_database_client(COSMOS_DATABASE_NAME)
 cosmos_events_container = cosmos_database.get_container_client(COSMOS_EVENTS_CONTAINER_NAME)
 cosmos_rag_container = cosmos_database.get_container_client(COSMOS_RAG_CONTAINER_NAME)
+cosmos_checkpoints_container = cosmos_database.get_container_client(COSMOS_CHECKPOINTS_CONTAINER_NAME)
 
 # OpenAI client
 print("Connecting to Azure OpenAI")
@@ -91,8 +93,17 @@ Virtual Office Pet is a fun and interactive app designed to bring a touch of joy
 # Initialize the agent
 agent = Agent(openai_client=openai_client, agent_config=agent_config, cosmos_events_container=cosmos_events_container, cosmos_rag_container=cosmos_rag_container)
 
-# Initialize continuation token
-continuation_token = None
+# Check for existing continuation token in checkpoints container
+print("Checking for existing continuation token")
+query = "SELECT * FROM c WHERE c.id = 'agent_facilitator'"
+items = list(cosmos_checkpoints_container.query_items(query=query, enable_cross_partition_query=True))
+
+if items:
+    continuation_token = items[0].get('continuation_token')
+    print(f"Found continuation token: {continuation_token}")
+else:
+    continuation_token = None
+    print("No continuation token found, starting from None")
 
 # Listen for changes in the discussions container and process new discussions
 while True:
@@ -114,6 +125,13 @@ while True:
 
         continuation_token = response.continuation_token
 
+        # Save the continuation token to the checkpoints container
+        checkpoint_document = {
+            'id': 'agent_facilitator',
+            'continuation_token': continuation_token
+        }
+        cosmos_checkpoints_container.upsert_item(checkpoint_document)
+        
     # Wait before fetching the next discussions
     time.sleep(FETCH_INTERVAL)
 

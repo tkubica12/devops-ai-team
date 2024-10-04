@@ -54,3 +54,11 @@ resource "azurerm_cosmosdb_sql_container" "events" {
   database_name       = azurerm_cosmosdb_sql_database.main.name
   partition_key_paths = ["/conversation_id"]
 }
+
+resource "azurerm_cosmosdb_sql_container" "checkpoints" {
+  name                = "checkpoints"
+  resource_group_name = azurerm_resource_group.main.name
+  account_name        = azurerm_cosmosdb_account.main.name
+  database_name       = azurerm_cosmosdb_sql_database.main.name
+  partition_key_paths = ["/id"]
+}
