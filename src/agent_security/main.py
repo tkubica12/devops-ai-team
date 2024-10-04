@@ -51,7 +51,7 @@ github_tools = GitHubTools(
 print("Connecting to Azure OpenAI")
 openai_client = AzureOpenAI(
     api_key=AZURE_OPENAI_API_KEY,
-    api_version="2024-05-01-preview",
+    api_version="2024-08-01-preview",
     azure_endpoint=AZURE_OPENAI_ENDPOINT
 )
 
