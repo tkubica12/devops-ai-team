@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import './App.css';
-import { themes } from './theme'; // Import the themes
+import { themes } from './theme';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -22,7 +22,7 @@ const VirtualOfficePet = () => {
   const [mood, setMood] = useState('happy');
   const [moodScore, setMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
-  const [theme, setTheme] = useState(themes.light); // Theme state
+  const [theme, setTheme] = useState(themes.light);
 
   const adoptPet = (petType) => {
     setPet(petType);
