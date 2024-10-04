@@ -93,7 +93,10 @@ const VirtualOfficePet = () => {
           )}
         </CardContent>
       </Card>
-      <ColorSchemeSelector onChangeTheme={(color) => setThemeColor(color)} />
+      <ColorSchemeSelector onChangeTheme={(color) => {
+        console.log(`Changing theme color to ${color}`);
+        setThemeColor(color);
+      }} />
     </div>
   );
 };
