@@ -67,7 +67,7 @@ const VirtualOfficePet = () => {
               <div className="button-container mt-4">
                 {petTypes.map((type) => (
                   <Button key={type.name} onClick={() => adoptPet(type)} className="flex flex-col items-center justify-center">
-                    {type.icon ? <type.icon size={40} /> : <span>Icon Missing</span>}
+                    {<type.icon size={40} />}
                     <span>{type.name}</span>
                   </Button>
                 ))}
@@ -76,7 +76,7 @@ const VirtualOfficePet = () => {
           ) : (
             <div>
               <div className="text-center mb-4">
-                {pet.icon ? <pet.icon size={80} /> : <span>Icon Missing</span>}
+                {<pet.icon size={80} />}
                 <p>Mood: {mood}</p>
                 {lastAction && <p>Last action: {lastAction}</p>}
               </div>
