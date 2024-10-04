@@ -54,6 +54,10 @@ const VirtualOfficePet = () => {
     }
   }, [moodScore]);
 
+  useEffect(() => {
+    console.log(`Theme color changed to: ${themeColor}`);
+  }, [themeColor]);
+
   return (
     <div className={`App ${themeColor}`}>
       <Card className="w-80 mx-auto mt-8">
