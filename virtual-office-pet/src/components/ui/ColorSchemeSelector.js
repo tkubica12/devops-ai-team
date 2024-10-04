@@ -12,6 +12,7 @@ const ColorSchemeSelector = ({ onChangeTheme }) => {
 
   const handleChange = (theme) => {
     setSelectedTheme(theme.name);
+    console.log(`Selected theme: ${theme.name}`);
     onChangeTheme(theme.color);
   };
 
