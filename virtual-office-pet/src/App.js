@@ -13,7 +13,7 @@ const sanitizeInput = (input) => {
 const petTypes = [
   { name: 'Dog', icon: Dog },
   { name: 'Cat', icon: Cat },
-  // { name: 'Koala', icon: Koala }, // Removed Koala as it's not exported
+  // Removed 'Koala' as it's not exported from 'lucide-react'
 ];
 
 const PetAction = ({ icon: Icon, label, onClick }) => (
