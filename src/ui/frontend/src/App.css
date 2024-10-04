@@ -49,10 +49,10 @@
 }
 
 .input-section select {
-  margin-left: 10px; /* Add space between input and select */
-  height: 40px; /* Match the height of the input box */
-  padding: 10px; /* Match padding of the input box */
-  font-size: 16px; /* Match font size of the input box */
+  margin-left: 10px;
+  height: 40px;
+  padding: 10px; 
+  font-size: 16px; 
 }
 
 .conversation-selector {
@@ -61,6 +61,16 @@
 }
 
 .refresh-icon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.new-conversation-icon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.send-icon {
   margin-left: 10px;
   cursor: pointer;
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Message from './Message';
-import { FaSync } from 'react-icons/fa'; // Import FontAwesome sync icon
+import { FaSync, FaPlus, FaPaperPlane } from 'react-icons/fa'; // Import FaPlus icon
 
 const adjectives = [
   'green', 'blue', 'red', 'yellow', 'happy', 'sad', 'fast', 'slow',
@@ -26,6 +26,7 @@ function App() {
   const [inputMessage, setInputMessage] = useState('');
   const [conversationId, setConversationId] = useState(null);
   const [conversations, setConversations] = useState([]);
+  const [newConversationId, setNewConversationId] = useState('');
 
   useEffect(() => {
     fetchConversations();
@@ -74,17 +75,18 @@ function App() {
     setInputMessage(e.target.value);
   };
 
-  const handleInputSubmit = async (e) => {
-    if (e.key === 'Enter' && inputMessage.trim()) {
-      let newConversationId = generateCodename();
-      setConversationId(newConversationId);
-      setConversations((prevConversations) => [...prevConversations, newConversationId]);
-
+  const handleSendMessage = async () => {
+    if (!conversationId) {
+      alert('Please create or select a conversation before sending a message.');
+      return;
+    }
+  
+    if (inputMessage.trim()) {
       const newMessage = {
         message: inputMessage,
-        conversation_id: newConversationId,
+        conversation_id: conversationId,
       };
-
+  
       try {
         const response = await fetch('/api/user_message', {
           method: 'POST',
@@ -93,7 +95,7 @@ function App() {
           },
           body: JSON.stringify(newMessage),
         });
-
+  
         if (response.ok) {
           const data = await response.json();
           setMessages((prevMessages) => [...prevMessages, data]);
@@ -107,8 +109,22 @@ function App() {
     }
   };
 
+  const handleCreateNewConversation = () => {
+    const newId = prompt('Enter new conversation ID:', generateCodename());
+    if (newId) {
+      setConversationId(newId);
+      setConversations((prevConversations) => [...prevConversations, newId]);
+    }
+  };
+
   const handleConversationChange = (e) => {
     setConversationId(e.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
   };
 
   return (
@@ -123,9 +139,10 @@ function App() {
           type="text"
           value={inputMessage}
           onChange={handleInputChange}
-          onKeyDown={handleInputSubmit}
-          placeholder="Type your message and hit Enter..."
+          onKeyDown={handleKeyDown}
+          placeholder="Type your message..."
         />
+        <FaPaperPlane className="send-icon" onClick={handleSendMessage} title="Send Message" />
         <div className="conversation-selector">
           <select onChange={handleConversationChange} value={conversationId || ''}>
             <option value="" disabled>Select a conversation</option>
@@ -136,6 +153,7 @@ function App() {
             ))}
           </select>
           <FaSync className="refresh-icon" onClick={fetchConversations} title="Refresh Conversations" />
+          <FaPlus className="new-conversation-icon" onClick={handleCreateNewConversation} title="New Conversation" />
         </div>
       </div>
       <div className="messages">
