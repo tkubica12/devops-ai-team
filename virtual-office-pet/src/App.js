@@ -22,7 +22,7 @@ const VirtualOfficePet = () => {
   const [mood, setMood] = useState('happy');
   const [moodScore, updateMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
-  const [themeColor, setThemeColor] = useState('#f9f9f9');
+  const [themeColor, setThemeColor] = useState('default-theme');
 
   const adoptPet = (petType) => {
     setPet(petType);
@@ -55,7 +55,7 @@ const VirtualOfficePet = () => {
   }, [moodScore]);
 
   return (
-    <div className="App" style={{ backgroundColor: themeColor }}>
+    <div className={`App ${themeColor}`}>
       <Card className="w-80 mx-auto mt-8">
         <CardHeader>
           <CardTitle>Virtual Office Pet</CardTitle>
@@ -89,7 +89,7 @@ const VirtualOfficePet = () => {
           )}
         </CardContent>
       </Card>
-      <ColorSchemeSelector onChangeTheme={setThemeColor} />
+      <ColorSchemeSelector onChangeTheme={(color) => setThemeColor(color)} />
     </div>
   );
 };
