@@ -5,7 +5,7 @@
   "dependencies": {
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^15.0.0",
+    "@testing-library/user-event": "^14.4.3",
     "lucide-react": "^0.500.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
