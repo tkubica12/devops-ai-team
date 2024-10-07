@@ -3,8 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import './App.css';
-import VirtualPetLifecycle from './components/VirtualPetLifecycle'; // Import lifecycle component
-import Notification from './components/Notification'; // Import notification component
+import VirtualPetLifecycle from './components/VirtualPetLifecycle';
+import Notification from './components/Notification';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
