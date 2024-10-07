@@ -56,7 +56,9 @@ const VirtualOfficePet = () => {
   };
 
   const handlePurchase = (option) => {
-    console.info(`Purchased: ${option.name} for ${option.price}`);
+    if (process.env.NODE_ENV !== 'production') {
+      console.info(`Purchased: ${option.name} for ${option.price}`);
+    }
     // Handle purchase logic here
   };
 
