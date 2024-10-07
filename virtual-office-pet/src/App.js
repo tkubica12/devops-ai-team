@@ -103,7 +103,7 @@ const VirtualOfficePet = () => {
                 <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
                 <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} />
               </div>
-              <VirtualPetLifecycle pet={pet} onPetDie={handlePetDie} />
+              {pet && <VirtualPetLifecycle pet={pet} onPetDie={handlePetDie} />}
             </div>
           )}
         </CardContent>
