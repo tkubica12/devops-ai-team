@@ -19,7 +19,10 @@ const VirtualPetLifecycle = ({ pet, onPetDie, checkInterval = 1000 }) => {
 };
 
 VirtualPetLifecycle.propTypes = {
-  pet: PropTypes.object.isRequired,
+  pet: PropTypes.shape({
+    type: PropTypes.object.isRequired,
+    moodScore: PropTypes.number.isRequired,
+  }).isRequired,
   onPetDie: PropTypes.func.isRequired,
   checkInterval: PropTypes.number,
 };

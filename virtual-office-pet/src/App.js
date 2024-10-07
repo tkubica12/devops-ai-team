@@ -60,8 +60,11 @@ const VirtualOfficePet = () => {
       setMood('okay');
     } else {
       setMood('sad');
+      if (moodScore === 0 && pet) {
+        handlePetDie();
+      }
     }
-  }, [moodScore]);
+  }, [moodScore, pet]);
 
   const handlePetDie = () => {
     setPet(null);
