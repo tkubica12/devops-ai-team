@@ -15,14 +15,6 @@ const VirtualPetLifecycle = ({ pet, onPetDie }) => {
     return () => clearInterval(checkPetStatus);
   }, [pet, onPetDie]);
 
-  if (!isAlive) {
-    return (
-      <div className="w-full p-4 text-center bg-red-100 border border-red-400 text-red-700 rounded">
-        Your pet has passed away. You can remember your pet with memorabilia or start a new life.
-      </div>
-    );
-  }
-
   return null;
 };
 

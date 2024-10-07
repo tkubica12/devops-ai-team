@@ -4,6 +4,7 @@ import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import './App.css';
 import VirtualPetLifecycle from './components/VirtualPetLifecycle'; // Import lifecycle component
+import Notification from './components/Notification'; // Import notification component
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -22,6 +23,7 @@ const VirtualOfficePet = () => {
   const [mood, setMood] = useState('happy');
   const [moodScore, setMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
+  const [notification, setNotification] = useState('');
 
   const adoptPet = (petType) => {
     setPet({ type: petType, moodScore: 70 });
@@ -35,11 +37,17 @@ const VirtualOfficePet = () => {
   };
 
   useEffect(() => {
+    let isMounted = true;
+
     const timer = setInterval(() => {
+      if (!isMounted) return;
       setMoodScore((prevScore) => Math.max(prevScore - 5, 0));
     }, 5000);
 
-    return () => clearInterval(timer);
+    return () => {
+      isMounted = false;
+      clearInterval(timer);
+    };
   }, []);
 
   useEffect(() => {
@@ -54,11 +62,12 @@ const VirtualOfficePet = () => {
 
   const handlePetDie = () => {
     setPet(null);
-    alert('Your pet has passed away.');
+    setNotification('Your pet has passed away.');
   };
 
   return (
     <div className="App">
+      {notification && <Notification message={notification} />}
       <Card className="w-80 mx-auto mt-8">
         <CardHeader>
           <CardTitle>Virtual Office Pet</CardTitle>
