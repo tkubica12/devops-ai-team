@@ -103,7 +103,7 @@ const VirtualOfficePet = () => {
           ) : (
             <div>
               <div className="text-center mb-4">
-                <pet.icon size={80} />
+                {React.createElement(pet.icon, {size: 80})} {/* Corrected icon rendering */}
                 <p>Mood: {mood}</p>
                 {lastAction && <p>Last action: {lastAction}</p>}
               </div>
