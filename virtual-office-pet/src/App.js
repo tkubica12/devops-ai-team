@@ -26,7 +26,7 @@ const VirtualOfficePet = () => {
   const [notification, setNotification] = useState('');
 
   const adoptPet = (petType) => {
-    setPet({ type: petType, moodScore: 70 });
+    setPet({ type: petType.icon, name: petType.name, moodScore: 70 });
     setMood('excited');
     setLastAction('Adopted');
   };
@@ -94,7 +94,7 @@ const VirtualOfficePet = () => {
           ) : (
             <div>
               <div className="text-center mb-4">
-                <pet.type.icon size={80} />
+                <pet.type size={80} />
                 <p>Mood: {mood}</p>
                 {lastAction && <p>Last action: {lastAction}</p>}
               </div>
