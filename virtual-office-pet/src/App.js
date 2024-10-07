@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import './App.css'; // Import the CSS file
+import InAppPurchase from './components/InAppPurchase';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -32,6 +33,11 @@ const VirtualOfficePet = () => {
   const performAction = (action) => {
     setLastAction(action);
     setMoodScore((prevScore) => Math.min(prevScore + 10, 100)); // Increase mood score, max 100
+  };
+
+  const handlePurchase = (option) => {
+    console.log(`Purchased: ${option.name} for ${option.price}`);
+    // Handle purchase logic here
   };
 
   useEffect(() => {
@@ -83,8 +89,8 @@ const VirtualOfficePet = () => {
                 <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
                 <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
                 <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} /> {/* New Play action */}
-                {/* Add more actions as needed */}
               </div>
+              <InAppPurchase onPurchase={handlePurchase} />
             </div>
           )}
         </CardContent>
