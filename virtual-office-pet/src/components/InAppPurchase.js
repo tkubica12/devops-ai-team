@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from './ui/Button';
 
 const customizationOptions = [
@@ -19,6 +20,10 @@ const InAppPurchase = ({ onPurchase }) => {
       ))}
     </div>
   );
+};
+
+InAppPurchase.propTypes = {
+  onPurchase: PropTypes.func.isRequired
 };
 
 export default InAppPurchase;
