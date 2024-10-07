@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
-import './App.css'; // Import the CSS file
+import './App.css';
+import VirtualPetLifecycle from './components/VirtualPetLifecycle';
+import Notification from './components/Notification';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -19,42 +21,59 @@ const PetAction = ({ icon: Icon, label, onClick }) => (
 const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
-  const [moodScore, setMoodScore] = useState(50); // Initial mood score
+  const [moodScore, setMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
+  const [notification, setNotification] = useState('');
 
   const adoptPet = (petType) => {
-    setPet(petType);
+    setPet({ type: petType.icon, name: petType.name, moodScore: 70 });
     setMood('excited');
-    setMoodScore(70); // Set initial mood score when pet is adopted
     setLastAction('Adopted');
   };
 
   const performAction = (action) => {
     setLastAction(action);
-    setMoodScore((prevScore) => Math.min(prevScore + 10, 100)); // Increase mood score, max 100
+    setMoodScore((prevScore) => Math.min(prevScore + 10, 100));
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setMoodScore((prevScore) => Math.max(prevScore - 5, 0)); // Decrease mood score, min 0
-    }, 5000); // Decrease mood score every 5 seconds
+    let isMounted = true;
 
-    return () => clearInterval(timer);
+    const updateMood = () => {
+      setMoodScore((prevScore) => Math.max(prevScore - 5, 0));
+    };
+
+    const timer = setInterval(() => {
+      if (isMounted) updateMood();
+    }, 5000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(timer);
+    };
   }, []);
 
   useEffect(() => {
-    // Update mood based on mood score
     if (moodScore >= 70) {
       setMood('happy');
     } else if (moodScore >= 40) {
       setMood('okay');
     } else {
       setMood('sad');
+      if (moodScore === 0 && pet) {
+        handlePetDie();
+      }
     }
-  }, [moodScore]);
+  }, [moodScore, pet]);
+
+  const handlePetDie = () => {
+    setPet(null);
+    setNotification('Your pet has passed away.');
+  };
 
   return (
     <div className="App">
+      {notification && <Notification message={notification} />}
       <Card className="w-80 mx-auto mt-8">
         <CardHeader>
           <CardTitle>Virtual Office Pet</CardTitle>
@@ -75,16 +94,16 @@ const VirtualOfficePet = () => {
           ) : (
             <div>
               <div className="text-center mb-4">
-                <pet.icon size={80} />
+                <pet.type size={80} />
                 <p>Mood: {mood}</p>
                 {lastAction && <p>Last action: {lastAction}</p>}
               </div>
               <div className="button-container grid grid-cols-2 gap-2">
                 <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
                 <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
-                <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} /> {/* New Play action */}
-                {/* Add more actions as needed */}
+                <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} />
               </div>
+              {pet && <VirtualPetLifecycle pet={pet} onPetDie={handlePetDie} />}
             </div>
           )}
         </CardContent>
