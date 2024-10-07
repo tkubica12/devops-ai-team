@@ -39,9 +39,12 @@ const VirtualOfficePet = () => {
   useEffect(() => {
     let isMounted = true;
 
-    const timer = setInterval(() => {
-      if (!isMounted) return;
+    const updateMood = () => {
       setMoodScore((prevScore) => Math.max(prevScore - 5, 0));
+    };
+
+    const timer = setInterval(() => {
+      if (isMounted) updateMood();
     }, 5000);
 
     return () => {

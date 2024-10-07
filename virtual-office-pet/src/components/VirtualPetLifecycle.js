@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const VirtualPetLifecycle = ({ pet, onPetDie }) => {
+const VirtualPetLifecycle = ({ pet, onPetDie, checkInterval = 1000 }) => {
   const [isAlive, setIsAlive] = useState(true);
 
   useEffect(() => {
@@ -10,10 +10,10 @@ const VirtualPetLifecycle = ({ pet, onPetDie }) => {
         setIsAlive(false);
         onPetDie();
       }
-    }, 1000);
+    }, checkInterval);
 
     return () => clearInterval(checkPetStatus);
-  }, [pet, onPetDie]);
+  }, [pet, onPetDie, checkInterval]);
 
   return null;
 };
@@ -21,6 +21,7 @@ const VirtualPetLifecycle = ({ pet, onPetDie }) => {
 VirtualPetLifecycle.propTypes = {
   pet: PropTypes.object.isRequired,
   onPetDie: PropTypes.func.isRequired,
+  checkInterval: PropTypes.number,
 };
 
 export default VirtualPetLifecycle;
