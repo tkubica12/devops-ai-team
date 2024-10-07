@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const VirtualPetLifecycle = ({ pet, onPetDie, checkInterval = 1000 }) => {
-  const [isAlive, setIsAlive] = useState(true);
-
   useEffect(() => {
     const checkPetStatus = setInterval(() => {
       if (pet && pet.moodScore <= 0) {
-        setIsAlive(false);
         onPetDie();
       }
     }, checkInterval);
