@@ -3,11 +3,26 @@ import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
 import './App.css'; // Import the CSS file
+import InAppPurchase from './components/InAppPurchase';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
   { name: 'Cat', icon: Cat },
 ];
+
+const MOODS = {
+  HAPPY: 'happy',
+  EXCITED: 'excited',
+  OKAY: 'okay',
+  SAD: 'sad'
+};
+
+const ACTIONS = {
+  ADOPT: 'Adopted',
+  FEED: 'Fed',
+  TALK: 'Talked',
+  PLAY: 'Played'
+};
 
 const PetAction = ({ icon: Icon, label, onClick }) => (
   <Button onClick={onClick} className="flex items-center space-x-2">
@@ -18,26 +33,39 @@ const PetAction = ({ icon: Icon, label, onClick }) => (
 
 const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
-  const [mood, setMood] = useState('happy');
+  const [mood, setMood] = useState(MOODS.HAPPY);
   const [moodScore, setMoodScore] = useState(50); // Initial mood score
   const [lastAction, setLastAction] = useState(null);
 
   const adoptPet = (petType) => {
     setPet(petType);
-    setMood('excited');
+    setMood(MOODS.EXCITED);
     setMoodScore(70); // Set initial mood score when pet is adopted
-    setLastAction('Adopted');
+    setLastAction(ACTIONS.ADOPT);
+  };
+
+  const updateMoodScore = (change) => {
+    setMoodScore((prevScore) =>
+      Math.min(Math.max(prevScore + change, 0), 100) // Ensure score stays between 0 and 100
+    );
   };
 
   const performAction = (action) => {
     setLastAction(action);
-    setMoodScore((prevScore) => Math.min(prevScore + 10, 100)); // Increase mood score, max 100
+    updateMoodScore(10); // Increase mood score, max 100
+  };
+
+  const handlePurchase = (option) => {
+    if (process.env.NODE_ENV !== 'production') {
+      console.info(`Purchased: ${option.name} for ${option.price}`);
+    }
+    // Handle purchase logic here
   };
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setMoodScore((prevScore) => Math.max(prevScore - 5, 0)); // Decrease mood score, min 0
-    }, 5000); // Decrease mood score every 5 seconds
+      updateMoodScore(-5); // Decrease mood score every 5 seconds
+    }, 5000);
 
     return () => clearInterval(timer);
   }, []);
@@ -45,11 +73,11 @@ const VirtualOfficePet = () => {
   useEffect(() => {
     // Update mood based on mood score
     if (moodScore >= 70) {
-      setMood('happy');
+      setMood(MOODS.HAPPY);
     } else if (moodScore >= 40) {
-      setMood('okay');
+      setMood(MOODS.OKAY);
     } else {
-      setMood('sad');
+      setMood(MOODS.SAD);
     }
   }, [moodScore]);
 
@@ -75,16 +103,16 @@ const VirtualOfficePet = () => {
           ) : (
             <div>
               <div className="text-center mb-4">
-                <pet.icon size={80} />
+                {React.createElement(pet.icon, {size: 80})} {/* Corrected icon rendering */}
                 <p>Mood: {mood}</p>
                 {lastAction && <p>Last action: {lastAction}</p>}
               </div>
               <div className="button-container grid grid-cols-2 gap-2">
-                <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
-                <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
-                <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} /> {/* New Play action */}
-                {/* Add more actions as needed */}
+                <PetAction icon={Coffee} label="Feed" onClick={() => performAction(ACTIONS.FEED)} />
+                <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction(ACTIONS.TALK)} />
+                <PetAction icon={Play} label="Play" onClick={() => performAction(ACTIONS.PLAY)} /> {/* New Play action */}
               </div>
+              <InAppPurchase onPurchase={handlePurchase} />
             </div>
           )}
         </CardContent>

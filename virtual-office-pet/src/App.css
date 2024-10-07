@@ -19,7 +19,7 @@
   color: white;
 }
 
-button {
+.global-button {
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -34,11 +34,11 @@ button {
 }
 
 /* Add some spacing between icon and text */
-button span {
+.global-button span {
   margin-left: 8px;
 }
 
-button:hover {
+.global-button:hover {
   background-color: #0056b3;
 }
 
