@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const VirtualPetLifecycle = ({ pet, onPetDie, checkInterval = 1000 }) => {
