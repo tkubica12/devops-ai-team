@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
+import ColorSchemeSelector from './components/ui/ColorSchemeSelector';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
-import './App.css'; // Import the CSS file
+import './App.css';
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
@@ -11,7 +12,7 @@ const petTypes = [
 
 const PetAction = ({ icon: Icon, label, onClick }) => (
   <Button onClick={onClick} className="flex items-center space-x-2">
-    <Icon size={20} />
+    {Icon ? <Icon size={20} /> : <span>Icon Missing</span>}
     <span>{label}</span>
   </Button>
 );
@@ -19,31 +20,31 @@ const PetAction = ({ icon: Icon, label, onClick }) => (
 const VirtualOfficePet = () => {
   const [pet, setPet] = useState(null);
   const [mood, setMood] = useState('happy');
-  const [moodScore, setMoodScore] = useState(50); // Initial mood score
+  const [moodScore, updateMoodScore] = useState(50);
   const [lastAction, setLastAction] = useState(null);
+  const [themeColor, setThemeColor] = useState('default-theme');
 
   const adoptPet = (petType) => {
     setPet(petType);
     setMood('excited');
-    setMoodScore(70); // Set initial mood score when pet is adopted
+    updateMoodScore(70);
     setLastAction('Adopted');
   };
 
   const performAction = (action) => {
     setLastAction(action);
-    setMoodScore((prevScore) => Math.min(prevScore + 10, 100)); // Increase mood score, max 100
+    updateMoodScore((prevScore) => Math.min(prevScore + 10, 100));
   };
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setMoodScore((prevScore) => Math.max(prevScore - 5, 0)); // Decrease mood score, min 0
-    }, 5000); // Decrease mood score every 5 seconds
+      updateMoodScore((prevScore) => Math.max(prevScore - 5, 0));
+    }, 5000);
 
     return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
-    // Update mood based on mood score
     if (moodScore >= 70) {
       setMood('happy');
     } else if (moodScore >= 40) {
@@ -53,8 +54,17 @@ const VirtualOfficePet = () => {
     }
   }, [moodScore]);
 
+  useEffect(() => {
+    console.log(`Theme color changed to: ${themeColor}`);
+  }, [themeColor]);
+
+  const onChangeTheme = (color) => {
+    console.log(`Changing theme color to ${color}`);
+    setThemeColor(color);
+  };
+
   return (
-    <div className="App">
+    <div className={`App ${themeColor}`}>
       <Card className="w-80 mx-auto mt-8">
         <CardHeader>
           <CardTitle>Virtual Office Pet</CardTitle>
@@ -65,8 +75,8 @@ const VirtualOfficePet = () => {
               <p>Choose your pet:</p>
               <div className="button-container mt-4">
                 {petTypes.map((type) => (
-                  <Button key={type.name} onClick={() => adoptPet(type)} className="flex flex-col items-center">
-                    <type.icon size={40} />
+                  <Button key={type.name} onClick={() => adoptPet(type)} className="flex flex-col items-center justify-center">
+                    {type.icon ? <type.icon size={40} /> : <span>Icon Missing</span>}
                     <span>{type.name}</span>
                   </Button>
                 ))}
@@ -75,20 +85,20 @@ const VirtualOfficePet = () => {
           ) : (
             <div>
               <div className="text-center mb-4">
-                <pet.icon size={80} />
+                {pet.icon ? <pet.icon size={80} /> : <span>Icon Missing</span>}
                 <p>Mood: {mood}</p>
                 {lastAction && <p>Last action: {lastAction}</p>}
               </div>
               <div className="button-container grid grid-cols-2 gap-2">
                 <PetAction icon={Coffee} label="Feed" onClick={() => performAction('Fed')} />
                 <PetAction icon={MessageSquare} label="Talk" onClick={() => performAction('Talked')} />
-                <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} /> {/* New Play action */}
-                {/* Add more actions as needed */}
+                <PetAction icon={Play} label="Play" onClick={() => performAction('Played')} />
               </div>
             </div>
           )}
         </CardContent>
       </Card>
+      <ColorSchemeSelector onChangeTheme={onChangeTheme} />
     </div>
   );
 };
