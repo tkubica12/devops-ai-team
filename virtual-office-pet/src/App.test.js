@@ -16,20 +16,17 @@ test('adopts a pet and updates mood and last action', () => {
 });
 
 
-// New test to simulate a pet's lifecycle ending
-
 test('pet mood score decreases over time and pet passes away', async () => {
-  jest.useFakeTimers(); // Use fake timers
+  jest.useFakeTimers();
 
   render(<VirtualOfficePet />);
 
   const dogButton = screen.getByText(/Dog/i);
   fireEvent.click(dogButton);
 
-  // Simulate time passing to reach zero mood score
-  jest.advanceTimersByTime(70000); // Advance time
+  jest.advanceTimersByTime(70000);
 
   await waitFor(() => expect(screen.getByText(/Your pet has passed away/i)).toBeInTheDocument());
 
-  jest.useRealTimers(); // Cleanup timers
+  jest.useRealTimers();
 });
