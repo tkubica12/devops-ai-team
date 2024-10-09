@@ -2,11 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/Card';
 import { Button } from './components/ui/Button';
 import { Dog, Cat, Coffee, MessageSquare, Play } from 'lucide-react';
+import DOMPurify from 'dompurify';
 import './App.css'; // Import the CSS file
+
+// Sanitize function
+const sanitizeInput = (input) => {
+  return DOMPurify.sanitize(input);
+};
 
 const petTypes = [
   { name: 'Dog', icon: Dog },
   { name: 'Cat', icon: Cat },
+  // Removed 'Koala' as it's not exported from 'lucide-react'
 ];
 
 const PetAction = ({ icon: Icon, label, onClick }) => (
@@ -23,15 +30,24 @@ const VirtualOfficePet = () => {
   const [lastAction, setLastAction] = useState(null);
 
   const adoptPet = (petType) => {
-    setPet(petType);
-    setMood('excited');
-    setMoodScore(70); // Set initial mood score when pet is adopted
-    setLastAction('Adopted');
+    try {
+      const sanitizedPetType = { ...petType, name: sanitizeInput(petType.name) };
+      setPet(sanitizedPetType);
+      setMood('excited');
+      setMoodScore(70); // Set initial mood score when pet is adopted
+      setLastAction('Adopted');
+    } catch (error) {
+      console.error('Error adopting pet:', error);
+    }
   };
 
   const performAction = (action) => {
-    setLastAction(action);
-    setMoodScore((prevScore) => Math.min(prevScore + 10, 100)); // Increase mood score, max 100
+    try {
+      setLastAction(action);
+      setMoodScore((prevScore) => Math.min(prevScore + 10, 100)); // Increase mood score, max 100
+    } catch (error) {
+      console.error('Error performing action:', error);
+    }
   };
 
   useEffect(() => {
